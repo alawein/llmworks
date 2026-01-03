@@ -1,0 +1,538 @@
+/**
+ * Offline data synchronization system
+ * Handles offline storage and sync when connection is restored
+ */
+
+import { getConfig, isFeatureEnabled } from './environment';
+
+// IndexedDB database configuration
+const DB_NAME = 'llm_works_offline';
+const DB_VERSION = 1;
+const STORES = {
+  evaluations: 'evaluations',
+  benchmarks: 'benchmarks',
+  settings: 'settings',
+  queue: 'sync_queue',
+} as const;
+
+export interface SyncItem {
+  id: string;
+  type: 'evaluation' | 'benchmark' | 'setting' | 'user_action';
+  action: 'create' | 'update' | 'delete';
+  data: unknown;
+  timestamp: number;
+  retries: number;
+  lastError?: string;
+}
+
+export interface OfflineEvaluation {
+  id: string;
+  modelA: string;
+  modelB: string;
+  prompt: string;
+  responseA: string;
+  responseB: string;
+  winner?: 'A' | 'B' | 'tie';
+  timestamp: number;
+  userId?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface OfflineBenchmark {
+  id: string;
+  name: string;
+  type: string;
+  config: Record<string, unknown>;
+  results?: unknown;
+  timestamp: number;
+  status: 'pending' | 'running' | 'completed' | 'failed';
+}
+
+class OfflineSyncManager {
+  private db: IDBDatabase | null = null;
+  private syncInProgress = false;
+  private syncQueue: SyncItem[] = [];
+  private observers: Array<(status: SyncStatus) => void> = [];
+
+  /**
+   * Initialize offline sync system
+   */
+  async init(): Promise<void> {
+    const config = getConfig();
+    
+    if (!config.features.offlineMode || !('indexedDB' in window)) {
+      console.log('Offline mode not supported or disabled');
+      return;
+    }
+
+    try {
+      await this.initDatabase();
+      await this.loadSyncQueue();
+      this.setupEventListeners();
+      
+      console.log('Offline sync system initialized');
+    } catch (error) {
+      console.error('Failed to initialize offline sync:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Initialize IndexedDB database
+   */
+  private initDatabase(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        this.db = request.result;
+        resolve();
+      };
+
+      request.onupgradeneeded = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+
+        // Evaluations store
+        if (!db.objectStoreNames.contains(STORES.evaluations)) {
+          const evaluationStore = db.createObjectStore(STORES.evaluations, { keyPath: 'id' });
+          evaluationStore.createIndex('timestamp', 'timestamp');
+          evaluationStore.createIndex('userId', 'userId');
+        }
+
+        // Benchmarks store
+        if (!db.objectStoreNames.contains(STORES.benchmarks)) {
+          const benchmarkStore = db.createObjectStore(STORES.benchmarks, { keyPath: 'id' });
+          benchmarkStore.createIndex('timestamp', 'timestamp');
+          benchmarkStore.createIndex('status', 'status');
+        }
+
+        // Settings store
+        if (!db.objectStoreNames.contains(STORES.settings)) {
+          db.createObjectStore(STORES.settings, { keyPath: 'key' });
+        }
+
+        // Sync queue store
+        if (!db.objectStoreNames.contains(STORES.queue)) {
+          const queueStore = db.createObjectStore(STORES.queue, { keyPath: 'id' });
+          queueStore.createIndex('timestamp', 'timestamp');
+          queueStore.createIndex('type', 'type');
+        }
+      };
+    });
+  }
+
+  /**
+   * Load sync queue from IndexedDB
+   */
+  private async loadSyncQueue(): Promise<void> {
+    if (!this.db) return;
+
+    try {
+      const transaction = this.db.transaction([STORES.queue], 'readonly');
+      const store = transaction.objectStore(STORES.queue);
+      const request = store.getAll();
+
+      return new Promise((resolve, reject) => {
+        request.onsuccess = () => {
+          this.syncQueue = request.result || [];
+          console.log(`Loaded ${this.syncQueue.length} items from sync queue`);
+          resolve();
+        };
+        request.onerror = () => reject(request.error);
+      });
+    } catch (error) {
+      console.error('Failed to load sync queue:', error);
+    }
+  }
+
+  /**
+   * Setup event listeners
+   */
+  private setupEventListeners(): void {
+    // Auto-sync when online
+    window.addEventListener('online', () => {
+      console.log('Connection restored, starting sync...');
+      this.sync();
+    });
+
+    // Register background sync if supported
+    if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+      navigator.serviceWorker.ready.then((registration) => {
+        return registration.sync.register('sync-evaluations');
+      }).catch((error) => {
+        console.error('Background sync registration failed:', error);
+      });
+    }
+
+    // Periodic sync attempt
+    setInterval(() => {
+      if (navigator.onLine && this.syncQueue.length > 0) {
+        this.sync();
+      }
+    }, 30000); // Every 30 seconds
+  }
+
+  /**
+   * Store evaluation for offline use
+   */
+  async storeEvaluation(evaluation: OfflineEvaluation): Promise<void> {
+    if (!this.db) throw new Error('Database not initialized');
+
+    const transaction = this.db.transaction([STORES.evaluations], 'readwrite');
+    const store = transaction.objectStore(STORES.evaluations);
+
+    return new Promise((resolve, reject) => {
+      const request = store.put(evaluation);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  /**
+   * Queue item for sync
+   */
+  async queueForSync(item: Omit<SyncItem, 'id' | 'timestamp' | 'retries'>): Promise<void> {
+    const syncItem: SyncItem = {
+      ...item,
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      retries: 0,
+    };
+
+    this.syncQueue.push(syncItem);
+
+    // Persist to IndexedDB
+    if (this.db) {
+      const transaction = this.db.transaction([STORES.queue], 'readwrite');
+      const store = transaction.objectStore(STORES.queue);
+      store.put(syncItem);
+    }
+
+    // Trigger sync if online
+    if (navigator.onLine) {
+      this.sync();
+    }
+
+    this.notifyObservers('queued');
+  }
+
+  /**
+   * Perform sync operation
+   */
+  async sync(): Promise<void> {
+    if (this.syncInProgress || !navigator.onLine || this.syncQueue.length === 0) {
+      return;
+    }
+
+    this.syncInProgress = true;
+    this.notifyObservers('syncing');
+
+    const config = getConfig();
+    const maxRetries = 3;
+    const itemsToRemove: string[] = [];
+
+    console.log(`Starting sync of ${this.syncQueue.length} items`);
+
+    for (const item of this.syncQueue) {
+      try {
+        const success = await this.syncItem(item, config.apiUrl);
+        
+        if (success) {
+          itemsToRemove.push(item.id);
+        } else {
+          item.retries++;
+          if (item.retries >= maxRetries) {
+            console.error(`Max retries reached for item ${item.id}`);
+            itemsToRemove.push(item.id);
+          }
+        }
+      } catch (error) {
+        console.error(`Sync failed for item ${item.id}:`, error);
+        item.retries++;
+        item.lastError = error instanceof Error ? error.message : 'Unknown error';
+        
+        if (item.retries >= maxRetries) {
+          itemsToRemove.push(item.id);
+        }
+      }
+    }
+
+    // Remove successfully synced items
+    await this.removeFromQueue(itemsToRemove);
+
+    this.syncInProgress = false;
+    
+    const status = this.syncQueue.length > 0 ? 'error' : 'completed';
+    this.notifyObservers(status);
+    
+    console.log(`Sync completed. ${itemsToRemove.length} items processed, ${this.syncQueue.length} remaining`);
+  }
+
+  /**
+   * Sync individual item
+   */
+  private async syncItem(item: SyncItem, apiUrl: string): Promise<boolean> {
+    const endpoint = this.getEndpoint(item.type);
+    const url = `${apiUrl}/api/${endpoint}`;
+
+    const method = item.action === 'create' ? 'POST' : 
+                   item.action === 'update' ? 'PUT' : 'DELETE';
+
+    const requestOptions: RequestInit = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: item.action !== 'delete' ? JSON.stringify(item.data) : undefined,
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      console.log(`Successfully synced ${item.type} item ${item.id}`);
+      return true;
+    } catch (error) {
+      console.error(`Failed to sync item ${item.id}:`, error);
+      return false;
+    }
+  }
+
+  /**
+   * Get API endpoint for item type
+   */
+  private getEndpoint(type: string): string {
+    switch (type) {
+      case 'evaluation': return 'evaluations';
+      case 'benchmark': return 'benchmarks';
+      case 'setting': return 'settings';
+      case 'user_action': return 'analytics';
+      default: return 'sync';
+    }
+  }
+
+  /**
+   * Remove items from sync queue
+   */
+  private async removeFromQueue(itemIds: string[]): Promise<void> {
+    // Remove from memory
+    this.syncQueue = this.syncQueue.filter(item => !itemIds.includes(item.id));
+
+    // Remove from IndexedDB
+    if (this.db && itemIds.length > 0) {
+      const transaction = this.db.transaction([STORES.queue], 'readwrite');
+      const store = transaction.objectStore(STORES.queue);
+
+      for (const id of itemIds) {
+        store.delete(id);
+      }
+    }
+  }
+
+  /**
+   * Get offline evaluations
+   */
+  async getOfflineEvaluations(): Promise<OfflineEvaluation[]> {
+    if (!this.db) return [];
+
+    const transaction = this.db.transaction([STORES.evaluations], 'readonly');
+    const store = transaction.objectStore(STORES.evaluations);
+
+    return new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  /**
+   * Get offline benchmarks
+   */
+  async getOfflineBenchmarks(): Promise<OfflineBenchmark[]> {
+    if (!this.db) return [];
+
+    const transaction = this.db.transaction([STORES.benchmarks], 'readonly');
+    const store = transaction.objectStore(STORES.benchmarks);
+
+    return new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  /**
+   * Clear offline data
+   */
+  async clearOfflineData(): Promise<void> {
+    if (!this.db) return;
+
+    const storeNames = [STORES.evaluations, STORES.benchmarks, STORES.settings];
+    const transaction = this.db.transaction(storeNames, 'readwrite');
+
+    for (const storeName of storeNames) {
+      transaction.objectStore(storeName).clear();
+    }
+
+    return new Promise((resolve, reject) => {
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  /**
+   * Get sync status
+   */
+  getSyncStatus(): {
+    queueLength: number;
+    syncing: boolean;
+    online: boolean;
+    lastSync?: number;
+  } {
+    return {
+      queueLength: this.syncQueue.length,
+      syncing: this.syncInProgress,
+      online: navigator.onLine,
+    };
+  }
+
+  /**
+   * Add observer for sync status changes
+   */
+  onSyncStatusChange(observer: (status: SyncStatus) => void): void {
+    this.observers.push(observer);
+  }
+
+  /**
+   * Remove sync status observer
+   */
+  removeSyncStatusObserver(observer: (status: SyncStatus) => void): void {
+    const index = this.observers.indexOf(observer);
+    if (index > -1) {
+      this.observers.splice(index, 1);
+    }
+  }
+
+  /**
+   * Notify observers of status change
+   */
+  private notifyObservers(status: SyncStatus): void {
+    this.observers.forEach(observer => {
+      try {
+        observer(status);
+      } catch (error) {
+        console.error('Sync observer error:', error);
+      }
+    });
+  }
+}
+
+export type SyncStatus = 'idle' | 'queued' | 'syncing' | 'completed' | 'error';
+
+// Global offline sync manager
+export const offlineSyncManager = new OfflineSyncManager();
+
+/**
+ * Initialize offline sync system
+ */
+export async function initOfflineSync(): Promise<void> {
+  if (!isFeatureEnabled('offlineMode')) {
+    console.log('Offline mode disabled');
+    return;
+  }
+
+  try {
+    await offlineSyncManager.init();
+    console.log('Offline sync initialized successfully');
+  } catch (error) {
+    console.error('Offline sync initialization failed:', error);
+  }
+}
+
+/**
+ * Store evaluation for offline use
+ */
+export async function storeOfflineEvaluation(evaluation: Omit<OfflineEvaluation, 'id' | 'timestamp'>): Promise<string> {
+  const id = crypto.randomUUID();
+  const fullEvaluation: OfflineEvaluation = {
+    ...evaluation,
+    id,
+    timestamp: Date.now(),
+  };
+
+  await offlineSyncManager.storeEvaluation(fullEvaluation);
+  
+  // Queue for sync
+  await offlineSyncManager.queueForSync({
+    type: 'evaluation',
+    action: 'create',
+    data: fullEvaluation,
+  });
+
+  return id;
+}
+
+/**
+ * Store benchmark for offline use
+ */
+export async function storeOfflineBenchmark(benchmark: Omit<OfflineBenchmark, 'id' | 'timestamp'>): Promise<string> {
+  const id = crypto.randomUUID();
+  const fullBenchmark: OfflineBenchmark = {
+    ...benchmark,
+    id,
+    timestamp: Date.now(),
+  };
+
+  // Queue for sync
+  await offlineSyncManager.queueForSync({
+    type: 'benchmark',
+    action: 'create',
+    data: fullBenchmark,
+  });
+
+  return id;
+}
+
+/**
+ * Force sync now
+ */
+export async function forceSyncNow(): Promise<void> {
+  await offlineSyncManager.sync();
+}
+
+/**
+ * React hook for offline sync status
+ */
+export function useOfflineSync() {
+  const [status, setStatus] = React.useState<SyncStatus>('idle');
+  const [syncInfo, setSyncInfo] = React.useState(offlineSyncManager.getSyncStatus());
+
+  React.useEffect(() => {
+    const updateInfo = () => setSyncInfo(offlineSyncManager.getSyncStatus());
+    const handleStatusChange = (newStatus: SyncStatus) => setStatus(newStatus);
+
+    offlineSyncManager.onSyncStatusChange(handleStatusChange);
+    
+    const interval = setInterval(updateInfo, 5000);
+
+    return () => {
+      offlineSyncManager.removeSyncStatusObserver(handleStatusChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  return {
+    status,
+    ...syncInfo,
+    forceSync: forceSyncNow,
+  };
+}
+
+// Auto-initialize if offline mode is enabled
+if (typeof window !== 'undefined' && isFeatureEnabled('offlineMode')) {
+  initOfflineSync();
+}

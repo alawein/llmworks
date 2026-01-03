@@ -1,0 +1,413 @@
+/**
+ * Secure Analytics Access
+ * 
+ * This module provides secure access to analytics data with proper authorization.
+ * Addresses the security concern about analytics data being exposed to competitors.
+ */
+
+import { supabase } from '@/integrations/supabase/client';
+
+export interface AnalyticsEvent {
+  id: string;
+  event_type: string;
+  event_name: string;
+  created_at: string;
+  session_id?: string;
+  user_id?: string;
+  payload?: any;
+  url?: string;
+  referrer?: string;
+  user_agent?: string;
+}
+
+export interface AnalyticsSummary {
+  event_type: string;
+  event_name: string;
+  time_bucket: string;
+  event_count: number;
+  unique_sessions: number;
+}
+
+export interface UserAnalyticsData {
+  user_events: AnalyticsEvent[];
+  total_count: number;
+}
+
+/**
+ * Check if current user has admin privileges
+ */
+export async function checkAdminAccess(): Promise<boolean> {
+  try {
+    const { data, error } = await supabase.rpc('is_admin');
+    if (error) {
+      console.warn('Error checking admin access:', error);
+      return false;
+    }
+    return data === true;
+  } catch (error) {
+    console.warn('Failed to check admin access:', error);
+    return false;
+  }
+}
+
+/**
+ * Get user's own analytics events only
+ */
+export async function getUserAnalytics(limit: number = 100): Promise<UserAnalyticsData> {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
+  // Users can only see their own analytics events
+  const { data, error, count } = await supabase
+    .from('analytics_events')
+    .select('*', { count: 'exact' })
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Failed to retrieve user analytics:', error);
+    throw new Error('Failed to retrieve analytics data');
+  }
+
+  return {
+    user_events: data || [],
+    total_count: count || 0
+  };
+}
+
+/**
+ * Get aggregated analytics summary (non-sensitive data)
+ */
+export async function getAnalyticsSummary(): Promise<AnalyticsSummary[]> {
+  // This uses the secure view that doesn't expose sensitive user data
+  const { data, error } = await supabase
+    .from('analytics_summary')
+    .select('*')
+    .order('time_bucket', { ascending: false })
+    .limit(100);
+
+  if (error) {
+    console.error('Failed to retrieve analytics summary:', error);
+    throw new Error('Failed to retrieve analytics summary');
+  }
+
+  return data || [];
+}
+
+/**
+ * Admin-only: Get all analytics events with full access
+ */
+export async function getAdminAnalytics(
+  limit: number = 1000,
+  eventType?: string,
+  dateFrom?: string,
+  dateTo?: string
+): Promise<AnalyticsEvent[]> {
+  // Verify admin access
+  const isAdmin = await checkAdminAccess();
+  if (!isAdmin) {
+    throw new Error('Admin access required to view all analytics data');
+  }
+
+  let query = supabase
+    .from('analytics_events')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  // Apply filters if provided
+  if (eventType) {
+    query = query.eq('event_type', eventType);
+  }
+
+  if (dateFrom) {
+    query = query.gte('created_at', dateFrom);
+  }
+
+  if (dateTo) {
+    query = query.lte('created_at', dateTo);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Failed to retrieve admin analytics:', error);
+    throw new Error('Failed to retrieve analytics data');
+  }
+
+  // Log admin access to analytics
+  await logSecurityEvent('analytics_admin_access', 'analytics_events', undefined, {
+    filter_count: data?.length || 0,
+    event_type: eventType,
+    date_range: { from: dateFrom, to: dateTo }
+  });
+
+  return data || [];
+}
+
+/**
+ * Admin-only: Get analytics by user ID
+ */
+export async function getAnalyticsByUser(userId: string): Promise<AnalyticsEvent[]> {
+  const isAdmin = await checkAdminAccess();
+  if (!isAdmin) {
+    throw new Error('Admin access required to view user analytics');
+  }
+
+  const { data, error } = await supabase
+    .from('analytics_events')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to retrieve user analytics:', error);
+    throw new Error('Failed to retrieve user analytics');
+  }
+
+  await logSecurityEvent('analytics_user_lookup', 'analytics_events', undefined, {
+    target_user_id: userId,
+    event_count: data?.length || 0
+  });
+
+  return data || [];
+}
+
+/**
+ * Admin-only: Get analytics statistics
+ */
+export async function getAnalyticsStatistics(): Promise<{
+  total_events: number;
+  unique_users: number;
+  unique_sessions: number;
+  event_types: Array<{ type: string; count: number }>;
+  recent_activity: Array<{ date: string; count: number }>;
+}> {
+  const isAdmin = await checkAdminAccess();
+  if (!isAdmin) {
+    throw new Error('Admin access required to view analytics statistics');
+  }
+
+  // Get overall statistics
+  const { data: totalEvents, error: totalError } = await supabase
+    .from('analytics_events')
+    .select('id', { count: 'exact', head: true });
+
+  const { data: uniqueUsers, error: usersError } = await supabase
+    .from('analytics_events')
+    .select('user_id')
+    .not('user_id', 'is', null);
+
+  const { data: uniqueSessions, error: sessionsError } = await supabase
+    .from('analytics_events')
+    .select('session_id')
+    .not('session_id', 'is', null);
+
+  const { data: eventTypes, error: typesError } = await supabase
+    .from('analytics_events')
+    .select('event_type')
+    .order('event_type');
+
+  if (totalError || usersError || sessionsError || typesError) {
+    throw new Error('Failed to retrieve analytics statistics');
+  }
+
+  // Process the data
+  const uniqueUserSet = new Set(uniqueUsers?.map(u => u.user_id) || []);
+  const uniqueSessionSet = new Set(uniqueSessions?.map(s => s.session_id) || []);
+
+  const eventTypeCounts = (eventTypes || []).reduce((acc, event) => {
+    acc[event.event_type] = (acc[event.event_type] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Get recent activity (last 7 days)
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const { data: recentEvents, error: recentError } = await supabase
+    .from('analytics_events')
+    .select('created_at')
+    .gte('created_at', sevenDaysAgo.toISOString());
+
+  const recentActivity = (recentEvents || []).reduce((acc, event) => {
+    const date = new Date(event.created_at).toDateString();
+    acc[date] = (acc[date] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  await logSecurityEvent('analytics_statistics_accessed', 'analytics_events');
+
+  return {
+    total_events: totalEvents?.length || 0,
+    unique_users: uniqueUserSet.size,
+    unique_sessions: uniqueSessionSet.size,
+    event_types: Object.entries(eventTypeCounts).map(([type, count]) => ({ type, count })),
+    recent_activity: Object.entries(recentActivity).map(([date, count]) => ({ date, count }))
+  };
+}
+
+/**
+ * Track analytics event securely
+ */
+export async function trackSecureAnalyticsEvent(
+  eventType: string,
+  eventName: string,
+  payload?: any,
+  sessionId?: string
+): Promise<void> {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Sanitize payload to remove sensitive data
+  const sanitizedPayload = payload ? sanitizePayload(payload) : null;
+
+  const { error } = await supabase
+    .from('analytics_events')
+    .insert({
+      user_id: user?.id || null,
+      session_id: sessionId,
+      event_type: eventType,
+      event_name: eventName,
+      payload: sanitizedPayload,
+      url: typeof window !== 'undefined' ? window.location.pathname : null,
+      referrer: typeof document !== 'undefined' ? document.referrer : null,
+      user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : null
+    });
+
+  if (error) {
+    console.warn('Failed to track analytics event:', error);
+    // Don't throw error for analytics tracking failures
+  }
+}
+
+/**
+ * Sanitize payload to remove sensitive information
+ */
+function sanitizePayload(payload: any): any {
+  if (!payload || typeof payload !== 'object') {
+    return payload;
+  }
+
+  const sensitive_keys = [
+    'password', 'token', 'api_key', 'secret', 'auth', 'key',
+    'credit_card', 'ssn', 'email', 'phone', 'address'
+  ];
+
+  const sanitized = { ...payload };
+
+  function recursiveSanitize(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map(item => recursiveSanitize(item));
+    }
+
+    if (obj && typeof obj === 'object') {
+      const result: any = {};
+      for (const [key, value] of Object.entries(obj)) {
+        const lowerKey = key.toLowerCase();
+        if (sensitive_keys.some(sensitiveKey => lowerKey.includes(sensitiveKey))) {
+          result[key] = '[REDACTED]';
+        } else {
+          result[key] = recursiveSanitize(value);
+        }
+      }
+      return result;
+    }
+
+    return obj;
+  }
+
+  return recursiveSanitize(sanitized);
+}
+
+/**
+ * Log security events (internal function)
+ */
+async function logSecurityEvent(
+  action: string,
+  resourceType: string,
+  resourceId?: string,
+  details?: Record<string, any>
+): Promise<void> {
+  try {
+    await supabase.rpc('log_security_event', {
+      p_action: action,
+      p_resource_type: resourceType,
+      p_resource_id: resourceId,
+      p_details: details
+    });
+  } catch (error) {
+    console.warn('Failed to log security event:', error);
+  }
+}
+
+/**
+ * Admin-only: Export analytics data (with additional security checks)
+ */
+export async function exportAnalyticsData(
+  format: 'json' | 'csv' = 'json',
+  filters?: {
+    eventType?: string;
+    dateFrom?: string;
+    dateTo?: string;
+    includeAnonymous?: boolean;
+  }
+): Promise<string> {
+  const isAdmin = await checkAdminAccess();
+  if (!isAdmin) {
+    throw new Error('Admin access required to export analytics data');
+  }
+
+  const events = await getAdminAnalytics(
+    10000, // Reasonable limit for exports
+    filters?.eventType,
+    filters?.dateFrom,
+    filters?.dateTo
+  );
+
+  // Filter out anonymous events if requested
+  const filteredEvents = filters?.includeAnonymous === false 
+    ? events.filter(event => event.user_id !== null)
+    : events;
+
+  await logSecurityEvent('analytics_export', 'analytics_events', undefined, {
+    format,
+    event_count: filteredEvents.length,
+    filters
+  });
+
+  if (format === 'csv') {
+    return convertToCSV(filteredEvents);
+  }
+
+  return JSON.stringify(filteredEvents, null, 2);
+}
+
+/**
+ * Convert analytics data to CSV format
+ */
+function convertToCSV(events: AnalyticsEvent[]): string {
+  if (events.length === 0) {
+    return 'No data available';
+  }
+
+  const headers = Object.keys(events[0]);
+  const csvRows = [
+    headers.join(','),
+    ...events.map(event => 
+      headers.map(header => {
+        const value = (event as any)[header];
+        // Escape commas and quotes in CSV
+        if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+          return `"${value.replace(/"/g, '""')}"`;
+        }
+        return value || '';
+      }).join(',')
+    )
+  ];
+
+  return csvRows.join('\n');
+}

@@ -1,0 +1,278 @@
+/**
+ * Secure API Key Management
+ * 
+ * This module provides enhanced security for API key storage and access.
+ * Addresses the security concern about API keys being exposed if RLS policies fail.
+ */
+
+import { supabase } from '@/integrations/supabase/client';
+import CryptoJS from 'crypto-js';
+
+// Environment-based encryption key (should be in environment variables)
+const ENCRYPTION_KEY = import.meta.env.VITE_API_KEY_ENCRYPTION_SALT || 'default-dev-key-change-in-prod';
+
+export interface SecureApiKey {
+  id: string;
+  name: string;
+  provider: string;
+  model_id: string;
+  is_active: boolean;
+  created_at: string;
+  key_last_used?: string;
+  access_level: 'user' | 'admin' | 'restricted';
+}
+
+export interface ApiKeyWithAccess extends SecureApiKey {
+  api_key_decrypted?: string;
+}
+
+/**
+ * Encrypt API key using AES encryption
+ */
+export function encryptApiKey(apiKey: string): { encrypted: string; hash: string } {
+  const encrypted = CryptoJS.AES.encrypt(apiKey, ENCRYPTION_KEY).toString();
+  const hash = CryptoJS.SHA256(apiKey).toString();
+  
+  return { encrypted, hash };
+}
+
+/**
+ * Decrypt API key
+ */
+export function decryptApiKey(encryptedKey: string): string {
+  try {
+    const bytes = CryptoJS.AES.decrypt(encryptedKey, ENCRYPTION_KEY);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    console.error('Failed to decrypt API key:', error);
+    throw new Error('Invalid or corrupted API key');
+  }
+}
+
+/**
+ * Validate API key format based on provider
+ */
+export function validateApiKeyFormat(provider: string, apiKey: string): boolean {
+  const patterns: Record<string, RegExp> = {
+    openai: /^sk-[A-Za-z0-9]{48,}$/,
+    anthropic: /^sk-ant-[A-Za-z0-9-]{95,}$/,
+    google: /^[A-Za-z0-9_-]{39}$/,
+    azure: /^[A-Za-z0-9]{32}$/,
+  };
+
+  const pattern = patterns[provider.toLowerCase()];
+  return pattern ? pattern.test(apiKey) : true; // Allow unknown providers
+}
+
+/**
+ * Securely store API key with enhanced metadata
+ */
+export async function storeApiKey(
+  name: string,
+  provider: string,
+  modelId: string,
+  apiKey: string,
+  accessLevel: 'user' | 'admin' | 'restricted' = 'user'
+): Promise<string> {
+  // Validate API key format
+  if (!validateApiKeyFormat(provider, apiKey)) {
+    throw new Error(`Invalid API key format for provider: ${provider}`);
+  }
+
+  const { encrypted, hash } = encryptApiKey(apiKey);
+
+  const { data, error } = await supabase
+    .from('models')
+    .insert({
+      name,
+      provider,
+      model_id: modelId,
+      api_key_encrypted: encrypted,
+      api_key_hash: hash,
+      access_level: accessLevel,
+      key_created_at: new Date().toISOString(),
+      config: {
+        security_level: 'enhanced',
+        created_by_version: '2.0',
+        encryption_method: 'AES-256'
+      }
+    })
+    .select('id')
+    .single();
+
+  if (error) {
+    console.error('Failed to store API key:', error);
+    throw new Error('Failed to store API key securely');
+  }
+
+  // Log the security event
+  await logSecurityEvent('api_key_created', 'models', data.id);
+
+  return data.id;
+}
+
+/**
+ * Retrieve API keys (without decrypted values by default)
+ */
+export async function getApiKeys(): Promise<SecureApiKey[]> {
+  const { data, error } = await supabase
+    .from('models')
+    .select(`
+      id,
+      name,
+      provider,
+      model_id,
+      is_active,
+      created_at,
+      key_last_used,
+      access_level
+    `)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Failed to retrieve API keys:', error);
+    throw new Error('Failed to retrieve API keys');
+  }
+
+  return data || [];
+}
+
+/**
+ * Get decrypted API key for use (with security logging)
+ */
+export async function getDecryptedApiKey(modelId: string): Promise<string> {
+  const { data, error } = await supabase
+    .from('models')
+    .select('id, api_key_encrypted, access_level, is_active')
+    .eq('id', modelId)
+    .eq('is_active', true)
+    .single();
+
+  if (error || !data) {
+    await logSecurityEvent('api_key_access_denied', 'models', modelId, { reason: 'not_found' });
+    throw new Error('API key not found or inactive');
+  }
+
+  if (!data.api_key_encrypted) {
+    await logSecurityEvent('api_key_access_denied', 'models', modelId, { reason: 'no_key' });
+    throw new Error('No API key stored for this model');
+  }
+
+  // Update last used timestamp
+  await supabase
+    .from('models')
+    .update({ key_last_used: new Date().toISOString() })
+    .eq('id', modelId);
+
+  // Log successful access
+  await logSecurityEvent('api_key_accessed', 'models', modelId);
+
+  return decryptApiKey(data.api_key_encrypted);
+}
+
+/**
+ * Rotate API key (replace with new one)
+ */
+export async function rotateApiKey(modelId: string, newApiKey: string): Promise<void> {
+  const { encrypted, hash } = encryptApiKey(newApiKey);
+
+  const { error } = await supabase
+    .from('models')
+    .update({
+      api_key_encrypted: encrypted,
+      api_key_hash: hash,
+      key_created_at: new Date().toISOString(),
+      key_last_used: null
+    })
+    .eq('id', modelId);
+
+  if (error) {
+    console.error('Failed to rotate API key:', error);
+    throw new Error('Failed to rotate API key');
+  }
+
+  await logSecurityEvent('api_key_rotated', 'models', modelId);
+}
+
+/**
+ * Revoke API key (soft delete)
+ */
+export async function revokeApiKey(modelId: string): Promise<void> {
+  const { error } = await supabase
+    .from('models')
+    .update({
+      is_active: false,
+      api_key_encrypted: null,
+      api_key_hash: null
+    })
+    .eq('id', modelId);
+
+  if (error) {
+    console.error('Failed to revoke API key:', error);
+    throw new Error('Failed to revoke API key');
+  }
+
+  await logSecurityEvent('api_key_revoked', 'models', modelId);
+}
+
+/**
+ * Log security events
+ */
+async function logSecurityEvent(
+  action: string,
+  resourceType: string,
+  resourceId?: string,
+  details?: Record<string, any>
+): Promise<void> {
+  try {
+    await supabase.rpc('log_security_event', {
+      p_action: action,
+      p_resource_type: resourceType,
+      p_resource_id: resourceId,
+      p_details: details
+    });
+  } catch (error) {
+    // Security logging should not break the main flow
+    console.warn('Failed to log security event:', error);
+  }
+}
+
+/**
+ * Check if current user has admin access
+ */
+export async function checkAdminAccess(): Promise<boolean> {
+  try {
+    const { data, error } = await supabase.rpc('is_admin');
+    return !error && data === true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Get API key security audit trail (admin only)
+ */
+export async function getApiKeyAuditTrail(modelId?: string): Promise<any[]> {
+  const isAdmin = await checkAdminAccess();
+  if (!isAdmin) {
+    throw new Error('Admin access required for audit trail');
+  }
+
+  const query = supabase
+    .from('security_audit_log')
+    .select('*')
+    .in('action', ['api_key_created', 'api_key_accessed', 'api_key_rotated', 'api_key_revoked'])
+    .order('created_at', { ascending: false });
+
+  if (modelId) {
+    query.eq('resource_id', modelId);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw new Error('Failed to retrieve audit trail');
+  }
+
+  return data || [];
+}

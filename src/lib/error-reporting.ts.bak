@@ -1,0 +1,697 @@
+/**
+ * Comprehensive error reporting and monitoring system
+ * Integrates with Sentry, custom logging, and real-time error tracking
+ */
+
+import { getConfig, isFeatureEnabled } from './environment';
+import { sendNotification } from './notifications';
+
+export interface ErrorContext {
+  user?: {
+    id?: string;
+    email?: string;
+    name?: string;
+  };
+  request?: {
+    url: string;
+    method?: string;
+    headers?: Record<string, string>;
+    body?: string;
+  };
+  browser?: {
+    name?: string;
+    version?: string;
+    os?: string;
+  };
+  extra?: Record<string, unknown>;
+}
+
+export interface ErrorReport {
+  id: string;
+  timestamp: number;
+  level: 'error' | 'warning' | 'info' | 'debug';
+  message: string;
+  stack?: string;
+  fingerprint?: string;
+  tags?: Record<string, string>;
+  context?: ErrorContext;
+  breadcrumbs?: Breadcrumb[];
+  resolved?: boolean;
+  count?: number;
+}
+
+export interface Breadcrumb {
+  timestamp: number;
+  message: string;
+  category: string;
+  level: 'error' | 'warning' | 'info' | 'debug';
+  data?: Record<string, unknown>;
+}
+
+class ErrorReportingManager {
+  private breadcrumbs: Breadcrumb[] = [];
+  private errorBuffer: ErrorReport[] = [];
+  private sentryInitialized = false;
+  private maxBreadcrumbs = 50;
+  private maxErrorBuffer = 100;
+  private context: ErrorContext = {};
+  private tags: Record<string, string> = {};
+
+  /**
+   * Initialize error reporting system
+   */
+  async init(): Promise<void> {
+    const config = getConfig();
+    
+    if (!config.features.errorReporting) {
+      console.log('Error reporting disabled in configuration');
+      return;
+    }
+
+    try {
+      // Initialize Sentry if DSN is provided
+      const sentryDsn = config.monitoring.sentryDsn;
+      if (sentryDsn) {
+        await this.initSentry(sentryDsn);
+      }
+
+      // Setup global error handlers
+      this.setupGlobalErrorHandlers();
+
+      // Setup unhandled promise rejection handler
+      this.setupPromiseRejectionHandler();
+
+      // Setup performance observer for errors
+      this.setupPerformanceObserver();
+
+      // Set default context
+      this.setDefaultContext();
+
+      console.log('Error reporting system initialized');
+    } catch (error) {
+      console.error('Failed to initialize error reporting:', error);
+    }
+  }
+
+  /**
+   * Initialize Sentry
+   */
+  private async initSentry(dsn: string): Promise<void> {
+    try {
+      const config = getConfig();
+      
+      // Dynamically import Sentry to avoid bundle bloat if not used
+      const Sentry = await import('@sentry/browser');
+      
+      Sentry.init({
+        dsn,
+        environment: config.environment,
+        release: '1.0.0',
+        tracesSampleRate: config.environment === 'production' ? 0.1 : 1.0,
+        beforeSend: (event) => this.beforeSend(event),
+        beforeBreadcrumb: (breadcrumb) => this.beforeBreadcrumb(breadcrumb),
+      });
+
+      this.sentryInitialized = true;
+      console.log('Sentry initialized');
+    } catch (error) {
+      console.error('Failed to initialize Sentry:', error);
+    }
+  }
+
+  /**
+   * Setup global error handlers
+   */
+  private setupGlobalErrorHandlers(): void {
+    window.addEventListener('error', (event) => {
+      this.captureError(event.error || new Error(event.message), {
+        extra: {
+          filename: event.filename,
+          lineno: event.lineno,
+          colno: event.colno,
+          type: 'javascript_error',
+        },
+      });
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      this.captureError(
+        event.reason instanceof Error ? event.reason : new Error(String(event.reason)),
+        {
+          extra: {
+            type: 'unhandled_promise_rejection',
+            promise: event.promise,
+          },
+        }
+      );
+    });
+  }
+
+  /**
+   * Setup promise rejection handler
+   */
+  private setupPromiseRejectionHandler(): void {
+    // Additional promise rejection tracking
+    const originalPromise = window.Promise;
+    if (originalPromise) {
+      const originalThen = originalPromise.prototype.then;
+      const originalCatch = originalPromise.prototype.catch;
+
+      originalPromise.prototype.then = function(onFulfilled, onRejected) {
+        return originalThen.call(
+          this,
+          onFulfilled,
+          onRejected ? (reason: unknown) => {
+            // Log rejection for debugging
+            console.debug('Promise rejection caught:', reason);
+            return onRejected(reason);
+          } : undefined
+        );
+      };
+
+      originalPromise.prototype.catch = function(onRejected) {
+        return originalCatch.call(this, (reason: unknown) => {
+          console.debug('Promise rejection handled:', reason);
+          return onRejected ? onRejected(reason) : Promise.reject(reason);
+        });
+      };
+    }
+  }
+
+  /**
+   * Setup performance observer for errors
+   */
+  private setupPerformanceObserver(): void {
+    if ('PerformanceObserver' in window) {
+      try {
+        const observer = new PerformanceObserver((list) => {
+          list.getEntries().forEach((entry) => {
+            if (entry.entryType === 'navigation') {
+              const navEntry = entry as PerformanceNavigationTiming;
+              
+              // Report slow page loads
+              if (navEntry.loadEventEnd - navEntry.navigationStart > 10000) {
+                this.captureMessage('Slow page load detected', 'warning', {
+                  extra: {
+                    loadTime: navEntry.loadEventEnd - navEntry.navigationStart,
+                    url: window.location.href,
+                  },
+                });
+              }
+            }
+          });
+        });
+
+        observer.observe({ entryTypes: ['navigation'] });
+      } catch (error) {
+        console.debug('Performance observer not supported:', error);
+      }
+    }
+  }
+
+  /**
+   * Set default context
+   */
+  private setDefaultContext(): void {
+    this.context = {
+      browser: {
+        name: this.getBrowserName(),
+        version: this.getBrowserVersion(),
+        os: navigator.platform,
+      },
+      extra: {
+        timestamp: Date.now(),
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        cookieEnabled: navigator.cookieEnabled,
+        onLine: navigator.onLine,
+      },
+    };
+
+    this.tags = {
+      environment: getConfig().environment,
+      version: '1.0.0',
+    };
+  }
+
+  /**
+   * Get browser name
+   */
+  private getBrowserName(): string {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf('Chrome') > -1) return 'Chrome';
+    if (userAgent.indexOf('Firefox') > -1) return 'Firefox';
+    if (userAgent.indexOf('Safari') > -1) return 'Safari';
+    if (userAgent.indexOf('Edge') > -1) return 'Edge';
+    return 'Unknown';
+  }
+
+  /**
+   * Get browser version
+   */
+  private getBrowserVersion(): string {
+    const userAgent = navigator.userAgent;
+    const matches = userAgent.match(/(chrome|firefox|safari|edge)\/([0-9.]+)/i);
+    return matches ? matches[2] : 'Unknown';
+  }
+
+  /**
+   * Before send hook for Sentry
+   */
+  private beforeSend(event: unknown): unknown {
+    // Filter out known non-critical errors
+    const message = (event as { message?: string }).message;
+    if (message) {
+      const ignoredMessages = [
+        'Script error',
+        'Network request failed',
+        'Loading CSS chunk',
+        'ChunkLoadError',
+      ];
+
+      if (ignoredMessages.some(ignored => message.includes(ignored))) {
+        return null; // Don't send to Sentry
+      }
+    }
+
+    return event;
+  }
+
+  /**
+   * Before breadcrumb hook for Sentry
+   */
+  private beforeBreadcrumb(breadcrumb: unknown): unknown {
+    // Filter out noisy breadcrumbs
+    const category = (breadcrumb as { category?: string }).category;
+    const message = (breadcrumb as { message?: string }).message;
+
+    if (category === 'console' && message?.includes('debug')) {
+      return null; // Don't include debug console logs
+    }
+
+    return breadcrumb;
+  }
+
+  /**
+   * Capture error
+   */
+  captureError(
+    error: Error, 
+    context?: Partial<ErrorContext>, 
+    tags?: Record<string, string>
+  ): string {
+    const errorId = crypto.randomUUID();
+    
+    const errorReport: ErrorReport = {
+      id: errorId,
+      timestamp: Date.now(),
+      level: 'error',
+      message: error.message || 'Unknown error',
+      stack: error.stack,
+      fingerprint: this.generateFingerprint(error),
+      tags: { ...this.tags, ...tags },
+      context: { ...this.context, ...context },
+      breadcrumbs: [...this.breadcrumbs],
+    };
+
+    // Add to error buffer
+    this.errorBuffer.unshift(errorReport);
+    if (this.errorBuffer.length > this.maxErrorBuffer) {
+      this.errorBuffer = this.errorBuffer.slice(0, this.maxErrorBuffer);
+    }
+
+    // Send to Sentry if initialized
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.withScope((scope) => {
+        if (tags) {
+          Object.entries(tags).forEach(([key, value]) => {
+            scope.setTag(key, value);
+          });
+        }
+        
+        if (context) {
+          scope.setContext('additional', context);
+        }
+
+        window.Sentry.captureException(error);
+      });
+    }
+
+    // Send to custom endpoint
+    this.sendToCustomEndpoint(errorReport);
+
+    // Show notification for critical errors
+    if (this.isCriticalError(error)) {
+      this.showErrorNotification(errorReport);
+    }
+
+    // Add breadcrumb for this error
+    this.addBreadcrumb(error.message, 'error', 'error', {
+      errorId,
+      stack: error.stack?.substring(0, 200),
+    });
+
+    console.error('Error captured:', errorReport);
+    return errorId;
+  }
+
+  /**
+   * Capture message
+   */
+  captureMessage(
+    message: string, 
+    level: 'error' | 'warning' | 'info' | 'debug' = 'info',
+    context?: Partial<ErrorContext>, 
+    tags?: Record<string, string>
+  ): string {
+    const messageId = crypto.randomUUID();
+    
+    const errorReport: ErrorReport = {
+      id: messageId,
+      timestamp: Date.now(),
+      level,
+      message,
+      tags: { ...this.tags, ...tags },
+      context: { ...this.context, ...context },
+      breadcrumbs: [...this.breadcrumbs],
+    };
+
+    // Add to error buffer
+    this.errorBuffer.unshift(errorReport);
+    if (this.errorBuffer.length > this.maxErrorBuffer) {
+      this.errorBuffer = this.errorBuffer.slice(0, this.maxErrorBuffer);
+    }
+
+    // Send to Sentry if initialized
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.captureMessage(message, level);
+    }
+
+    // Send to custom endpoint
+    this.sendToCustomEndpoint(errorReport);
+
+    // Add breadcrumb
+    this.addBreadcrumb(message, 'message', level);
+
+    console.log(`Message captured (${level}):`, errorReport);
+    return messageId;
+  }
+
+  /**
+   * Add breadcrumb
+   */
+  addBreadcrumb(
+    message: string,
+    category: string,
+    level: 'error' | 'warning' | 'info' | 'debug' = 'info',
+    data?: Record<string, unknown>
+  ): void {
+    const breadcrumb: Breadcrumb = {
+      timestamp: Date.now(),
+      message,
+      category,
+      level,
+      data,
+    };
+
+    this.breadcrumbs.push(breadcrumb);
+
+    // Keep only the latest breadcrumbs
+    if (this.breadcrumbs.length > this.maxBreadcrumbs) {
+      this.breadcrumbs = this.breadcrumbs.slice(-this.maxBreadcrumbs);
+    }
+
+    // Send to Sentry if initialized
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.addBreadcrumb(breadcrumb);
+    }
+  }
+
+  /**
+   * Generate error fingerprint
+   */
+  private generateFingerprint(error: Error): string {
+    // Create a consistent fingerprint for grouping similar errors
+    const message = error.message || 'unknown';
+    const firstStackLine = error.stack?.split('\n')[1] || '';
+    
+    return btoa(`${message}:${firstStackLine}`).substring(0, 16);
+  }
+
+  /**
+   * Check if error is critical
+   */
+  private isCriticalError(error: Error): boolean {
+    const criticalPatterns = [
+      /authentication/i,
+      /authorization/i,
+      /security/i,
+      /payment/i,
+      /database/i,
+      /network.*failed/i,
+    ];
+
+    return criticalPatterns.some(pattern => 
+      pattern.test(error.message) || pattern.test(error.stack || '')
+    );
+  }
+
+  /**
+   * Show error notification
+   */
+  private showErrorNotification(errorReport: ErrorReport): void {
+    sendNotification(
+      'Critical Error Detected',
+      `${errorReport.message.substring(0, 100)}...`,
+      {
+        category: 'security',
+        priority: 'high',
+        actions: [
+          {
+            id: 'view',
+            label: 'View Details',
+            action: 'custom',
+            handler: () => this.showErrorDetails(errorReport.id),
+          },
+          {
+            id: 'report',
+            label: 'Report Issue',
+            action: 'custom',
+            handler: () => this.reportIssue(errorReport.id),
+          },
+        ],
+        data: { errorId: errorReport.id },
+      }
+    ).catch(console.error);
+  }
+
+  /**
+   * Show error details
+   */
+  private showErrorDetails(errorId: string): void {
+    const error = this.errorBuffer.find(e => e.id === errorId);
+    if (error) {
+      console.group('Error Details');
+      console.error('Message:', error.message);
+      console.error('Stack:', error.stack);
+      console.error('Context:', error.context);
+      console.error('Breadcrumbs:', error.breadcrumbs);
+      console.groupEnd();
+    }
+  }
+
+  /**
+   * Report issue
+   */
+  private reportIssue(errorId: string): void {
+    // Open issue reporting interface or external tool
+    const error = this.errorBuffer.find(e => e.id === errorId);
+    if (error) {
+      const issueUrl = `mailto:support@llmworks.dev?subject=Error Report&body=${encodeURIComponent(
+        `Error ID: ${errorId}\n\nMessage: ${error.message}\n\nStack: ${error.stack}\n\nContext: ${JSON.stringify(error.context, null, 2)}`
+      )}`;
+      
+      window.open(issueUrl);
+    }
+  }
+
+  /**
+   * Send to custom endpoint
+   */
+  private async sendToCustomEndpoint(errorReport: ErrorReport): Promise<void> {
+    const config = getConfig();
+    const endpoint = `${config.apiUrl}/api/errors`;
+
+    try {
+      await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(errorReport),
+      });
+    } catch (error) {
+      console.debug('Failed to send error to custom endpoint:', error);
+      // Don't report this error to avoid infinite loops
+    }
+  }
+
+  /**
+   * Set user context
+   */
+  setUser(user: ErrorContext['user']): void {
+    this.context.user = user;
+
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.setUser(user || {});
+    }
+  }
+
+  /**
+   * Set extra context
+   */
+  setExtra(key: string, value: unknown): void {
+    if (!this.context.extra) {
+      this.context.extra = {};
+    }
+    this.context.extra[key] = value;
+
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.setExtra(key, value);
+    }
+  }
+
+  /**
+   * Set tag
+   */
+  setTag(key: string, value: string): void {
+    this.tags[key] = value;
+
+    if (this.sentryInitialized && window.Sentry) {
+      window.Sentry.setTag(key, value);
+    }
+  }
+
+  /**
+   * Get error reports
+   */
+  getErrorReports(): ErrorReport[] {
+    return [...this.errorBuffer];
+  }
+
+  /**
+   * Get breadcrumbs
+   */
+  getBreadcrumbs(): Breadcrumb[] {
+    return [...this.breadcrumbs];
+  }
+
+  /**
+   * Clear error reports
+   */
+  clearErrorReports(): void {
+    this.errorBuffer = [];
+  }
+
+  /**
+   * Clear breadcrumbs
+   */
+  clearBreadcrumbs(): void {
+    this.breadcrumbs = [];
+  }
+
+  /**
+   * Test error reporting
+   */
+  testError(): void {
+    try {
+      throw new Error('Test error for error reporting system');
+    } catch (error) {
+      this.captureError(error as Error, {
+        extra: {
+          test: true,
+          timestamp: Date.now(),
+        },
+      }, {
+        test: 'true',
+      });
+    }
+  }
+}
+
+// Global error reporting manager
+export const errorReportingManager = new ErrorReportingManager();
+
+/**
+ * Initialize error reporting system
+ */
+export async function initErrorReporting(): Promise<void> {
+  try {
+    await errorReportingManager.init();
+    console.log('Error reporting system initialized');
+  } catch (error) {
+    console.error('Error reporting initialization failed:', error);
+  }
+}
+
+/**
+ * Capture error
+ */
+export function captureError(
+  error: Error, 
+  context?: Partial<ErrorContext>, 
+  tags?: Record<string, string>
+): string {
+  return errorReportingManager.captureError(error, context, tags);
+}
+
+/**
+ * Capture message
+ */
+export function captureMessage(
+  message: string, 
+  level: 'error' | 'warning' | 'info' | 'debug' = 'info',
+  context?: Partial<ErrorContext>, 
+  tags?: Record<string, string>
+): string {
+  return errorReportingManager.captureMessage(message, level, context, tags);
+}
+
+/**
+ * Add breadcrumb
+ */
+export function addBreadcrumb(
+  message: string,
+  category: string,
+  level: 'error' | 'warning' | 'info' | 'debug' = 'info',
+  data?: Record<string, unknown>
+): void {
+  errorReportingManager.addBreadcrumb(message, category, level, data);
+}
+
+/**
+ * Set user context
+ */
+export function setUser(user: ErrorContext['user']): void {
+  errorReportingManager.setUser(user);
+}
+
+/**
+ * Set extra context
+ */
+export function setExtra(key: string, value: unknown): void {
+  errorReportingManager.setExtra(key, value);
+}
+
+/**
+ * Set tag
+ */
+export function setTag(key: string, value: string): void {
+  errorReportingManager.setTag(key, value);
+}
+
+// Auto-initialize if error reporting is enabled
+if (typeof window !== 'undefined' && isFeatureEnabled('errorReporting')) {
+  initErrorReporting();
+}
