@@ -1,9 +1,44 @@
-.vercel
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+.next/
+build/
+
+# Environment
 .env
 .env.local
 .env.*
 !.env.example
 !.env.*.example
+
+# Vercel
+.vercel/
+
+# Test & coverage
+coverage/
+playwright-report/
+test-results/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+
+# Cache
+.eslintcache
+.cache/
+
+# Logs
 *.log
+
+# Editor / IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
