@@ -98,21 +98,21 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4",
-    "tailwindcss": "^4",
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.54.2",
+    "@tailwindcss/vite": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-react": "5.1.4",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "axe-core": "^4.10.3",
     "jest-axe": "^10.0.0",
     "jsdom": "^26.1.0",
+    "tailwindcss": "^4",
     "terser": "^5.43.1",
-    "vite": "^5.4.10"
+    "vite": "7.3.1"
   },
   "engines": {
     "node": ">=18.0.0",
