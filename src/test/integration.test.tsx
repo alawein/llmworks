@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,41 +8,6 @@ import { Navigation } from '@/components/Navigation';
 import { AccessibilityToolbar } from '@/components/accessibility/AccessibilityToolbar';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { NotificationProvider } from '@/components/FloatingNotifications';
-
-// Mock browser APIs
-const mockIntersectionObserver = vi.fn().mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-  root: null,
-  rootMargin: '',
-  thresholds: [],
-  takeRecords: vi.fn(),
-});
-global.IntersectionObserver = mockIntersectionObserver;
-
-const mockResizeObserver = vi.fn().mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-});
-global.ResizeObserver = mockResizeObserver;
-
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: vi.fn().mockImplementation((query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  })),
-});
-
-HTMLElement.prototype.scrollIntoView = vi.fn();
 
 // Mock service worker registration
 vi.mock('@/lib/service-worker', () => ({

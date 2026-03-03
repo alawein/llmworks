@@ -1,29 +1,7 @@
-import '@testing-library/jest-dom';
 import { render, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
-
-// Mock browser APIs needed by components rendered in tests
-const mockIntersectionObserver = vi.fn().mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-  root: null,
-  rootMargin: '',
-  thresholds: [],
-  takeRecords: vi.fn(),
-});
-global.IntersectionObserver = mockIntersectionObserver;
-
-const mockResizeObserver = vi.fn().mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-});
-global.ResizeObserver = mockResizeObserver;
-
-HTMLElement.prototype.scrollIntoView = vi.fn();
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import Index from '@/pages/Index';
 import Arena from '@/pages/Arena';
