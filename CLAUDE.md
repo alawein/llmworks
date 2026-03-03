@@ -3,35 +3,52 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with
 code in this repository.
 
-**Project**: LLM Works - Open-source LLM evaluation platform **Domain**:
-llmworks.dev (planned) **Status**: Complete rebrand from Aegis AI implemented
-January 12, 2025
+**Project**: LLM Works -- Open-Source LLM Evaluation Platform
+**Domain**: llmworks.dev (Vercel deployment)
+**Status**: Active development (rebranded from Aegis AI, January 2025)
 
 ## Commands
 
 ### Development
 
-- `npm run dev` - Start development server on port 8080
+- `npm run dev` - Start development server (port 8080)
 - `npm run build` - Build for production
 - `npm run build:dev` - Build for development mode
-- `npm run preview` - Preview production build
+- `npm run preview` - Preview production build (port 4173)
 - `npm run lint` - Run ESLint
+- `npm run type-check` - TypeScript validation
+- `npm run test` - Run Vitest in watch mode
+- `npm run test:run` - Run Vitest once (`npx vitest run`)
+- `npm run test:coverage` - Run tests with V8 coverage
+- `npm run test:e2e` - Run Playwright end-to-end tests
+- `npm run test:integration` - Run integration tests
+- `npm run test:performance` - Run performance tests
+- `npm run test:accessibility` - Run accessibility tests
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check formatting
+
+### Testing
+
+- `npx vitest run` - Run all unit tests (one-shot, recommended for CI)
+- **pool: forks** is configured in `vite.config.ts` to prevent test hangs -- do not change to threads
+- Teardown timeout: 5000ms
+- Environment: jsdom
+- Excludes `**/e2e/**`, `**/visual/**`, and `**/*.spec.ts`
 
 ### Installation
 
 - `npm install` - Install dependencies
+- Requires Node.js >= 18.0.0, npm >= 8.0.0
 
 ## Architecture Overview
 
-**LLM Works** is a **Vite + React + TypeScript** application with **shadcn/ui**
-components and **Supabase** backend integration.
+**LLM Works** is a **Vite 5 + React 19 + TypeScript** application with
+**shadcn/ui** components and **Supabase** backend for LLM evaluation and
+benchmarking.
 
-### Product Overview
+### Product Features
 
-Open-source LLM evaluation platform featuring:
-
-- **The Arena**: Interactive model testing (debates, creative challenges,
-  explanations)
+- **The Arena**: Interactive model testing (debates, creative challenges, explanations)
 - **The Bench**: Rigorous benchmarking (MMLU, TruthfulQA, custom tests)
 - **Arbiter Framework**: Consistent evaluation protocols
 - **Verifier System**: Cryptographic audit trails
@@ -39,59 +56,44 @@ Open-source LLM evaluation platform featuring:
 
 ### Tech Stack
 
-- **Build Tool**: Vite
-- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite 5 with Terser minification
+- **Framework**: React 19 with TypeScript
 - **Routing**: React Router v6
-- **UI Components**: shadcn/ui (Radix UI primitives with Tailwind CSS)
-- **Styling**: Tailwind CSS with custom configuration
-- **State Management**: React Query (TanStack Query)
-- **Backend**: Supabase (authentication and database)
-- **Forms**: React Hook Form with Zod validation
+- **UI Components**: shadcn/ui (Radix UI primitives + Tailwind CSS v4)
+- **Styling**: Tailwind CSS v4 via @tailwindcss/vite plugin
+- **State Management**: TanStack Query v5
+- **Backend**: Supabase (authentication + database)
+- **Charts**: Recharts
+- **Forms**: React Hook Form + Zod validation
+- **Crypto**: crypto-js for audit trail hashing
+- **Testing**: Vitest (unit) + Playwright (e2e/visual/accessibility)
 
 ### Project Structure
 
 - `/src/pages/` - Route components (Index, Arena, Bench, NotFound)
 - `/src/components/` - Reusable React components
-- `/src/components/ui/` - shadcn/ui component library (auto-generated, don't
-  edit directly)
-- `/src/integrations/supabase/` - Supabase client and types (auto-generated)
+- `/src/components/ui/` - shadcn/ui component library (auto-generated, do not edit)
+- `/src/integrations/supabase/` - Supabase client and types (auto-generated, do not edit)
+- `/src/api/` - API layer
 - `/src/lib/` - Utility functions
 - `/src/hooks/` - Custom React hooks
+- `/src/styles/` - Global styles
+- `/src/test/` - Test utilities and setup
 
 ### Key Configuration
 
 - **Path Aliases**: `@/` maps to `./src/` directory
-- **TypeScript**: Relaxed settings with no strict null checks and unused
-  parameter warnings disabled
-- **Routes**: All routes defined in `src/App.tsx` - add new routes above the
-  catch-all route
+- **TypeScript**: Relaxed settings (no strict null checks)
+- **Routes**: All routes defined in `src/App.tsx` -- add new routes above the catch-all
+- **Security Headers**: X-Content-Type-Options, X-Frame-Options, X-XSS-Protection configured in vite.config.ts
+- **Manual Chunks**: vendor-react, vendor-ui, vendor-charts, vendor-query, vendor-supabase
 
 ### Important Notes
 
-- **Brand Identity**: Recently rebranded from "Aegis AI" to "LLM Works"
-  (January 2025)
-- **Color Palette**: Analytical Blue (#4F83F0) primary, Insight Orange (#FF7A2A)
-  accent
-- **Domain Migration**: Planned migration to llmworks.dev domain
-- This is a Lovable.dev project - changes pushed to GitHub sync with the Lovable
-  platform
-- Supabase integration files in `/src/integrations/supabase/` are
-  auto-generated - do not edit directly
-- The UI components in `/src/components/ui/` follow shadcn/ui patterns - prefer
-  using existing components over creating new ones
-- Development server runs on port 8080 with IPv6 host binding (`::`)
-
-### Brand Guidelines
-
-- Use "LLM Works" for all branding (not "Aegis AI")
-- Maintain Arena/Bench product naming (core metaphors)
-- Preserve Arbiter/Verifier framework terminology
-- Copy should emphasize: evidence-first, transparency, auditability, trust
-- CTAs should be open-source friendly: "Try in Browser", "View Examples",
-  "Browse Docs"
-
-### Documentation References
-
-- Brand guidelines: `/docs/brand/LLM_WORKS_BRAND_GUIDELINES.md`
-- Implementation guide: `/docs/REBRAND_IMPLEMENTATION_GUIDE.md`
-- Domain migration: `/docs/DOMAIN_MIGRATION_GUIDE.md`
+- **Brand Identity**: Use "LLM Works" (not "Aegis AI") -- rebranded January 2025
+- **Color Palette**: Analytical Blue (#4F83F0) primary, Insight Orange (#FF7A2A) accent
+- Do not edit `src/components/ui/` -- these are shadcn/ui generated components
+- Do not edit `src/integrations/supabase/` -- these are auto-generated
+- The `pool: 'forks'` setting in vite.config.ts test config prevents Vitest from hanging -- do not switch to threads
+- Console logs and debugger statements are stripped in production builds
+- Governance: Has `AGENTS.md` from Morphism framework
