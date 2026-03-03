@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -60,6 +61,17 @@ export default defineConfig({
     },
     // Optimize chunk sizes
     chunkSizeWarningLimit: 1000,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    exclude: [
+      'node_modules',
+      'dist',
+      '**/e2e/**',
+      '**/visual/**',
+      '**/*.spec.ts',
+    ],
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
