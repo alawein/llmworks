@@ -1,9 +1,10 @@
+import { Button, Label, Slider, Switch } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 import { Settings, Palette, Eye, Moon, Sun, Monitor, Zap, Sparkles, Atom } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+
+
+
+
 
 interface ThemeSettings {
   colorScheme: 'tactical' | 'neural' | 'cyber' | 'stealth';

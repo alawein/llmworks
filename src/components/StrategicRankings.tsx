@@ -1,5 +1,6 @@
+import { Badge } from "@alawein/ui";
 import { memo } from 'react';
-import { Badge } from '@/components/ui/badge';
+
 import { Crown, TrendingUp, Award, Star } from 'lucide-react';
 
 interface RankingItem {

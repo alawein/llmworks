@@ -1,9 +1,10 @@
+import { Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
+
 import {
   AlertTriangle,
   CheckCircle,
@@ -33,7 +34,7 @@ import {
   WifiOff,
   CloudOff,
 } from 'lucide-react';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { trackEvent } from '@/lib/analytics';
 

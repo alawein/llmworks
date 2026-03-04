@@ -1,7 +1,8 @@
+import { Badge, Dialog, DialogContent, Input } from "@alawein/ui";
 import React, { memo, useState, useEffect, useRef, useMemo } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+
+
+
 import {
   Search,
   Zap,

@@ -1,3 +1,4 @@
+import { Badge, Button } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 import {
   Monitor,
@@ -14,8 +15,8 @@ import {
   Palette,
   Zap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+
+
 
 interface PortfolioPresentationProps {
   className?: string;

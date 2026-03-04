@@ -1,27 +1,12 @@
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+
+
+
+
+
+
+
 import {
   Play,
   Pause,
@@ -44,7 +29,7 @@ import {
   Filter,
   Calendar,
 } from 'lucide-react';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { trackEvent } from '@/lib/analytics';
 

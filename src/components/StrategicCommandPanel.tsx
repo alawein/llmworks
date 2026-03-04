@@ -1,10 +1,11 @@
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import { memo, useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
+
+
 import {
   Terminal,
   Settings,

@@ -1,8 +1,9 @@
+import { Badge, Button, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import { memo, useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
 import {
   Activity,
   Zap,

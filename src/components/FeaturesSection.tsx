@@ -1,6 +1,7 @@
+import { Badge, Card } from "@alawein/ui";
 import React, { memo, useRef, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+
+
 import { Swords, Users, TrendingUp, Zap, Eye, Trophy, LucideIcon } from 'lucide-react';
 
 interface Feature {

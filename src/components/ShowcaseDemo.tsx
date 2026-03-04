@@ -1,3 +1,4 @@
+import { Button } from "@alawein/ui";
 import { memo, useState, useEffect, useRef } from 'react';
 import {
   Play,
@@ -11,7 +12,7 @@ import {
   Target,
   Star,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+
 import { useNotifications } from '@/components/FloatingNotifications';
 import { useKeyboard } from '@/components/KeyboardShortcuts';
 

@@ -1,3 +1,10 @@
+---
+type: guide
+authority: canonical
+audience: [ai-agents, contributors]
+last-verified: 2026-03-03
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with
@@ -97,3 +104,6 @@ benchmarking.
 - The `pool: 'forks'` setting in vite.config.ts test config prevents Vitest from hanging -- do not switch to threads
 - Console logs and debugger statements are stripped in production builds
 - Governance: Has `AGENTS.md` from Morphism framework
+
+## Governance
+See [AGENTS.md](AGENTS.md) for rules. See [SSOT.md](SSOT.md) for current state.

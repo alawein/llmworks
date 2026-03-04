@@ -1,6 +1,7 @@
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+
+
+
+import { Badge, Card, Progress } from "@alawein/ui";
 import { Activity } from 'lucide-react';
 import type { ActiveEvaluation } from './types';
 

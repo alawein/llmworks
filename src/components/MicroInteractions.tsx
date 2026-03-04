@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@alawein/ui';
 
 interface RippleEffectProps {
   children: React.ReactNode;

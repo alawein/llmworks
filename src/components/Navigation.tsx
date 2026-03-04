@@ -1,7 +1,8 @@
+import { Badge, Button } from "@alawein/ui";
 import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+
+
 import { Swords, Zap, BarChart3, Settings, Github, Menu, X, Keyboard, Command } from 'lucide-react';
 import { KeyboardShortcutsModal } from '@/components/accessibility/KeyboardShortcutsModal';
 import { trackEvent } from '@/lib/analytics';

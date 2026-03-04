@@ -1,10 +1,11 @@
+import { Badge, Button, Skeleton } from "@alawein/ui";
 import { memo, Suspense, lazy, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+
+
 import { Swords, Zap, BarChart3, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '@/lib/analytics';
-import { Skeleton } from '@/components/ui/skeleton';
+
 import { AIBattleAnimation } from '@/components/AIBattleAnimation';
 
 const LazyBenchmarkPanel = lazy(() =>

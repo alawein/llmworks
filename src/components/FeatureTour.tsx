@@ -1,3 +1,4 @@
+import { Button } from "@alawein/ui";
 import { memo, useState, useEffect, useRef, ReactNode } from 'react';
 import {
   X,
@@ -10,7 +11,7 @@ import {
   Target,
   CheckCircle,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+
 import { useKeyboard } from '@/components/KeyboardShortcuts';
 
 interface TourStep {

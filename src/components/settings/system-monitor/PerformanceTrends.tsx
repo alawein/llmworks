@@ -1,5 +1,6 @@
-import { Card } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+
+
+import { Card, ChartContainer, ChartTooltip, ChartTooltipContent } from "@alawein/ui";
 import { LineChart, Line, XAxis, YAxis, AreaChart, Area } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, Clock, Zap } from 'lucide-react';
 

@@ -1,7 +1,8 @@
+import { Card } from "@alawein/ui";
 import { memo } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
-import { Card } from '@/components/ui/card';
+
 
 const PrivacyPage = () => {
   return (
