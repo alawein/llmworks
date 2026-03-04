@@ -1,8 +1,9 @@
+import { Badge, Button, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useEffect, useState, Suspense, lazy, memo } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
 import { Navigation } from '@/components/Navigation';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import {

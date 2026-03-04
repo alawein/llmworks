@@ -1,5 +1,6 @@
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+
+
+import { Badge, Card } from "@malawein/ui";
 import { Server, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import type { SystemStatus } from './types';
 

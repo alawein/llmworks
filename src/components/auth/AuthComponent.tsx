@@ -1,8 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
+
+import { Button, Card, Input, Label, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useAuth } from '@/hooks/useAuth';
 import { useState } from 'react';
 import { Shield, Mail, Lock, User, LogOut } from 'lucide-react';

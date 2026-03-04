@@ -1,3 +1,4 @@
+import { Button } from "@malawein/ui";
 import { memo, useState, useEffect, useReducer } from 'react';
 import { AIPersonalityAvatar, type AIPersonality, type BattleState } from './AIPersonalityAvatar';
 import { EpicConfrontationMoments } from './EpicConfrontationMoments';
@@ -7,7 +8,7 @@ import { EnvironmentalEffects } from './EnvironmentalEffects';
 import { ModelEnergySignatures } from './ModelEnergySignatures';
 import { CitationTracker } from './CitationTracker';
 import { PlayCircle, PauseCircle, Settings, Volume2, VolumeX, Eye, EyeOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+
 
 interface Debater {
   id: string;

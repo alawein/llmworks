@@ -1,3 +1,4 @@
+import { Badge, Button } from "@malawein/ui";
 import { memo, useState, useEffect } from 'react';
 import {
   Play,
@@ -11,8 +12,8 @@ import {
   MessageSquare,
   Target,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+
+
 import { type AIPersonality } from './AIPersonalityAvatar';
 
 interface DemoScenario {

@@ -1,15 +1,10 @@
+import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@malawein/ui";
 import { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
+
+
+
+
 import { Lightbulb, Play, RotateCcw, Palette, Target, Sparkles } from 'lucide-react';
 
 interface CreativeOutput {

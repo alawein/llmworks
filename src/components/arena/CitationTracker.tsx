@@ -1,3 +1,4 @@
+import { Badge } from "@malawein/ui";
 import { memo, useState, useEffect, useMemo } from 'react';
 import {
   CheckCircle,
@@ -8,7 +9,7 @@ import {
   Search,
   Shield,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+
 
 interface Citation {
   id: string;

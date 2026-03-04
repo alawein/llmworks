@@ -1,5 +1,6 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useEffect, useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import { Navigation } from '@/components/Navigation';
 import { SettingsPage } from '@/components/settings/SettingsPage';
 import { ModelManager } from '@/components/settings/ModelManager';

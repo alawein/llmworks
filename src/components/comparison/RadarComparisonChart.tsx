@@ -1,5 +1,6 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@malawein/ui";
 import { useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 import {
   ResponsiveContainer,
   RadarChart,
