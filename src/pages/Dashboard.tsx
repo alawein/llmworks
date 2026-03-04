@@ -1,3 +1,4 @@
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useEffect } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Dashboard } from '@/components/Dashboard';
@@ -6,8 +7,8 @@ import { ModelManagementDashboard } from '@/components/dashboard/ModelManagement
 import { EvaluationMonitoringDashboard } from '@/components/dashboard/EvaluationMonitoringDashboard';
 import { CostTrackingDashboard } from '@/components/dashboard/CostTrackingDashboard';
 import { SystemHealthDashboard } from '@/components/dashboard/SystemHealthDashboard';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
 import { Home, BarChart3, Activity, Brain, Play, DollarSign, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { setSEO, injectJsonLd } from '@/lib/seo';

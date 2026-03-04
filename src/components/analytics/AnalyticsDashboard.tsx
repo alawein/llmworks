@@ -1,7 +1,8 @@
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+
+
+
+
+import { Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { LineChart, Line, XAxis, YAxis, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { Download, Eye, TrendingUp, Users, Activity, Clock } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';

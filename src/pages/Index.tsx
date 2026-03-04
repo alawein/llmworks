@@ -1,3 +1,4 @@
+import { Button } from "@malawein/ui";
 import { memo, useEffect, useState } from 'react';
 import { HeroSection } from '@/components/HeroSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
@@ -14,7 +15,7 @@ import { PortfolioPresentation } from '@/components/PortfolioPresentation';
 import { PixelBattleScene } from '@/components/PixelBattleScene';
 import { DynamicLeaderboard } from '@/components/DynamicLeaderboard';
 import { AchievementSystem } from '@/components/AchievementSystem';
-import { Button } from '@/components/ui/button';
+
 import { BarChart3, Zap, Activity, Terminal, FileText, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { setSEO, injectJsonLd } from '@/lib/seo';

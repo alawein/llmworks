@@ -1,7 +1,8 @@
+import { Button, Card } from "@malawein/ui";
 import { useLocation, Link } from 'react-router-dom';
 import { useEffect, memo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+
+
 import { Home, ArrowLeft } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import { trackEvent } from '@/lib/analytics';

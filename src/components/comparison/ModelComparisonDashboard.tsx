@@ -1,8 +1,9 @@
+import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useState, useMemo, useCallback } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+
+
+
 import { Download, Share2, RotateCcw, Plus, Trash2 } from 'lucide-react';
 import { ModelSelector } from './ModelSelector';
 import { RadarComparisonChart } from './RadarComparisonChart';

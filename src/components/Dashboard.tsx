@@ -1,7 +1,8 @@
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+
+
+
+
+import { Badge, Button, Card, Skeleton } from "@malawein/ui";
 import {
   BarChart3,
   Swords,

@@ -52,3 +52,5 @@ Arbiter evaluation framework, and dynamic Elo rankings.
 - Hooks: `use*.ts`
 - Utilities: `camelCase.ts`
 - Path alias: `@/` maps to `./src/`
+
+See [CLAUDE.md](CLAUDE.md) | [SSOT.md](SSOT.md)

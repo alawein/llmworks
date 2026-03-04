@@ -1,7 +1,8 @@
+import { Badge } from "@malawein/ui";
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Swords, Github, Shield, ExternalLink } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+
 
 const FooterComponent = () => {
   const currentYear = new Date().getFullYear();
