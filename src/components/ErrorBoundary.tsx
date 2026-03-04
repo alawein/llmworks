@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@alawein/ui";
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@malawein/ui";
 import React from 'react';
 
 

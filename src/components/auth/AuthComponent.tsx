@@ -3,7 +3,7 @@
 
 
 
-import { Button, Card, Input, Label, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { Button, Card, Input, Label, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useAuth } from '@/hooks/useAuth';
 import { useState } from 'react';
 import { Shield, Mail, Lock, User, LogOut } from 'lucide-react';

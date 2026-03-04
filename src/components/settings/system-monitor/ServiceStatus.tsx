@@ -1,6 +1,6 @@
 
 
-import { Badge, Card } from "@alawein/ui";
+import { Badge, Card } from "@malawein/ui";
 import { Server, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import type { SystemStatus } from './types';
 

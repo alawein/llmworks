@@ -1,6 +1,6 @@
 
 
-import { Card, ChartContainer, ChartTooltip, ChartTooltipContent } from "@alawein/ui";
+import { Card, ChartContainer, ChartTooltip, ChartTooltipContent } from "@malawein/ui";
 import { LineChart, Line, XAxis, YAxis, AreaChart, Area } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, Clock, Zap } from 'lucide-react';
 

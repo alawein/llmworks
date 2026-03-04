@@ -1,4 +1,4 @@
-import { Badge, Dialog, DialogContent, Input } from "@alawein/ui";
+import { Badge, Dialog, DialogContent, Input } from "@malawein/ui";
 import React, { memo, useState, useEffect, useRef, useMemo } from 'react';
 
 

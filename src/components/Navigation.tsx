@@ -1,4 +1,4 @@
-import { Badge, Button } from "@alawein/ui";
+import { Badge, Button } from "@malawein/ui";
 import { memo, useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 

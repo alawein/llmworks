@@ -2,7 +2,7 @@
 
 
 
-import { Badge, Button, Card, Skeleton } from "@alawein/ui";
+import { Badge, Button, Card, Skeleton } from "@malawein/ui";
 import {
   BarChart3,
   Swords,

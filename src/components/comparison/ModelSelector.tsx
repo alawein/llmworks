@@ -1,10 +1,10 @@
-import { Button, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, Popover, PopoverContent, PopoverTrigger } from "@alawein/ui";
+import { Button, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, Popover, PopoverContent, PopoverTrigger } from "@malawein/ui";
 import { useState } from 'react';
 
 
 
 import { Plus, Check } from 'lucide-react';
-import { cn } from '@alawein/ui';
+import { cn } from '@malawein/ui';
 import type { ModelData } from './ModelComparisonDashboard';
 
 interface ModelSelectorProps {

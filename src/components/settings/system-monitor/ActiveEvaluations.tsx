@@ -1,7 +1,7 @@
 
 
 
-import { Badge, Card, Progress } from "@alawein/ui";
+import { Badge, Card, Progress } from "@malawein/ui";
 import { Activity } from 'lucide-react';
 import type { ActiveEvaluation } from './types';
 

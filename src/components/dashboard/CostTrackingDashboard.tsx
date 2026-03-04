@@ -1,4 +1,4 @@
-import { Badge, Button, Calendar, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Popover, PopoverContent, PopoverTrigger, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { Badge, Button, Calendar, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Popover, PopoverContent, PopoverTrigger, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import React, { useState, useEffect } from 'react';
 
 

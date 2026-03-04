@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
 import { useEffect, useState } from 'react';
 
 import { Navigation } from '@/components/Navigation';

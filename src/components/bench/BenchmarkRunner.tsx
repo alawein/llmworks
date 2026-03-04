@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
+import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@malawein/ui";
 import { useState } from 'react';
 
 

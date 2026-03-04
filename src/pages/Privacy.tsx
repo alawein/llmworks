@@ -1,4 +1,4 @@
-import { Card } from "@alawein/ui";
+import { Card } from "@malawein/ui";
 import { memo } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
