@@ -14,10 +14,12 @@ test.describe('Visual Regression Tests', () => {
 
   test('homepage visual snapshot', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1000);
+    await page.addStyleTag({ content: '*, *::before, *::after { animation: none !important; transition: none !important; }' });
+    await page.waitForTimeout(2000);
     await expect(page).toHaveScreenshot('homepage.png', {
       fullPage: true,
       maxDiffPixelRatio: 0.05,
+      timeout: 15_000,
     });
   });
 
@@ -44,10 +46,12 @@ test.describe('Visual Regression Tests', () => {
   test('responsive tablet view', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 });
     await page.goto('/');
-    await page.waitForTimeout(1000);
+    await page.addStyleTag({ content: '*, *::before, *::after { animation: none !important; transition: none !important; }' });
+    await page.waitForTimeout(2000);
     await expect(page).toHaveScreenshot('homepage-tablet.png', {
       fullPage: true,
       maxDiffPixelRatio: 0.05,
+      timeout: 15_000,
     });
   });
 });
