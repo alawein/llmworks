@@ -481,8 +481,8 @@ const TechnicalSpecsDrawerComponent = () => {
 
                 {expandedSections.includes(category.category) && (
                   <div className="mt-3 space-y-3 pl-4">
-                    {category.specs.map((spec, specIndex) => (
-                      <Card key={specIndex} className="glass-minimal border-border/20">
+                    {category.specs.map((spec) => (
+                      <Card key={spec.label} className="glass-minimal border-border/20">
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-3">
@@ -514,9 +514,9 @@ const TechnicalSpecsDrawerComponent = () => {
             </div>
 
             <div className="space-y-3">
-              {apiEndpoints.map((endpoint, index) => (
+              {apiEndpoints.map((endpoint) => (
                 <Card
-                  key={index}
+                  key={`${endpoint.method}-${endpoint.path}`}
                   className="glass-subtle border-border/20 hover:shadow-md transition-all duration-300"
                 >
                   <CardContent className="p-4">
@@ -541,8 +541,8 @@ const TechnicalSpecsDrawerComponent = () => {
                       <div className="mb-2">
                         <div className="text-xs text-muted-foreground mb-1">Parameters:</div>
                         <div className="flex flex-wrap gap-2">
-                          {endpoint.parameters.map((param, paramIndex) => (
-                            <Badge key={paramIndex} variant="outline" className="text-xs font-mono">
+                          {endpoint.parameters.map((param) => (
+                            <Badge key={param} variant="outline" className="text-xs font-mono">
                               {param}
                             </Badge>
                           ))}
@@ -584,8 +584,8 @@ const TechnicalSpecsDrawerComponent = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    {layer.components.map((component, componentIndex) => (
-                      <div key={componentIndex} className="glass-minimal p-3 rounded-lg">
+                    {layer.components.map((component) => (
+                      <div key={component.name} className="glass-minimal p-3 rounded-lg">
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-3">
                             <Badge className={getStatusColor(component.status)}>
@@ -620,8 +620,8 @@ const TechnicalSpecsDrawerComponent = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {securitySpecs.map((spec, index) => (
-                <Card key={index} className="glass-subtle border-border/20">
+              {securitySpecs.map((spec) => (
+                <Card key={spec.feature} className="glass-subtle border-border/20">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
@@ -644,8 +644,8 @@ const TechnicalSpecsDrawerComponent = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {performanceMetrics.map((metric, index) => (
-                <Card key={index} className="glass-subtle border-border/20">
+              {performanceMetrics.map((metric) => (
+                <Card key={metric.metric} className="glass-subtle border-border/20">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium">{metric.metric}</span>

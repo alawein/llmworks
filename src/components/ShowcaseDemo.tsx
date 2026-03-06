@@ -474,9 +474,9 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
               {/* Step Navigation */}
               <div className="flex justify-between items-center">
                 <div className="flex gap-1">
-                  {showcaseSteps.map((_, index) => (
+                  {showcaseSteps.map((step, index) => (
                     <button
-                      key={index}
+                      key={step.id}
                       onClick={() => setCurrentStep(index)}
                       className={`w-2 h-2 rounded-full transition-colors ${
                         index === currentStep

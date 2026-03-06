@@ -306,9 +306,9 @@ const ThemeCustomizerComponent = ({
                     </div>
                     <p className="text-xs text-muted-foreground mb-3">{scheme.description}</p>
                     <div className="flex gap-2">
-                      {Object.values(scheme.colors).map((color, index) => (
+                      {Object.values(scheme.colors).map((color) => (
                         <div
-                          key={index}
+                          key={color}
                           className="w-4 h-4 rounded-full border border-white/20"
                           style={{ backgroundColor: color }}
                         />

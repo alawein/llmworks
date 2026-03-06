@@ -224,9 +224,9 @@ const Bench = memo(() => {
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-foreground mb-8">Evaluation Metrics</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {metrics.map((metric, index) => (
+            {metrics.map((metric) => (
               <Card
-                key={index}
+                key={metric.label}
                 className="p-6 text-center shadow-medium hover:shadow-strong transition-all duration-300"
               >
                 <metric.icon className="h-8 w-8 text-accent mx-auto mb-4" />

@@ -196,8 +196,8 @@ const XPProgressionSystemComponent = () => {
               Commander Perks
             </h4>
             <div className="flex flex-wrap gap-1">
-              {playerLevel.perks.map((perk, index) => (
-                <Badge key={index} variant="outline" className="text-xs glass-minimal">
+              {playerLevel.perks.map((perk) => (
+                <Badge key={perk} variant="outline" className="text-xs glass-minimal">
                   {perk}
                 </Badge>
               ))}

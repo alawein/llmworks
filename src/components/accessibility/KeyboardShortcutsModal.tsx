@@ -145,15 +145,15 @@ export const KeyboardShortcutsModal = memo(({ trigger }: KeyboardShortcutsModalP
               <div className="grid gap-3">
                 {shortcuts
                   .filter((shortcut) => shortcut.category === category)
-                  .map((shortcut, index) => (
+                  .map((shortcut) => (
                     <div
-                      key={index}
+                      key={`${shortcut.category}-${shortcut.description}`}
                       className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors"
                     >
                       <span className="text-sm text-foreground flex-1">{shortcut.description}</span>
                       <div className="flex items-center gap-1">
                         {shortcut.keys.map((key, keyIndex) => (
-                          <span key={keyIndex} className="flex items-center gap-1">
+                          <span key={`${shortcut.description}-${key}`} className="flex items-center gap-1">
                             {keyIndex > 0 && (
                               <span className="text-xs text-muted-foreground">+</span>
                             )}

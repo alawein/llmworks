@@ -202,9 +202,9 @@ export const ExplanationChallenge = () => {
             className="min-h-[80px]"
           />
           <div className="flex flex-wrap gap-2 mt-2">
-            {complexTopics.map((suggestion, index) => (
+            {complexTopics.map((suggestion) => (
               <Button
-                key={index}
+                key={suggestion}
                 variant="outline"
                 size="sm"
                 onClick={() => setTopic(suggestion)}

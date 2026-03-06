@@ -188,9 +188,9 @@ const Dashboard = memo(() => {
                 </div>
               </Card>
             ))
-          : stats.map((stat, index) => (
+          : stats.map((stat) => (
               <Card
-                key={index}
+                key={stat.label}
                 className={`
               group p-6 border-border/50 bg-card/60 backdrop-blur-sm
               transition-all duration-300 hover:shadow-trust hover:-translate-y-1
@@ -235,9 +235,9 @@ const Dashboard = memo(() => {
             ? Array.from({ length: 4 }).map((_, index) => (
                 <Skeleton key={index} className="h-24 rounded-lg" />
               ))
-            : quickActions.map((action, index) => (
+            : quickActions.map((action) => (
                 <Button
-                  key={index}
+                  key={action.action}
                   variant="outline"
                   size="lg"
                   asChild
@@ -321,8 +321,8 @@ const Dashboard = memo(() => {
                 { model: 'Claude 3.5 Sonnet', score: 89.7, trend: '+1.8%' },
                 { model: 'Gemini 1.5 Pro', score: 87.4, trend: '+0.9%' },
                 { model: 'Llama 3.1 70B', score: 84.2, trend: '-0.3%' },
-              ].map((performer, index) => (
-                <div key={index} className="flex items-center justify-between">
+              ].map((performer) => (
+                <div key={performer.model} className="flex items-center justify-between">
                   <div>
                     <div className="font-medium text-foreground">{performer.model}</div>
                     <div className="text-sm text-muted-foreground">{performer.score}% avg</div>

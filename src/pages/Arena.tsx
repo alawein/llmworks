@@ -170,8 +170,8 @@ const Arena = memo(() => {
                     <p className="text-muted-foreground mb-6 flex-grow">{mode.description}</p>
 
                     <div className="space-y-3 mb-6">
-                      {mode.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-2">
+                      {mode.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent"></div>
                           <span className="text-sm text-muted-foreground">{feature}</span>
                         </div>

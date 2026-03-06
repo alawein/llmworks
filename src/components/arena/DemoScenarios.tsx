@@ -360,8 +360,8 @@ const DemoScenariosComponent = ({
               {/* Expected Highlights */}
               <div className="space-y-1">
                 <div className="text-xs text-muted-foreground">Epic Moments:</div>
-                {scenario.expectedHighlights.slice(0, 2).map((highlight, index) => (
-                  <div key={index} className="flex items-center gap-1 text-xs">
+                {scenario.expectedHighlights.slice(0, 2).map((highlight) => (
+                  <div key={highlight} className="flex items-center gap-1 text-xs">
                     <Trophy className="h-3 w-3 text-yellow-500" />
                     <span className="text-muted-foreground truncate">{highlight}</span>
                   </div>
@@ -457,8 +457,8 @@ const DemoScenariosComponent = ({
             <div className="space-y-3">
               <div>
                 <div className="text-sm font-medium mb-2">Left Combatant Strengths</div>
-                {selectedScenario.participants.left.strengths.map((strength, index) => (
-                  <Badge key={index} variant="outline" className="mr-2 mb-2">
+                {selectedScenario.participants.left.strengths.map((strength) => (
+                  <Badge key={strength} variant="outline" className="mr-2 mb-2">
                     {strength}
                   </Badge>
                 ))}
@@ -467,8 +467,8 @@ const DemoScenariosComponent = ({
             <div className="space-y-3">
               <div>
                 <div className="text-sm font-medium mb-2">Right Combatant Strengths</div>
-                {selectedScenario.participants.right.strengths.map((strength, index) => (
-                  <Badge key={index} variant="outline" className="mr-2 mb-2">
+                {selectedScenario.participants.right.strengths.map((strength) => (
+                  <Badge key={strength} variant="outline" className="mr-2 mb-2">
                     {strength}
                   </Badge>
                 ))}
@@ -480,8 +480,8 @@ const DemoScenariosComponent = ({
           <div className="mt-4 pt-4 border-t border-primary/20">
             <div className="text-sm font-medium mb-2">What to Watch For</div>
             <div className="grid md:grid-cols-2 gap-2">
-              {selectedScenario.expectedHighlights.map((highlight, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm">
+              {selectedScenario.expectedHighlights.map((highlight) => (
+                <div key={highlight} className="flex items-center gap-2 text-sm">
                   <Trophy className="h-4 w-4 text-yellow-500" />
                   <span className="text-muted-foreground">{highlight}</span>
                 </div>

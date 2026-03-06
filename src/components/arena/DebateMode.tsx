@@ -145,9 +145,9 @@ export const DebateMode = () => {
             className="min-h-[80px]"
           />
           <div className="flex flex-wrap gap-2 mt-2">
-            {mockDebateTopics.map((suggestion, index) => (
+            {mockDebateTopics.map((suggestion) => (
               <Button
-                key={index}
+                key={suggestion}
                 variant="outline"
                 size="sm"
                 onClick={() => setTopic(suggestion)}

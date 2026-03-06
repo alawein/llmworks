@@ -60,8 +60,8 @@ export const PerformanceTrends = () => {
     <div className="space-y-6">
       {/* Metrics Summary */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((metric, index) => (
-          <Card key={index} className="p-4">
+        {metrics.map((metric) => (
+          <Card key={metric.title} className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">{metric.title}</p>

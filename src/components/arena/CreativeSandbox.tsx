@@ -254,9 +254,9 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
             className="min-h-[80px]"
           />
           <div className="flex flex-wrap gap-2 mt-2">
-            {creativeTasks.map((suggestion, index) => (
+            {creativeTasks.map((suggestion) => (
               <Button
-                key={index}
+                key={suggestion}
                 variant="outline"
                 size="sm"
                 onClick={() => setTask(suggestion)}

@@ -56,8 +56,8 @@ export function AnalyticsDashboard() {
     <div className="space-y-6">
       {/* Metrics Overview */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((metric, index) => (
-          <Card key={index} className="p-4">
+        {metrics.map((metric) => (
+          <Card key={metric.label} className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">{metric.label}</p>
@@ -118,8 +118,8 @@ export function AnalyticsDashboard() {
               <ChartContainer config={chartConfig} className="h-[300px]">
                 <PieChart>
                   <Pie data={eventData} cx="50%" cy="50%" outerRadius={80} dataKey="value">
-                    {eventData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    {eventData.map((entry) => (
+                      <Cell key={entry.name} fill={entry.color} />
                     ))}
                   </Pie>
                   <ChartTooltip content={<ChartTooltipContent />} />

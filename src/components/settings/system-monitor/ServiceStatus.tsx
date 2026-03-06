@@ -43,12 +43,12 @@ export const ServiceStatus = ({ systemStatus }: ServiceStatusProps) => {
       </div>
 
       <div className="space-y-3">
-        {systemStatus.map((service, index) => {
+        {systemStatus.map((service) => {
           const StatusIcon = getStatusIcon(service.status);
 
           return (
             <div
-              key={index}
+              key={service.service}
               className="flex items-center justify-between p-4 rounded-lg border border-border"
             >
               <div className="flex items-center gap-3">

@@ -281,8 +281,8 @@ const PortfolioPresentationComponent = ({
           <div className="space-y-8">
             <h2 className="heading-display text-4xl text-center mb-12">Core Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {portfolioData.features.map((feature, index) => (
-                <div key={index} className="glass-panel p-6 space-y-4">
+              {portfolioData.features.map((feature) => (
+                <div key={feature.title} className="glass-panel p-6 space-y-4">
                   <div className="flex items-center gap-3">
                     <Badge variant="outline" className="text-xs">
                       {feature.category}
@@ -291,8 +291,8 @@ const PortfolioPresentationComponent = ({
                   </div>
                   <p className="text-muted-foreground">{feature.description}</p>
                   <ul className="space-y-2">
-                    {feature.highlights.map((highlight, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm">
+                    {feature.highlights.map((highlight) => (
+                      <li key={highlight} className="flex items-center gap-2 text-sm">
                         <Zap className="h-4 w-4 text-primary" />
                         {highlight}
                       </li>
@@ -309,9 +309,9 @@ const PortfolioPresentationComponent = ({
           <div className="space-y-8">
             <h2 className="heading-display text-4xl text-center mb-12">Technology Stack</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {portfolioData.technologies.map((tech, index) => (
+              {portfolioData.technologies.map((tech) => (
                 <div
-                  key={index}
+                  key={tech.name}
                   className="glass-minimal p-6 text-center space-y-3 hover:bg-muted/10 transition-colors"
                 >
                   <div className="text-4xl">{tech.icon}</div>
@@ -367,8 +367,8 @@ const PortfolioPresentationComponent = ({
               <div className="glass-panel p-6 space-y-4">
                 <h3 className="heading-refined text-xl">Typography System</h3>
                 <div className="space-y-4">
-                  {portfolioData.designSystem.typography.map((type, index) => (
-                    <div key={index} className="border-l-2 border-primary/30 pl-4">
+                  {portfolioData.designSystem.typography.map((type) => (
+                    <div key={type.name} className="border-l-2 border-primary/30 pl-4">
                       <div className="font-semibold">{type.name}</div>
                       <div className="text-sm text-muted-foreground">
                         {type.usage} • Weight {type.weight}
@@ -383,8 +383,8 @@ const PortfolioPresentationComponent = ({
             <div className="glass-panel p-6">
               <h3 className="heading-refined text-xl mb-4">Component Library</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {portfolioData.designSystem.components.map((component, index) => (
-                  <div key={index} className="glass-minimal p-3 text-center text-sm">
+                {portfolioData.designSystem.components.map((component) => (
+                  <div key={component} className="glass-minimal p-3 text-center text-sm">
                     {component}
                   </div>
                 ))}
@@ -398,8 +398,8 @@ const PortfolioPresentationComponent = ({
           <div className="space-y-8">
             <h2 className="heading-display text-4xl text-center mb-12">Project Impact</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {portfolioData.achievements.map((achievement, index) => (
-                <div key={index} className="glass-panel p-6 text-center space-y-3">
+              {portfolioData.achievements.map((achievement) => (
+                <div key={achievement.label} className="glass-panel p-6 text-center space-y-3">
                   <div className="heading-display text-4xl text-primary">{achievement.metric}</div>
                   <div className="font-semibold">{achievement.label}</div>
                   <div className="text-sm text-muted-foreground">{achievement.description}</div>
@@ -550,9 +550,9 @@ const PortfolioPresentationComponent = ({
           </Button>
 
           <div className="flex gap-2">
-            {slides.map((_, index) => (
+            {slides.map((slide, index) => (
               <button
-                key={index}
+                key={slide.id}
                 onClick={() => setCurrentSlide(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
                   index === currentSlide ? 'bg-primary' : 'bg-muted/30'
