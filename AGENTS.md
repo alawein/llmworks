@@ -49,8 +49,15 @@ Arbiter evaluation framework, and dynamic Elo rankings.
 ## Naming Conventions
 
 - Components: `PascalCase.tsx`
-- Hooks: `use*.ts`
+- Hooks: `useCamelCase.ts` (exception: shadcn-generated `use-toast.ts`, `use-mobile.tsx`)
 - Utilities: `camelCase.ts`
 - Path alias: `@/` maps to `./src/`
+- Tests: `*.test.ts` (unit), `*.spec.ts` (E2E)
+
+## Style Tooling
+
+- ESLint: `@malawein/eslint-config/react-vite` (see `eslint.config.js`)
+- Prettier: `@malawein/prettier-config` (see `package.json` "prettier" key)
+- Run `npm run lint` and `npm run format:check` before proposing changes
 
 See [CLAUDE.md](CLAUDE.md) | [SSOT.md](SSOT.md)
