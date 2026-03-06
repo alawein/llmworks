@@ -41,6 +41,7 @@
     "test:watch": "vitest",
     "type-check": "tsc --noEmit"
   },
+  "prettier": "@malawein/prettier-config",
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@malawein/ui": "0.1.0",
