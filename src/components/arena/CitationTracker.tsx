@@ -1,4 +1,4 @@
-import { Badge } from "@malawein/ui";
+import { Badge } from "@alawein/ui";
 import { memo, useState, useEffect, useMemo } from 'react';
 import {
   CheckCircle,

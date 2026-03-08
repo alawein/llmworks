@@ -1,4 +1,4 @@
-import { Button } from "@malawein/ui";
+import { Button } from "@alawein/ui";
 import { memo, useState, useEffect, useRef } from 'react';
 import {
   Play,

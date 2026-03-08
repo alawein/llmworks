@@ -1,4 +1,4 @@
-import { Badge } from "@malawein/ui";
+import { Badge } from "@alawein/ui";
 import { memo } from 'react';
 
 import { Crown, TrendingUp, Award, Star } from 'lucide-react';

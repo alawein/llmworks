@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, useRef } from 'react';
-import { cn } from '@malawein/ui';
+import { cn } from '@alawein/ui';
 
 interface RippleEffectProps {
   children: React.ReactNode;
@@ -45,8 +45,23 @@ export const RippleEffect = memo(
       }, duration);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key !== 'Enter' && e.key !== ' ') {
+        return;
+      }
+
+      e.preventDefault();
+      handleClick(e as unknown as React.MouseEvent<HTMLDivElement>);
+    };
+
     return (
-      <div className={cn('relative overflow-hidden', className)} onClick={handleClick}>
+      <div
+        className={cn('relative overflow-hidden', className)}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+      >
         {children}
         {ripples.map((ripple) => (
           <span

@@ -1,4 +1,4 @@
-import { Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
+import { Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import React, { useState, useEffect } from 'react';
 
 

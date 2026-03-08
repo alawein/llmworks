@@ -1,4 +1,4 @@
-import { Button } from "@malawein/ui";
+import { Button } from "@alawein/ui";
 import { memo, useState, useEffect, useReducer } from 'react';
 import { AIPersonalityAvatar, type AIPersonality, type BattleState } from './AIPersonalityAvatar';
 import { EpicConfrontationMoments } from './EpicConfrontationMoments';

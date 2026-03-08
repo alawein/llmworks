@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Separator } from "@malawein/ui";
+import { Badge, Button, Card, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, Separator } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 
 

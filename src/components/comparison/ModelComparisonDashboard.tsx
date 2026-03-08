@@ -1,4 +1,4 @@
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
+import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import { useState, useMemo, useCallback } from 'react';
 
 

@@ -1,4 +1,4 @@
-import { Button, Card } from "@malawein/ui";
+import { Button, Card } from "@alawein/ui";
 import { useLocation, Link } from 'react-router-dom';
 import { useEffect, memo } from 'react';
 

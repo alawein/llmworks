@@ -1,4 +1,4 @@
-import { Badge } from "@malawein/ui";
+import { Badge } from "@alawein/ui";
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Swords, Github, Shield, ExternalLink } from 'lucide-react';

@@ -1,10 +1,10 @@
-import { Badge, Card, CardContent, CardHeader, CardTitle, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@malawein/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@alawein/ui";
 import { useMemo } from 'react';
 
 
 
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
-import { cn } from '@malawein/ui';
+import { cn } from '@alawein/ui';
 import type { ModelData } from './ModelComparisonDashboard';
 
 interface ComparisonTableProps {

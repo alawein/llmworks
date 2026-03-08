@@ -1,6 +1,6 @@
 
 
-import { Card, Progress } from "@malawein/ui";
+import { Card, Progress } from "@alawein/ui";
 import { Activity, Users, Zap, BarChart3 } from 'lucide-react';
 import type { Metrics } from './types';
 

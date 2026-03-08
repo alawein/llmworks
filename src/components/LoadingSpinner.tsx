@@ -1,4 +1,4 @@
-import { cn } from '@malawein/ui';
+import { cn } from '@alawein/ui';
 import { Swords, Zap, BarChart3 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 

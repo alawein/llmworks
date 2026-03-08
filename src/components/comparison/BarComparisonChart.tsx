@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@malawein/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@alawein/ui";
 import { useMemo } from 'react';
 
 import {

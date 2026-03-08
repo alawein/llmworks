@@ -1,4 +1,4 @@
-import { Button, Label, Slider, Switch } from "@malawein/ui";
+import { Button, Label, Slider, Switch } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 import { Settings, Palette, Eye, Moon, Sun, Monitor, Zap, Sparkles, Atom } from 'lucide-react';
 

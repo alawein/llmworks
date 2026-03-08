@@ -1,4 +1,4 @@
-import { Button, Card, Label, Separator, Switch } from "@malawein/ui";
+import { Button, Card, Label, Separator, Switch } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 
 

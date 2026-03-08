@@ -312,7 +312,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   if (event.action === 'explore') {
-    event.waitUntil(clients.openWindow('/'));
+    event.waitUntil(self.clients.openWindow('/'));
   }
 });
 

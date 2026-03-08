@@ -1,4 +1,4 @@
-import { Badge, Card } from "@malawein/ui";
+import { Badge, Card } from "@alawein/ui";
 import React, { memo, useRef, useEffect } from 'react';
 
 

@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Slider, Textarea } from "@malawein/ui";
+import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Slider, Textarea } from "@alawein/ui";
 import { useState } from 'react';
 
 
@@ -121,7 +121,7 @@ export const ExplanationChallenge = () => {
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Expert Model</label>
+            <div className="text-sm font-medium text-foreground mb-2">Expert Model</div>
             <Select value={expertModel} onValueChange={setExpertModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select expert model" />
@@ -137,7 +137,7 @@ export const ExplanationChallenge = () => {
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Student Model</label>
+            <div className="text-sm font-medium text-foreground mb-2">Student Model</div>
             <Select value={studentModel} onValueChange={setStudentModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select student model" />
@@ -155,9 +155,9 @@ export const ExplanationChallenge = () => {
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">
+            <div className="text-sm font-medium text-foreground mb-2">
               Target Audience Age: {audienceAge[0]} years old
-            </label>
+            </div>
             <Slider
               value={audienceAge}
               onValueChange={setAudienceAge}
@@ -173,9 +173,9 @@ export const ExplanationChallenge = () => {
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">
+            <div className="text-sm font-medium text-foreground mb-2">
               Initial Complexity: {complexity[0]}/10
-            </label>
+            </div>
             <Slider
               value={complexity}
               onValueChange={setComplexity}
@@ -192,14 +192,14 @@ export const ExplanationChallenge = () => {
         </div>
 
         <div className="mb-4">
-          <label className="text-sm font-medium text-foreground mb-2 block">
+          <div className="text-sm font-medium text-foreground mb-2">
             Complex Topic to Explain
-          </label>
+          </div>
           <Textarea
             placeholder="Enter a complex topic that needs to be explained simply..."
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="min-h-[80px]"
+            className="min-h-20"
           />
           <div className="flex flex-wrap gap-2 mt-2">
             {complexTopics.map((suggestion) => (

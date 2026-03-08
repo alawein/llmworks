@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@malawein/ui";
+import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@alawein/ui";
 import { useState } from 'react';
 
 
@@ -177,7 +177,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Creator Model</label>
+            <div className="text-sm font-medium text-foreground mb-2">Creator Model</div>
             <Select value={creatorModel} onValueChange={setCreatorModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select creator model" />
@@ -193,7 +193,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Refiner Model</label>
+            <div className="text-sm font-medium text-foreground mb-2">Refiner Model</div>
             <Select value={refinerModel} onValueChange={setRefinerModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select refiner model" />
@@ -211,7 +211,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Brand Voice</label>
+            <div className="text-sm font-medium text-foreground mb-2">Brand Voice</div>
             <Select value={brandVoice} onValueChange={setBrandVoice}>
               <SelectTrigger>
                 <SelectValue placeholder="Select brand voice" />
@@ -227,9 +227,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">
-              Target Audience
-            </label>
+            <div className="text-sm font-medium text-foreground mb-2">Target Audience</div>
             <Select value={targetAudience} onValueChange={setTargetAudience}>
               <SelectTrigger>
                 <SelectValue placeholder="Select target audience" />
@@ -246,7 +244,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
         </div>
 
         <div className="mb-4">
-          <label className="text-sm font-medium text-foreground mb-2 block">Creative Task</label>
+          <div className="text-sm font-medium text-foreground mb-2">Creative Task</div>
           <Textarea
             placeholder="Describe the creative task you want the AI models to collaborate on..."
             value={task}

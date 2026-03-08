@@ -1,4 +1,4 @@
-import { Badge, Button } from "@malawein/ui";
+import { Badge, Button } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 import {
   Monitor,

@@ -1,4 +1,4 @@
-import { Badge, Button } from "@malawein/ui";
+import { Badge, Button } from "@alawein/ui";
 import { memo, useState, useEffect } from 'react';
 import {
   Play,
@@ -299,11 +299,21 @@ const DemoScenariosComponent = ({
           return (
             <div
               key={scenario.id}
+              role="button"
+              tabIndex={0}
               className={`
                 glass-panel p-4 rounded-xl cursor-pointer transition-all duration-300
                 ${isSelected ? 'ring-2 ring-primary shadow-lg scale-105' : 'hover:shadow-md hover:scale-102'}
               `}
               onClick={() => handleScenarioSelect(scenario)}
+              onKeyDown={(event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') {
+                  return;
+                }
+
+                event.preventDefault();
+                handleScenarioSelect(scenario);
+              }}
             >
               {/* Scenario Header */}
               <div className="flex items-start justify-between mb-3">

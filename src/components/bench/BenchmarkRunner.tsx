@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@malawein/ui";
+import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
 import { useState } from 'react';
 
 
@@ -179,14 +179,18 @@ export const BenchmarkRunner = () => {
                   checked={selectedModels.includes(model.id)}
                   onCheckedChange={() => toggleModelSelection(model.id)}
                 />
-                <label htmlFor={model.id} className="flex-1 cursor-pointer">
+                <button
+                  type="button"
+                  className="flex-1 cursor-pointer text-left"
+                  onClick={() => toggleModelSelection(model.id)}
+                >
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-foreground">{model.name}</span>
                     <Badge variant="outline" className="text-xs">
                       {model.provider}
                     </Badge>
                   </div>
-                </label>
+                </button>
               </div>
             ))}
           </div>
@@ -207,7 +211,11 @@ export const BenchmarkRunner = () => {
                   checked={selectedBenchmarks.includes(benchmark.id)}
                   onCheckedChange={() => toggleBenchmarkSelection(benchmark.id)}
                 />
-                <label htmlFor={benchmark.id} className="flex-1 cursor-pointer">
+                <button
+                  type="button"
+                  className="flex-1 cursor-pointer text-left"
+                  onClick={() => toggleBenchmarkSelection(benchmark.id)}
+                >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-foreground">{benchmark.name}</span>
@@ -228,7 +236,7 @@ export const BenchmarkRunner = () => {
                       {benchmark.estimatedTime}
                     </div>
                   </div>
-                </label>
+                </button>
               </div>
             ))}
           </div>

@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@malawein/ui";
+import { Badge, Button, Card, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@alawein/ui";
 import { useState } from 'react';
 
 
@@ -102,9 +102,7 @@ export const DebateMode = () => {
 
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">
-              Proponent Model
-            </label>
+            <div className="text-sm font-medium text-foreground mb-2">Proponent Model</div>
             <Select value={proponentModel} onValueChange={setProponentModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select proponent model" />
@@ -120,7 +118,7 @@ export const DebateMode = () => {
           </div>
 
           <div>
-            <label className="text-sm font-medium text-foreground mb-2 block">Skeptic Model</label>
+            <div className="text-sm font-medium text-foreground mb-2">Skeptic Model</div>
             <Select value={skepticModel} onValueChange={setSkepticModel}>
               <SelectTrigger>
                 <SelectValue placeholder="Select skeptic model" />
@@ -137,12 +135,12 @@ export const DebateMode = () => {
         </div>
 
         <div className="mb-4">
-          <label className="text-sm font-medium text-foreground mb-2 block">Debate Topic</label>
+          <div className="text-sm font-medium text-foreground mb-2">Debate Topic</div>
           <Textarea
             placeholder="Enter a debatable topic or select from suggestions below..."
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="min-h-[80px]"
+            className="min-h-20"
           />
           <div className="flex flex-wrap gap-2 mt-2">
             {mockDebateTopics.map((suggestion) => (
@@ -196,7 +194,7 @@ export const DebateMode = () => {
                 )}
               </div>
 
-              <div className="space-y-4 max-h-[600px] overflow-y-auto">
+              <div className="space-y-4 max-h-150 overflow-y-auto">
                 {messages.map((message) => (
                   <div key={message.id} className="animate-fade-in">
                     {message.role === 'system' ? (

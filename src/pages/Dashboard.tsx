@@ -1,4 +1,4 @@
-import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@malawein/ui";
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import { useEffect } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { Dashboard } from '@/components/Dashboard';

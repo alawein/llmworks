@@ -4,7 +4,7 @@
 
 
 
-import { Badge, Button, Card, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@malawein/ui";
+import { Badge, Button, Card, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
 import {
   Search,
   Filter,

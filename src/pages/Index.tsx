@@ -1,4 +1,4 @@
-import { Button } from "@malawein/ui";
+import { Button } from "@alawein/ui";
 import { memo, useEffect, useState } from 'react';
 import { HeroSection } from '@/components/HeroSection';
 import { FeaturesSection } from '@/components/FeaturesSection';

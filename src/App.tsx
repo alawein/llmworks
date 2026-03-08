@@ -1,4 +1,4 @@
-import { Toaster as Sonner, TooltipProvider } from "@malawein/ui";
+import { Toaster as Sonner, TooltipProvider } from "@alawein/ui";
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 
