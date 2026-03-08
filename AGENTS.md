@@ -1,11 +1,11 @@
----
+﻿---
 type: normative
 authority: canonical
 audience: [agents, contributors, maintainers]
 last-verified: 2026-03-01
 ---
 
-# AGENTS -- llmworks
+# AGENTS — llmworks
 
 > LLM evaluation and security testing platform -- llmworks.dev
 
@@ -56,8 +56,8 @@ Arbiter evaluation framework, and dynamic Elo rankings.
 
 ## Style Tooling
 
-- ESLint: `@malawein/eslint-config/react-vite` (see `eslint.config.js`)
-- Prettier: `@malawein/prettier-config` (see `package.json` "prettier" key)
+- ESLint: `@alawein/eslint-config/react-vite` (see `eslint.config.js`)
+- Prettier: `@alawein/prettier-config` (see `package.json` "prettier" key)
 - Run `npm run lint` and `npm run format:check` before proposing changes
 
 See [CLAUDE.md](CLAUDE.md) | [SSOT.md](SSOT.md)
