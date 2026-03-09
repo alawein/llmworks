@@ -2,13 +2,13 @@
 type: normative
 authority: canonical
 audience: [ai-agents, contributors]
-last-verified: 2026-03-03
+last-verified: 2026-03-09
 ---
 
 # SSOT — llmworks
 
 **Version:** 1.0
-**Last Updated:** 2026-03-03
+**Last Updated:** 2026-03-09
 **Status:** Active Development
 
 ---

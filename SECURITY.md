@@ -6,7 +6,9 @@
 
 ---
 
-## Reporting a Vulnerability
+Report security vulnerabilities to **contact@meshal.ai**. Do not open public issues.
+
+We will acknowledge within 48 hours and provide updates on the resolution timeline.
 
 | Action       | Details                                                         |
 | ------------ | --------------------------------------------------------------- |

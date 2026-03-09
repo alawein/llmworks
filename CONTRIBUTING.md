@@ -1,177 +1,48 @@
-# Contributing
+# Contributing to LLM Works
 
-<img src="https://img.shields.io/badge/PRs-Welcome-A855F7?style=flat-square&labelColor=1a1b27" alt="PRs Welcome"/>
-<img src="https://img.shields.io/badge/Code-Python_3.11+-EC4899?style=flat-square&labelColor=1a1b27" alt="Python"/>
-<img src="https://img.shields.io/badge/Style-Ruff-4CC9F0?style=flat-square&labelColor=1a1b27" alt="Ruff"/>
+Thank you for your interest in contributing. This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md); below is the repo-specific summary.
 
----
-
-> Thank you for your interest in contributing to the governance system.
-
-## Quick Links
-
-- Code of Conduct
-- Development Setup
-- Contribution Types
-- Pull Request Process
-- Style Guidelines
-
----
-
-## Code of Conduct
-
-Be respectful, inclusive, and constructive in all interactions.
-
----
-
-## Development Setup
-
-### Prerequisites
-
-- Python 3.11+
-- Git
-- pre-commit
-
-### Setup
+## Getting Started
 
 ```bash
-# Clone
-git clone https://github.com/alawein/alawein.git
-cd alawein
-
-# Install dependencies
-pip install -r .metaHub/scripts/requirements.txt
-pip install pytest pytest-cov ruff mypy
-
-# Install hooks
-pre-commit install
-
-# Run tests
-pytest tests/ -v
+git clone https://github.com/alawein/llmworks.git
+cd llmworks
+npm install
+npm run dev   # http://localhost:8080
 ```
 
-### Run Scripts
+## Branch Naming
 
-```bash
-python .metaHub/scripts/enforce.py ./organizations/my-org/   # Enforcement
-python .metaHub/scripts/catalog.py                           # Catalog
-python .metaHub/scripts/meta.py scan-projects                # Audit
-```
+- `main` — production-ready; use PRs for all changes
+- `feat/*` — new features (e.g. `feat/arena`)
+- `fix/*` — bug fixes
+- `docs/*` — documentation only
+- `hotfix/*` — urgent fixes
+- `release/*` — release stabilization
 
----
+## Commit Messages
 
-## Contribution Types
+Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`
 
-### Policies (`.metaHub/policies/`)
-
-- Clear documentation of policy intent
-- Test cases demonstrating behavior
-- Backward compatibility consideration
-- Maintainer review required
-
-### Schemas (`.metaHub/schemas/`)
-
-- New fields should be optional (backward compatible)
-- Migration guide for existing repos
-- Validation tests required
-
-### Scripts (`.metaHub/scripts/`)
-
-- Type hints for all functions
-- Docstrings for public functions
-- Unit tests with >80% coverage
-- No breaking CLI changes
-
-### Workflows (`.github/workflows/`)
-
-- Explicit permissions block
-- Pinned action versions
-- Test in fork first
-- Security review for sensitive operations
-
----
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+- Example: `feat(bench): add Elo ranking export`
 
 ## Pull Request Process
 
-### Before Submitting
+1. Branch from `main`; keep PRs focused (≤300 lines preferred).
+2. Ensure CI is green (lint, type-check, test, build).
+3. Update docs if behavior or APIs change.
+4. Add or update tests for new or changed behavior.
+5. Request review; address feedback before merge.
 
-```bash
-pytest tests/ -v                    # Run tests
-ruff check .metaHub/scripts/        # Lint
-pre-commit run --all-files          # Pre-commit
-```
+## Development Commands
 
-### Requirements
+| Command              | Purpose                 |
+|----------------------|-------------------------|
+| `npm run dev`        | Dev server (port 8080)  |
+| `npm run lint`       | ESLint                  |
+| `npm run type-check` | TypeScript (if present) |
+| `npm run test`       | Unit tests (Vitest)     |
+| `npm run build`      | Production build        |
 
-| Requirement | Description                                           |
-| ----------- | ----------------------------------------------------- |
-| Title       | Conventional commit format (`feat:`, `fix:`, `docs:`) |
-| Description | Changes and motivation                                |
-| Issues      | Link to related issues                                |
-| CI          | All checks passing                                    |
-
-### Review
-
-1. Automated checks must pass
-2. One maintainer approval required
-3. All comments resolved
-4. Squash merge preferred
-
----
-
-## Style Guidelines
-
-### Python
-
-```python
-def my_function(param: str, optional: int = 0) -> Dict[str, Any]:
-    """Brief description.
-
-    Args:
-        param: Description.
-        optional: Description.
-
-    Returns:
-        Description.
-    """
-    pass
-```
-
-- Use `ruff` for linting/formatting
-- Type hints required
-- Google-style docstrings
-- Max line length: 100
-
-### Commit Messages
-
-```
-<type>(<scope>): <description>
-
-[optional body]
-```
-
-| Type       | Description      |
-| ---------- | ---------------- |
-| `feat`     | New feature      |
-| `fix`      | Bug fix          |
-| `docs`     | Documentation    |
-| `refactor` | Code restructure |
-| `test`     | Tests            |
-| `chore`    | Maintenance      |
-
-**Examples:**
-
-- `feat(policies): add kubernetes pod security policy`
-- `fix(enforce): handle missing metadata gracefully`
-- `docs(readme): update installation instructions`
-
----
-
-## Questions?
-
-- Open a GitHub issue
-- Check existing documentation first
-
----
-
-**Maintainer:** [@alawein](https://github.com/alawein)
+Vite + React + Supabase. See [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md).
