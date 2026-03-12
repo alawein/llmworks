@@ -6,4 +6,4 @@ on:
 
 jobs:
   policy:
-    uses: GitHub/.github/workflows/reusable-policy.yml@main
+    uses: alawein/alawein/.github/workflows/reusable-policy.yml@main
