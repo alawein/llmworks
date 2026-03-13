@@ -2,6 +2,10 @@
 
 > LLM security & testing platform
 
+## Design and branding
+
+- **Design system:** Shared tokens and style guides: [devkit/tokens](https://github.com/alawein/devkit/tree/main/tokens), [repz/branding](https://github.com/alawein/repz/tree/main/branding). Apply token-first styling and consistent logo placement (header, footer, loading).
+
 ## 🚀 Quick Start
 
 ```bash
