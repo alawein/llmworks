@@ -10,8 +10,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/alawein/nexus-framework.git
-cd nexus-framework/platforms/llmworks
+git clone https://github.com/alawein/llmworks.git
+cd llmworks
 
 # Install dependencies
 npm install
@@ -132,13 +132,13 @@ npm run test:coverage
 ## 📄 License
 
 This project is licensed under the MIT License - see the
-[LICENSE](../../LICENSE) file for details.
+[LICENSE](LICENSE) file for details.
 
 ## 🔗 Links
 
-- **Main Repository**: https://github.com/alawein/nexus-framework
-- **Documentation**: [../../docs](../../docs)
-- **Issues**: https://github.com/alawein/nexus-framework/issues
+- **Main Repository**: https://github.com/alawein/llmworks
+- **Documentation**: [docs/](docs/)
+- **Issues**: https://github.com/alawein/llmworks/issues
 
 ## 📊 Monitoring
 
