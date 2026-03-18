@@ -30,7 +30,7 @@ const ArgumentImpactSystemComponent = ({
     Array<{ id: string; side: 'left' | 'right'; strength: number }>
   >([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(undefined);
 
   // Simulate argument impacts for demonstration
   useEffect(() => {

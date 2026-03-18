@@ -34,11 +34,16 @@ export const getHealthStatus = async (): Promise<HealthStatus> => {
     // Get monitoring data if available
     const healthCheck = (window as unknown as { __health_check?: () => Promise<unknown> })
       .__health_check;
-    let monitoringData = null;
+    type MonitoringData = {
+      errors?: number;
+      performance?: { summary: Record<string, number>; coreWebVitals: Record<string, number> };
+      user?: { sessionDuration: number; interactions: number };
+    };
+    let monitoringData: MonitoringData | null = null;
 
     if (healthCheck) {
       try {
-        monitoringData = await healthCheck();
+        monitoringData = (await healthCheck()) as MonitoringData;
       } catch (error) {
         console.warn('Failed to get monitoring data:', error);
       }

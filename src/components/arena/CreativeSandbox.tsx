@@ -270,7 +270,7 @@ Recommend proceeding with iteration 2 focusing on tone adjustment and audience s
           <Button
             onClick={startCreativeProcess}
             disabled={!task || !creatorModel || !refinerModel || isRunning}
-            variant="gradient"
+            variant="hero"
           >
             <Play className="h-4 w-4" />
             Start Collaboration

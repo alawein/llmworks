@@ -446,10 +446,10 @@ export const CostTrackingDashboard = () => {
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
-                  initialFocus
+                  {...{ initialFocus: true } as any}
                   mode="range"
                   selected={dateRange as any}
-                  onSelect={setDateRange}
+                  onSelect={setDateRange as any}
                   numberOfMonths={2}
                 />
               </PopoverContent>

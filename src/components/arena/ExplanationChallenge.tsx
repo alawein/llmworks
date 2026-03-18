@@ -220,7 +220,7 @@ export const ExplanationChallenge = () => {
           <Button
             onClick={startExplanation}
             disabled={!topic || !expertModel || !studentModel || isRunning}
-            variant="gradient"
+            variant="hero"
           >
             <Play className="h-4 w-4" />
             Start Challenge

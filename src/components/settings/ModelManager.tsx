@@ -195,7 +195,7 @@ export const ModelManager = () => {
           />
         </div>
 
-        <Button onClick={addModel} variant="gradient">
+        <Button onClick={addModel} variant="hero">
           <Plus className="h-4 w-4 mr-2" />
           Add Model
         </Button>

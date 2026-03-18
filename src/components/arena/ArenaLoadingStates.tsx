@@ -101,7 +101,8 @@ const LoadingStateComponent = ({ type, message, progress }: LoadingStateProps) =
       )}
 
       {/* Custom CSS for orbit animation */}
-      <style jsx>{`
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <style {...({ jsx: true } as any)}>{`
         @keyframes orbit {
           from {
             transform: translate(-50%, -50%) rotate(0deg) translateX(60px) rotate(0deg);

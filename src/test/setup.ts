@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
 
 // Suppress React act() warnings in test environment
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+(globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
 
 // ----- Shared browser API mocks -----
 // These are missing from jsdom and needed by virtually every component test.

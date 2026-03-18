@@ -20,16 +20,9 @@ import {
   getPerformanceMetrics,
   getPerformanceScore,
   analyzeResourceTiming,
+  type PerformanceMetrics,
 } from '@/lib/performance';
 import { getSwStatus, isOffline } from '@/lib/service-worker';
-
-interface PerformanceMetrics {
-  lcp?: number;
-  fid?: number;
-  cls?: number;
-  ttfb?: number;
-  [key: string]: number | undefined;
-}
 
 interface PerformanceData {
   score: number;

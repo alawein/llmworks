@@ -3,7 +3,7 @@
  * Tracks Core Web Vitals and provides performance insights
  */
 
-interface PerformanceMetrics {
+export interface PerformanceMetrics {
   // Core Web Vitals
   lcp?: number; // Largest Contentful Paint
   fid?: number; // First Input Delay
@@ -143,7 +143,7 @@ class PerformanceMonitor {
   }
 
   private setupNavigationTiming(): void {
-    if ('performance' in window && performance.getEntriesByType) {
+    if ('performance' in window && typeof performance.getEntriesByType === 'function') {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry: any) => {

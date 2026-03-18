@@ -9,7 +9,7 @@ interface LoadingSpinnerProps {
   variant?: 'default' | 'battle' | 'pulse' | 'dots';
 }
 
-const BattleLoadingAnimation = ({ size = 'md' }: { size: string }) => {
+const BattleLoadingAnimation = ({ size = 'md' }: { size: 'sm' | 'md' | 'lg' }) => {
   const [currentIcon, setCurrentIcon] = useState(0);
   const icons = [Swords, Zap, BarChart3];
 
@@ -41,7 +41,7 @@ const BattleLoadingAnimation = ({ size = 'md' }: { size: string }) => {
   );
 };
 
-const PulseLoadingAnimation = ({ size = 'md' }: { size: string }) => {
+const PulseLoadingAnimation = ({ size = 'md' }: { size: 'sm' | 'md' | 'lg' }) => {
   const sizeClasses = {
     sm: 'h-4 w-4',
     md: 'h-8 w-8',

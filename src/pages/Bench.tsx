@@ -188,7 +188,7 @@ const Bench = memo(() => {
                     </div>
 
                     <Button
-                      variant="gradient"
+                      variant="hero"
                       className="w-full group-hover:shadow-glow"
                       onClick={() => setActiveTab('runner')}
                     >

@@ -161,7 +161,7 @@ export const DebateMode = () => {
           <Button
             onClick={startDebate}
             disabled={!topic || !proponentModel || !skepticModel || isRunning}
-            variant="trust"
+            variant="hero"
             className="hover-scale"
           >
             <Play className="h-4 w-4" />

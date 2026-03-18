@@ -238,7 +238,7 @@ export const CustomTestBuilder = () => {
         <Button
           onClick={saveTest}
           disabled={!testName || prompts.some((p) => !p.prompt)}
-          variant="trust"
+          variant="hero"
           className="hover-scale"
         >
           <CheckCircle className="h-4 w-4 mr-2" />
@@ -354,7 +354,7 @@ export const CustomTestBuilder = () => {
             <Button
               onClick={runCustomTest}
               disabled={!selectedTest || selectedModels.length === 0 || isRunning}
-              variant="trust"
+              variant="hero"
               className="w-full hover-scale"
             >
               {isRunning ? (

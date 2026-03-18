@@ -256,7 +256,7 @@ export const BenchmarkRunner = () => {
             <Button
               onClick={startBenchmark}
               disabled={selectedModels.length === 0 || selectedBenchmarks.length === 0 || isRunning}
-              variant="gradient"
+              variant="hero"
             >
               <Play className="h-4 w-4" />
               {isRunning ? 'Running...' : 'Start Benchmark'}

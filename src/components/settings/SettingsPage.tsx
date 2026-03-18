@@ -124,7 +124,7 @@ export const SettingsPage = () => {
         <div className="flex gap-2">
           <Button
             onClick={() => console.log('Settings saved')}
-            variant="trust"
+            variant="hero"
             className="hover-scale"
           >
             <Save className="h-4 w-4 mr-2" />

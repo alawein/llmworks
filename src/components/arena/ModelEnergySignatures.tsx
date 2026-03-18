@@ -38,7 +38,7 @@ const ModelEnergySignaturesComponent = ({
   academicMode = false,
 }: ModelEnergySignaturesProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(undefined);
   const timeRef = useRef<number>(0);
 
   // Define unique energy signatures for each AI personality

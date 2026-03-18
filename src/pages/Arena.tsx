@@ -179,7 +179,7 @@ const Arena = memo(() => {
                     </div>
 
                     <Button
-                      variant={mode.status === 'Available' ? 'gradient' : 'secondary'}
+                      variant={mode.status === 'Available' ? 'hero' : 'secondary'}
                       className="w-full"
                       onClick={() => mode.status === 'Available' && setActiveMode(mode.id)}
                       disabled={mode.status !== 'Available'}

@@ -201,7 +201,7 @@ class AnalyticsManager {
       value: parameters.value,
       custom_parameters: {
         timestamp: Date.now(),
-        session_id: this.session?.session_id,
+        ...(this.session?.session_id ? { session_id: this.session.session_id } : {}),
         page_path: window.location.pathname,
         user_agent: navigator.userAgent,
         ...parameters.custom_parameters,
