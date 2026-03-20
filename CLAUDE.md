@@ -5,6 +5,8 @@ audience: [ai-agents, contributors]
 last-verified: 2026-03-03
 ---
 
+> Extends: github.com/alawein/_pkos/CLAUDE.md
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with
