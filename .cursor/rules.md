@@ -10,7 +10,7 @@ You are working in llmworks.
 
 - Config: [CLAUDE.md](../CLAUDE.md), [AGENTS.md](../AGENTS.md)
 - Guidelines: [GUIDELINES.md](../GUIDELINES.md)
-- Shared governance: [../../../morphism/docs/shared/](../../../morphism/docs/shared/)
+- Shared governance: [../../../docs/shared/](../../../docs/shared/)
 
 ## Work Style
 

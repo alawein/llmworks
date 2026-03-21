@@ -5,7 +5,7 @@ set -e
 # Compare CLAUDE.md, AGENTS.md, GUIDELINES.md against tier-1 template
 # Ignore sections marked <!-- CUSTOM OVERRIDE: [section] -->
 
-template_source=${1:-./.morphism/templates/tier-1}
+template_source=${1:-../../../_pkos}
 
 for file in CLAUDE.md AGENTS.md GUIDELINES.md; do
   if [ ! -f "$file" ]; then continue; fi
