@@ -1,4 +1,5 @@
 {
+  "_comment": "CUSTOM OVERRIDE: governance hooks — scope-binding, observability, drift-detection aligned with Morphism invariants [Task 1.4 audit 2026-03-22]",
   "project_name": "llmworks",
   "project_type": "project",
   "hooks": {
