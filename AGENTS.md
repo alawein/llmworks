@@ -1,63 +1,44 @@
 ---
 type: normative
 authority: canonical
-audience: [agents, contributors, maintainers]
-last-verified: 2026-03-09
+audience: [agents, contributors]
 ---
 
-# AGENTS — llmworks
+# Governance
 
-> LLM evaluation and security testing platform -- llmworks.dev
+This project follows **Morphism Categorical Governance Framework**.
 
-## Repository Scope
+## Seven Invariants
 
-Vite + React + TypeScript application with shadcn/ui components and Supabase
-backend. Features Arena (interactive model testing), Bench (benchmarking),
-Arbiter evaluation framework, and dynamic Elo rankings.
+| ID | Invariant | Enforcement |
+|----|-----------| ------------|
+| I-1 | One Truth Per Domain | Maintain SSOT (single source of truth) per config type |
+| I-2 | Drift Is Debt | Config drift detected and logged; sync recommended |
+| I-3 | Observability | Log what changed, why, who, when |
+| I-4 | Scope Binding | Changes must have clear, narrow boundaries |
+| I-5 | Entropy Monotonicity | Complexity shouldn't decrease without intent |
+| I-6 | Refusal as Structure | Say "no" to scope creep |
+| I-7 | Minimal Authority | Fewest people/rules needed to govern |
 
-## Key Directories
+## Protocol
 
-| Directory | Purpose |
-|-----------|---------|
-| `src/pages/` | Route components (Index, Arena, Bench, NotFound) |
-| `src/components/ui/` | shadcn/ui library (auto-generated, do not edit) |
-| `src/integrations/supabase/` | Supabase client and types (auto-generated) |
-| `src/lib/` | Utility functions |
-| `src/hooks/` | Custom React hooks |
+1. Read governance docs before structural changes
+2. State the one thing you're building
+3. Verify the path (which files, which branches)
+4. Execute incrementally
+5. Refuse scope creep
 
-## Commands
+## Git Workflow
 
-- `npm install` -- install dependencies
-- `npm run dev` -- start dev server (port 8080)
-- `npm run build` -- production build
-- `npm run build:dev` -- development build
-- `npm run lint` -- ESLint
-- `npm run preview` -- preview production build
+Branches: `feat/`, `fix/`, `docs/`, `chore/`, `test/` prefixes.
+Direct work on main blocked by hooks.
 
-## Agent Rules
+## Open Work
 
-- Read this file before making changes
-- Never commit `.env` files or API keys
-- Always run `npm run build` before proposing changes
-- Do not edit `src/components/ui/` -- these are shadcn/ui generated
-- Do not edit `src/integrations/supabase/` -- these are auto-generated
-- Brand identity: "LLM Works" (rebranded from "Aegis AI" Jan 2025)
-- Color palette: Analytical Blue (#4F83F0), Insight Orange (#FF7A2A)
-- Routes are defined in `src/App.tsx` -- add new routes above the catch-all
-- Use conventional commit messages: `feat(scope):`, `fix(scope):`, etc.
+See: `docs/operations/backlog.md`
 
-## Naming Conventions
+## Session Handoff
 
-- Components: `PascalCase.tsx`
-- Hooks: `useCamelCase.ts` (exception: shadcn-generated `use-toast.ts`, `use-mobile.tsx`)
-- Utilities: `camelCase.ts`
-- Path alias: `@/` maps to `./src/`
-- Tests: `*.test.ts` (unit), `*.spec.ts` (E2E)
-
-## Style Tooling
-
-- ESLint: `@alawein/eslint-config/react-vite` (see `eslint.config.js`)
-- Prettier: `@alawein/prettier-config` (see `package.json` "prettier" key)
-- Run `npm run lint` and `npm run format:check` before proposing changes
-
-See [CLAUDE.md](CLAUDE.md) | [SSOT.md](SSOT.md)
+Before ending session:
+1. Append entry to `docs/operations/session-log.md`
+2. Update backlog (mark completed, add new items)
