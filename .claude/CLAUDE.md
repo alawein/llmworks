@@ -9,7 +9,7 @@ last-verified: 2026-03-21
 
 ## Project Context
 
-Part of the alawein governed ecosystem.
+LLMWorks — open-source LLM evaluation platform for security testing and benchmarking of language models. Vite + React 19 + TypeScript, Supabase backend, OpenAI + Anthropic API integrations.
 
 ## Quick Links
 
