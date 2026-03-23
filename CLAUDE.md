@@ -2,19 +2,48 @@
 type: reference
 authority: canonical
 audience: [agents, contributors]
-last-verified: 2026-03-21
+last-verified: 2026-03-22
 ---
 
 # llmworks — Claude Code Configuration
 
 ## Project Context
 
-Project configuration and governance.
+LLMWorks — open-source LLM evaluation platform for security testing and benchmarking of language models. Rebranded from Aegis AI (Jan 2025). Supabase backend, OpenAI + Anthropic API integrations.
+
+## Commands
+
+```bash
+npm run dev              # Vite dev server
+npm run build            # production build
+npm run test             # Vitest watch mode
+npm run test:run         # run all tests once
+npm run test:e2e         # Playwright E2E tests
+npm run test:coverage    # coverage report
+npm run test:visual      # visual regression tests
+npm run lint             # ESLint
+npm run format           # Prettier formatting
+npm run type-check       # TypeScript validation
+```
+
+## Architecture
+
+**Stack:** Vite + React 19 + TypeScript, Radix UI, Tailwind CSS 4, TanStack Query, React Router 6, Supabase (auth + DB), OpenAI + Anthropic SDKs, Recharts (charts), React Hook Form + Zod, Crypto-JS (encryption).
+
+**Structure:**
+- `src/components/` — reusable UI components
+- `src/pages/` — page components
+- `src/hooks/` — custom React hooks
+- `src/stores/` — state management
+- `src/utils/` — utility functions
+- `supabase/` — database config
+- `e2e/` — E2E test specs
+
+**Deployment:** Vercel. Docker support available. Node >= 18, npm >= 8.
 
 ## Quick Links
 
 - Governance: [AGENTS.md](AGENTS.md)
-- Guidelines: [GUIDELINES.md](GUIDELINES.md)
 - Shared governance guides: [../../../docs/shared/](../../../docs/shared/)
 
 ## Session Bootstrap
@@ -22,7 +51,6 @@ Project configuration and governance.
 Before working:
 1. Run `git log --oneline -5` to see recent work
 2. Read `docs/operations/backlog.md` for open work
-3. Use `/bootstrap` skill to load full context
 
 ## Work Style
 
@@ -30,18 +58,7 @@ Before working:
 - One change at a time. Make the smallest complete change, verify, then move to next.
 - If stuck for >2 tool calls, stop and ask.
 
-## Test Gates
-
-After modifying code, run relevant tests before proceeding.
-
-## Hooks
-
-Hooks in `.claude/settings.json` auto-validate files:
-- Python files: ruff check, mypy
-- TypeScript files: typecheck, lint, test
-
 ## Environment
 
 - Git configured for LF (not CRLF)
-- Python: use `python` (not `python3`)
 - No credentials in chat; use `gh secret set` or `vercel env add` instead
