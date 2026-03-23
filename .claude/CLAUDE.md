@@ -9,7 +9,7 @@ last-verified: 2026-03-21
 
 ## Project Context
 
-Part of the Tier-1 ecosystem.
+Part of the alawein governed ecosystem.
 
 ## Quick Links
 
