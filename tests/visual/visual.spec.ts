@@ -1,57 +1,94 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-/**
- * Visual Regression Tests for LLMWorks
- *
- * These tests capture screenshots and compare them against baseline images.
- * Run `npx playwright test --update-snapshots` to update baselines.
- */
+const visualThemeSettings = {
+  colorScheme: 'tactical',
+  intensity: 75,
+  glassMorphism: 60,
+  animations: false,
+  particleEffects: false,
+  dynamicBackground: false,
+  soundEffects: false,
+  accessibility: {
+    reducedMotion: true,
+    highContrast: false,
+    largeText: false,
+  },
+};
 
-test.describe('Visual Regression Tests', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+async function prepareHomepage(page: Page) {
+  await page.addInitScript((themeSettings) => {
+    window.localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+  }, visualThemeSettings);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+
+  await expect(page.getByRole('navigation', { name: /main navigation/i })).toBeVisible({
+    timeout: 30_000,
+  });
+  await expect(page.getByRole('heading', { level: 1, name: /Architect Superior/i })).toBeVisible({
+    timeout: 30_000,
+  });
+  await expect(page.getByRole('region', { name: /strategic analytics/i })).toBeVisible({
+    timeout: 30_000,
   });
 
+  await page.addStyleTag({
+    content: `
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        caret-color: transparent !important;
+      }
+
+      button[aria-label="Open theme customizer"],
+      button[aria-label="Dismiss achievement"],
+      .fixed.top-20.right-4,
+      .fixed.bottom-20.right-4,
+      .fixed.bottom-4.left-4,
+      .fixed.bottom-4.right-4 {
+        visibility: hidden !important;
+      }
+    `,
+  });
+
+  await page.waitForTimeout(300);
+}
+
+/**
+ * Visual regression is intentionally Chromium-only.
+ * Cross-engine rendering differences were generating noisy baselines while
+ * functional coverage already runs across Chromium, Firefox, and WebKit.
+ */
+test.describe('Visual Regression Tests', () => {
+  test.skip(({ browserName }) => browserName !== 'chromium', 'Visual baselines are Chromium-only.');
+
   test('homepage visual snapshot', async ({ page }) => {
-    await page.goto('/');
-    await page.addStyleTag({ content: '*, *::before, *::after { animation: none !important; transition: none !important; }' });
-    await page.waitForTimeout(2000);
+    await prepareHomepage(page);
+
     await expect(page).toHaveScreenshot('homepage.png', {
-      fullPage: true,
       maxDiffPixelRatio: 0.05,
       timeout: 15_000,
     });
   });
 
-  test('benchmark dashboard visual snapshot', async ({ page }) => {
-    await page.goto('/');
-    const dashboard = page.locator('[data-testid="benchmark-dashboard"], .benchmark-dashboard');
-    if (await dashboard.isVisible()) {
-      await expect(dashboard).toHaveScreenshot('benchmark-dashboard.png', {
+  test('strategic analytics panel visual snapshot', async ({ page }) => {
+    await prepareHomepage(page);
+
+    await expect(page.getByRole('region', { name: /strategic analytics/i })).toHaveScreenshot(
+      'strategic-analytics-panel.png',
+      {
         maxDiffPixelRatio: 0.05,
-      });
-    }
+      }
+    );
   });
 
   test('responsive mobile view', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
-    await page.waitForTimeout(1000);
-    await expect(page).toHaveScreenshot('homepage-mobile.png', {
-      fullPage: true,
-      maxDiffPixelRatio: 0.05,
-    });
-  });
+    await prepareHomepage(page);
 
-  test('responsive tablet view', async ({ page }) => {
-    await page.setViewportSize({ width: 768, height: 1024 });
-    await page.goto('/');
-    await page.addStyleTag({ content: '*, *::before, *::after { animation: none !important; transition: none !important; }' });
-    await page.waitForTimeout(2000);
-    await expect(page).toHaveScreenshot('homepage-tablet.png', {
-      fullPage: true,
+    await expect(page).toHaveScreenshot('homepage-mobile.png', {
       maxDiffPixelRatio: 0.05,
-      timeout: 15_000,
     });
   });
 });

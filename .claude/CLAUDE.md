@@ -37,7 +37,6 @@ After modifying code, run relevant tests before proceeding.
 ## Hooks
 
 Hooks in `.claude/settings.json` auto-validate files:
-- Python files: ruff check, mypy
 - TypeScript files: typecheck, lint, test
 
 ## Environment
