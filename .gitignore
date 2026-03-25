@@ -29,6 +29,9 @@ test-results/
 .eslintcache
 .cache/
 
+# Ops reports (generated locally or in CI artifacts)
+reports/sync-report.*.json
+
 # Logs
 *.log
 

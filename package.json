@@ -26,6 +26,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,md}\"",
     "lint": "eslint .",
+    "ops:sync-report": "node scripts/github-sync-report.mjs",
     "preview": "vite preview",
     "test": "vitest",
     "test:accessibility": "vitest run src/test/accessibility.test.ts",
