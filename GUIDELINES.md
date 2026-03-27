@@ -1,5 +1,8 @@
 ---
-type: reference
+type: derived
+source: org/governance-templates
+sync: manual
+sla: on-change
 audience: [contributors]
 ---
 

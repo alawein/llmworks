@@ -1,5 +1,8 @@
 ---
-type: reference
+type: derived
+source: org/governance-templates
+sync: manual
+sla: on-change
 authority: canonical
 audience: [agents, contributors]
 last-verified: 2026-03-21
