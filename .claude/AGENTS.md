@@ -1,7 +1,10 @@
 ---
-type: normative
+type: canonical
 authority: canonical
 audience: [agents, contributors]
+source: none
+sync: none
+sla: none
 ---
 
 # Governance
