@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Changelog
 
 All notable changes to LLMWorks will be documented here.

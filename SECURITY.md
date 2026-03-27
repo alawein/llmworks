@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Security Policy
 
 <img src="https://img.shields.io/badge/OpenSSF-Scorecard-A855F7?style=flat-square&labelColor=1a1b27" alt="OpenSSF"/>

@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # LLMWorks Platform Overview
 
 ## 1. Executive Summary

@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Security Fixes Implementation
 
 This document outlines the security vulnerabilities identified and the

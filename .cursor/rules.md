@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Cursor Rules for llmworks
 
 You are working in llmworks.

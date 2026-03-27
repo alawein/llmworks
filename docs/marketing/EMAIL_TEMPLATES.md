@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Email Announcement Templates - LLM Works Rebrand
 
 ## User Announcement Email

@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Social Media Assets for LLM Works
 
 ## Brand Announcement Posts

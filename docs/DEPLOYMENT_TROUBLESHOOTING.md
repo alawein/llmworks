@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Deployment Troubleshooting Guide
 
 This guide helps resolve common deployment issues on Lovable.dev and other

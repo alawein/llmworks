@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Critical Security Fixes Implementation (January 2025)
 
 ## Executive Summary

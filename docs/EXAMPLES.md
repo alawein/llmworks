@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # LLM Works Examples
 
 This document provides practical examples for using LLM Works to evaluate

@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # LLM Works Brand Guidelines
 
 ## Brand Identity

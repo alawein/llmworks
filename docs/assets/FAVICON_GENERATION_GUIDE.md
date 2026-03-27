@@ -1,3 +1,10 @@
+---
+type: canonical
+source: none
+sync: none
+sla: none
+---
+
 # Favicon & App Icon Generation Guide
 
 ## Required Assets for LLM Works
