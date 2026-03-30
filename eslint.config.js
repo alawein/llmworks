@@ -1,48 +1,65 @@
-import js from "@eslint/js";
-import tseslint from "typescript-eslint";
-import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import jsxA11y from "eslint-plugin-jsx-a11y";
+/**
+ * ESLint — shared preset from @alawein/eslint-config (react-vite).
+ */
+import base from '@alawein/eslint-config/react-vite';
+import globals from 'globals';
 
-/** @type {import("eslint").Linter.Config[]} */
 export default [
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...base,
   {
+    files: [
+      '*.{js,mjs,cjs}',
+      'config/**/*.{js,mjs,cjs,ts}',
+      'scripts/**/*.{js,mjs,cjs,ts}',
+      'tools/**/*.{js,mjs,cjs,ts}',
+    ],
     languageOptions: {
-      globals: { ...globals.browser, ...globals.es2020 },
-      ecmaVersion: 2020,
-      sourceType: "module",
-    },
-    rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
-      ],
-      "@typescript-eslint/no-explicit-any": "warn",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-      "prefer-const": "error",
-      eqeqeq: ["error", "always"],
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
   },
   {
-    ignores: ["dist/", "build/", "node_modules/", "coverage/", "*.config.js", "*.config.mjs", "*.config.ts"],
+    files: ['**/*.cjs', 'scripts/**/*.{js,cjs}', 'tools/**/*.{js,cjs}'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
   },
   {
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      "jsx-a11y": jsxA11y,
-    },
+    ignores: [
+      'dist/',
+      'build/',
+      '.next/',
+      'node_modules/',
+      'coverage/',
+      '*.config.js',
+      '*.config.mjs',
+      '*.config.ts',
+    ],
+  },
+  {
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      ...jsxA11y.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+      eqeqeq: 'warn',
+      'jsx-a11y/anchor-has-content': 'warn',
+      'jsx-a11y/no-noninteractive-element-interactions': 'warn',
+      'jsx-a11y/no-noninteractive-tabindex': 'warn',
+      'no-control-regex': 'warn',
+      '@typescript-eslint/ban-ts-comment': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-unsafe-function-type': 'warn',
+      'jsx-a11y/click-events-have-key-events': 'warn',
+      'jsx-a11y/img-redundant-alt': 'warn',
+      'jsx-a11y/label-has-associated-control': 'warn',
+      'jsx-a11y/media-has-caption': 'warn',
+      'jsx-a11y/no-autofocus': 'warn',
+      'jsx-a11y/no-static-element-interactions': 'warn',
+      'no-case-declarations': 'warn',
+      'no-constant-binary-expression': 'warn',
+      'no-empty': 'warn',
+      'no-useless-escape': 'warn',
+      'prefer-const': 'warn',
+      'react-hooks/rules-of-hooks': 'warn',
     },
-    settings: { react: { version: "detect" } },
   },
 ];

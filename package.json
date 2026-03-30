@@ -19,6 +19,7 @@
   "license": "MIT",
   "author": "LLM Works Community",
   "type": "module",
+  "prettier": "@alawein/prettier-config",
   "scripts": {
     "build": "vite build",
     "build:dev": "vite build --mode development",
@@ -100,8 +101,9 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@alawein/eslint-config": "^0.1.0",
+    "@alawein/prettier-config": "^0.1.0",
     "@axe-core/playwright": "^4.10.2",
-    "@eslint/js": "9.39.4",
     "@playwright/test": "^1.54.2",
     "@tailwindcss/vite": "^4",
     "@testing-library/jest-dom": "^6.9.1",
@@ -115,12 +117,10 @@
     "@vitest/ui": "^3.2.4",
     "axe-core": "^4.10.3",
     "eslint": "^9.0.0",
-    "eslint-plugin-jsx-a11y": "6.10.2",
-    "eslint-plugin-react-hooks": "5.2.0",
-    "eslint-plugin-react-refresh": "0.5.2",
-    "globals": "17.4.0",
+    "globals": "^15.0.0",
     "jest-axe": "^10.0.0",
     "jsdom": "^26.1.0",
+    "prettier": "^3.0.0",
     "tailwindcss": "^4",
     "terser": "^5.43.1",
     "typescript": "5.9.3",
