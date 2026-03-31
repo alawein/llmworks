@@ -163,3 +163,8 @@ This project is licensed under the MIT License - see the
 
 _Platform: LLMWorks_ _Entity: Alawein Technologies_ _Status: production_ _Last
 updated: 2025-12-15_
+
+## Ownership
+
+- **Maintainer:** @alawein
+- **Support:** GitHub Issues on this repository
