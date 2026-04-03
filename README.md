@@ -9,11 +9,7 @@ sla: none
 
 > LLM security & testing platform
 
-## Design and branding
-
-- **Design system:** Shared tokens and style guides: [devkit/tokens](https://github.com/alawein/devkit/tree/main/tokens), [repz/branding](https://github.com/alawein/repz/tree/main/branding). Apply token-first styling and consistent logo placement (header, footer, loading).
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -29,12 +25,12 @@ npm run dev
 # Visit http://localhost:3004
 ```
 
-## ✨ Features
+## Features
 
 - LLM Security
 - Testing Tools
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -58,7 +54,7 @@ npm run dev
 - **LLM Integration**
 - **Security Testing**
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 llmworks/
@@ -74,7 +70,7 @@ llmworks/
 └── scripts/          # Build and utility scripts
 ```
 
-## 🧪 Development
+## Development
 
 ### Available Scripts
 
@@ -96,7 +92,7 @@ VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Docker
 
@@ -115,7 +111,7 @@ docker run -p 3004:3004 llmworks
 docker-compose --profile llmworks up -d
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run unit tests
@@ -128,7 +124,7 @@ npm run test:e2e
 npm run test:coverage
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -136,24 +132,24 @@ npm run test:coverage
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the
 [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## Links
 
 - **Main Repository**: https://github.com/alawein/llmworks
 - **Documentation**: [docs/](docs/)
 - **Issues**: https://github.com/alawein/llmworks/issues
 
-## 📊 Monitoring
+## Monitoring
 
 - **Error Tracking**: Sentry
 - **Performance**: Web Vitals
 - **Analytics**: Plausible
 
-## 🔒 Security
+## Security
 
 - **Content Security Policy**: Configured
 - **Rate Limiting**: Implemented
