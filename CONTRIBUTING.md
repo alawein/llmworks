@@ -1,55 +1,61 @@
 ---
 type: canonical
-source: none
-sync: none
+source: _devkit/templates
+sync: propagated
 sla: none
 ---
 
-# Contributing to LLM Works
+<!-- Token legend:
+     AUTO-SUBSTITUTED by sync-contributing.sh (derived from git remote):
+       llmworks = GitHub slug used as heading (e.g. "bolts", "handshake-hai")
+       llmworks      = GitHub slug used in URLs  (e.g. "bolts", "handshake-hai")
+     MANUALLY FILLED in Plan 2 per-repo pass:
+       {INSTALL_COMMAND}  = e.g. "npm ci" or "uv pip install -e ."
+       {TEST_COMMAND}     = e.g. "npm test" or "pytest"
+       {VALIDATE_COMMAND} = e.g. "npm run lint && npm test" or "ruff check . && pytest"
+-->
 
-Thank you for your interest in contributing. This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md); below is the repo-specific summary.
+# Contributing to llmworks
+
+<!-- REPO-SPECIFIC: one-line context about what this repo is -->
+
+This project follows the [alawein org contributing standards](https://github.com/alawein/alawein/blob/main/CONTRIBUTING.md).
 
 ## Getting Started
 
 ```bash
 git clone https://github.com/alawein/llmworks.git
 cd llmworks
-npm install
-npm run dev   # http://localhost:8080
+{INSTALL_COMMAND}
 ```
 
-## Branch Naming
+## Development Workflow
 
-- `main` — production-ready; use PRs for all changes
-- `feat/*` — new features (e.g. `feat/arena`)
-- `fix/*` — bug fixes
-- `docs/*` — documentation only
-- `hotfix/*` — urgent fixes
-- `release/*` — release stabilization
+1. Branch off `main` using prefix: `feat/`, `fix/`, `docs/`, `chore/`, `test/`
+2. Make your changes — keep PRs focused on a single concern
+3. Run `{TEST_COMMAND}` to validate your changes before committing
+4. Commit using [Conventional Commits](https://www.conventionalcommits.org/) — `type(scope): subject`
+5. Open a Pull Request to `main`
 
-## Commit Messages
+## Code Standards
 
-Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`
+<!-- REPO-SPECIFIC: 2-4 bullets about this repo's conventions -->
+- Follow existing patterns in the codebase
+- Run linting and type checks before committing
+- Write tests for new functionality
 
-- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-- Example: `feat(bench): add Elo ranking export`
+## Pull Request Checklist
 
-## Pull Request Process
+- [ ] CI passes (no failing checks)
+- [ ] Tests added or updated for new functionality
+- [ ] `{VALIDATE_COMMAND}` passes
+- [ ] `CHANGELOG.md` updated under `[Unreleased]`
+- [ ] No breaking changes without a version bump plan
 
-1. Branch from `main`; keep PRs focused (≤300 lines preferred).
-2. Ensure CI is green (lint, type-check, test, build).
-3. Update docs if behavior or APIs change.
-4. Add or update tests for new or changed behavior.
-5. Request review; address feedback before merge.
+## Reporting Issues
 
-## Development Commands
+Open an issue on the [GitHub repository](https://github.com/alawein/llmworks/issues) with steps to reproduce and relevant context.
 
-| Command              | Purpose                 |
-|----------------------|-------------------------|
-| `npm run dev`        | Dev server (port 8080)  |
-| `npm run lint`       | ESLint                  |
-| `npm run type-check` | TypeScript (if present) |
-| `npm run test`       | Unit tests (Vitest)     |
-| `npm run build`      | Production build        |
+## License
 
-Vite + React + Supabase. See [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md).
+By contributing, you agree that your contributions will be licensed under [MIT](LICENSE).
