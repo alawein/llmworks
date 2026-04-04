@@ -143,23 +143,6 @@ This project is licensed under the MIT License - see the
 - **Documentation**: [docs/](docs/)
 - **Issues**: https://github.com/alawein/llmworks/issues
 
-## Monitoring
-
-- **Error Tracking**: Sentry
-- **Performance**: Web Vitals
-- **Analytics**: Plausible
-
-## Security
-
-- **Content Security Policy**: Configured
-- **Rate Limiting**: Implemented
-- **Dependency Auditing**: Automated
-
----
-
-_Platform: LLMWorks_ _Entity: Alawein Technologies_ _Status: production_ _Last
-updated: 2025-12-15_
-
 ## Ownership
 
 - **Maintainer:** @alawein
