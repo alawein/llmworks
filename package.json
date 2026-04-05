@@ -44,6 +44,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@alawein/theme-base": "0.1.0",
+    "@alawein/tokens": "0.1.0",
     "@alawein/ui": "^0.1.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",

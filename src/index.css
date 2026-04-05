@@ -5,6 +5,8 @@
 @import url('./styles/tokens.css');
 
 @import "tailwindcss";
+@import '@alawein/tokens';
+@import '@alawein/theme-base';
 @import "tw-animate-css";
 
 @theme inline {
