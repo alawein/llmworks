@@ -372,7 +372,7 @@ const DemoScenariosComponent = ({
                 <div className="text-xs text-muted-foreground">Epic Moments:</div>
                 {scenario.expectedHighlights.slice(0, 2).map((highlight) => (
                   <div key={highlight} className="flex items-center gap-1 text-xs">
-                    <Trophy className="h-3 w-3 text-yellow-500" />
+                    <Trophy className="h-3 w-3 text-warning" />
                     <span className="text-muted-foreground truncate">{highlight}</span>
                   </div>
                 ))}
@@ -492,7 +492,7 @@ const DemoScenariosComponent = ({
             <div className="grid md:grid-cols-2 gap-2">
               {selectedScenario.expectedHighlights.map((highlight) => (
                 <div key={highlight} className="flex items-center gap-2 text-sm">
-                  <Trophy className="h-4 w-4 text-yellow-500" />
+                  <Trophy className="h-4 w-4 text-warning" />
                   <span className="text-muted-foreground">{highlight}</span>
                 </div>
               ))}

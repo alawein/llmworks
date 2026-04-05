@@ -204,11 +204,11 @@ export const ModelManagementDashboard = () => {
   const getStatusIcon = (status: Model['status']) => {
     switch (status) {
       case 'active':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'paused':
-        return <Pause className="h-4 w-4 text-yellow-500" />;
+        return <Pause className="h-4 w-4 text-warning" />;
       case 'error':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+        return <AlertTriangle className="h-4 w-4 text-destructive" />;
       case 'offline':
         return <Clock className="h-4 w-4 text-gray-500" />;
     }
@@ -231,7 +231,7 @@ export const ModelManagementDashboard = () => {
     const iconClasses = 'h-6 w-6';
     switch (provider) {
       case 'openai':
-        return <Brain className={`${iconClasses} text-green-600`} />;
+        return <Brain className={`${iconClasses} text-success`} />;
       case 'anthropic':
         return <Brain className={`${iconClasses} text-orange-600`} />;
       case 'google':
@@ -265,7 +265,7 @@ export const ModelManagementDashboard = () => {
             <div>
               <p className="text-sm text-muted-foreground">Active Models</p>
               <p className="text-2xl font-bold text-foreground">{totalActiveModels}</p>
-              <p className="text-xs text-green-600">
+              <p className="text-xs text-success">
                 <TrendingUp className="inline h-3 w-3" /> +2 this week
               </p>
             </div>
@@ -278,7 +278,7 @@ export const ModelManagementDashboard = () => {
             <div>
               <p className="text-sm text-muted-foreground">Monthly Spend</p>
               <p className="text-2xl font-bold text-foreground">${totalMonthlySpend.toFixed(2)}</p>
-              <p className="text-xs text-red-600">
+              <p className="text-xs text-destructive">
                 <TrendingUp className="inline h-3 w-3" /> +$23.45 vs last month
               </p>
             </div>
@@ -291,7 +291,7 @@ export const ModelManagementDashboard = () => {
             <div>
               <p className="text-sm text-muted-foreground">Avg Success Rate</p>
               <p className="text-2xl font-bold text-foreground">{avgSuccessRate.toFixed(1)}%</p>
-              <p className="text-xs text-green-600">
+              <p className="text-xs text-success">
                 <TrendingUp className="inline h-3 w-3" /> +1.2% this week
               </p>
             </div>
@@ -304,7 +304,7 @@ export const ModelManagementDashboard = () => {
             <div>
               <p className="text-sm text-muted-foreground">Avg Accuracy</p>
               <p className="text-2xl font-bold text-foreground">{avgAccuracy.toFixed(1)}%</p>
-              <p className="text-xs text-green-600">
+              <p className="text-xs text-success">
                 <TrendingUp className="inline h-3 w-3" /> +0.8% this week
               </p>
             </div>
@@ -403,7 +403,7 @@ export const ModelManagementDashboard = () => {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => handleModelAction('delete', model)}
-                        className="text-red-600"
+                        className="text-destructive"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Delete

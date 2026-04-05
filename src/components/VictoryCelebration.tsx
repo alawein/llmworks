@@ -198,9 +198,9 @@ const VictoryCelebrationComponent = ({
             {/* Victory Icon */}
             <div className="mb-6 relative">
               <div className="absolute inset-0 animate-ping">
-                <Crown className="h-16 w-16 mx-auto text-yellow-400 opacity-75" />
+                <Crown className="h-16 w-16 mx-auto text-warning opacity-75" />
               </div>
-              <Crown className="h-16 w-16 mx-auto text-yellow-400 relative z-10" />
+              <Crown className="h-16 w-16 mx-auto text-warning relative z-10" />
             </div>
 
             {/* Victory Text */}
@@ -211,9 +211,9 @@ const VictoryCelebrationComponent = ({
 
             {/* Animated Trophy */}
             <div className="mt-6 flex justify-center items-center gap-3">
-              <Trophy className="h-8 w-8 text-yellow-400 animate-pulse" />
+              <Trophy className="h-8 w-8 text-warning animate-pulse" />
               <span className="heading-refined text-lg text-accent">MISSION COMPLETE</span>
-              <Trophy className="h-8 w-8 text-yellow-400 animate-pulse" />
+              <Trophy className="h-8 w-8 text-warning animate-pulse" />
             </div>
 
             {/* Energy Bars */}
@@ -236,10 +236,10 @@ const VictoryCelebrationComponent = ({
 
       {/* Lightning Effects */}
       <div className="absolute inset-0 pointer-events-none">
-        <Zap className="absolute top-1/4 left-1/4 h-12 w-12 text-yellow-400 animate-ping opacity-60" />
+        <Zap className="absolute top-1/4 left-1/4 h-12 w-12 text-warning animate-ping opacity-60" />
         <Zap className="absolute top-3/4 right-1/4 h-8 w-8 text-cyan-400 animate-pulse opacity-60" />
         <Sparkles className="absolute top-1/2 left-1/6 h-10 w-10 text-purple-400 animate-bounce opacity-60" />
-        <Sparkles className="absolute bottom-1/4 right-1/6 h-6 w-6 text-green-400 animate-spin opacity-60" />
+        <Sparkles className="absolute bottom-1/4 right-1/6 h-6 w-6 text-success animate-spin opacity-60" />
       </div>
     </div>
   );

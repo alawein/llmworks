@@ -68,9 +68,9 @@ export const PerformanceTrends = () => {
                 <p className="text-2xl font-bold text-foreground">{metric.value}</p>
                 <div className="flex items-center gap-1 mt-1">
                   {metric.trend === 'up' ? (
-                    <TrendingUp className="h-3 w-3 text-green-500" />
+                    <TrendingUp className="h-3 w-3 text-success" />
                   ) : (
-                    <TrendingDown className="h-3 w-3 text-red-500" />
+                    <TrendingDown className="h-3 w-3 text-destructive" />
                   )}
                   <span
                     className={`text-xs ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}

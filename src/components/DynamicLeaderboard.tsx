@@ -140,7 +140,7 @@ const DynamicLeaderboardComponent = () => {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Crown className="h-5 w-5 text-yellow-400" />;
+        return <Crown className="h-5 w-5 text-warning" />;
       case 2:
         return <Trophy className="h-5 w-5 text-gray-400" />;
       case 3:
@@ -151,8 +151,8 @@ const DynamicLeaderboardComponent = () => {
   };
 
   const getMomentumIcon = (momentum: string, currentRank: number, previousRank: number) => {
-    if (currentRank < previousRank) return <TrendingUp className="h-4 w-4 text-green-400" />;
-    if (currentRank > previousRank) return <TrendingDown className="h-4 w-4 text-red-400" />;
+    if (currentRank < previousRank) return <TrendingUp className="h-4 w-4 text-success" />;
+    if (currentRank > previousRank) return <TrendingDown className="h-4 w-4 text-destructive" />;
     return <Minus className="h-4 w-4 text-muted-foreground" />;
   };
 
@@ -328,7 +328,7 @@ const DynamicLeaderboardComponent = () => {
 
                     {/* Win Streak Display */}
                     {contender.winStreak > 5 && (
-                      <div className="flex items-center gap-1 text-xs text-yellow-400">
+                      <div className="flex items-center gap-1 text-xs text-warning">
                         <Star className="h-3 w-3" />
                         <span>Hot Streak!</span>
                       </div>

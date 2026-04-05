@@ -552,7 +552,7 @@ const TechnicalSpecsDrawerComponent = () => {
 
                     <div>
                       <div className="text-xs text-muted-foreground mb-1">Response:</div>
-                      <div className="text-xs font-mono text-green-400 bg-black/20 p-2 rounded">
+                      <div className="text-xs font-mono text-success bg-black/20 p-2 rounded">
                         {endpoint.response}
                       </div>
                     </div>
@@ -579,7 +579,7 @@ const TechnicalSpecsDrawerComponent = () => {
                       {layerIndex === 0 && <Monitor className="h-4 w-4 text-primary" />}
                       {layerIndex === 1 && <Server className="h-4 w-4 text-secondary" />}
                       {layerIndex === 2 && <Database className="h-4 w-4 text-accent" />}
-                      {layerIndex === 3 && <Cloud className="h-4 w-4 text-green-500" />}
+                      {layerIndex === 3 && <Cloud className="h-4 w-4 text-success" />}
                       {layer.layer}
                     </CardTitle>
                   </CardHeader>
@@ -625,7 +625,7 @@ const TechnicalSpecsDrawerComponent = () => {
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Lock className="h-4 w-4 text-green-500" />
+                        <Lock className="h-4 w-4 text-success" />
                         <span className="text-sm font-medium">{spec.feature}</span>
                       </div>
                       <Badge className="performance-superior strategic-rank">{spec.status}</Badge>
@@ -671,7 +671,7 @@ const TechnicalSpecsDrawerComponent = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-green-500">98.7%</span>
+                  <span className="text-2xl font-bold text-success">98.7%</span>
                   <Badge className="performance-elite strategic-rank">EXCELLENT</Badge>
                 </div>
                 <Progress value={98.7} className="h-3 mb-2" />

@@ -270,7 +270,7 @@ const FloatingNotificationsComponent = ({
             {/* Battle Spark Effect */}
             {notification.type === 'battle' && (
               <div className="absolute top-2 right-8">
-                <Zap className="h-4 w-4 text-yellow-400 animate-bounce" />
+                <Zap className="h-4 w-4 text-warning animate-bounce" />
               </div>
             )}
           </div>

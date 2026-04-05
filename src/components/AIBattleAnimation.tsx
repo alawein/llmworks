@@ -203,8 +203,8 @@ const AIBattleAnimationComponent = () => {
               {/* Attack Effect */}
               {robot.attacking && (
                 <div className="absolute -inset-1">
-                  <Sparkles className="h-4 w-4 text-yellow-400 absolute -top-2 -right-2 animate-spin" />
-                  <Sparkles className="h-3 w-3 text-yellow-400 absolute -bottom-1 -left-1 animate-ping" />
+                  <Sparkles className="h-4 w-4 text-warning absolute -top-2 -right-2 animate-spin" />
+                  <Sparkles className="h-3 w-3 text-warning absolute -bottom-1 -left-1 animate-ping" />
                 </div>
               )}
             </div>
@@ -248,7 +248,7 @@ const AIBattleAnimationComponent = () => {
 
           {effect.type === 'spark' && (
             <div className="animate-ping">
-              <Sparkles className="h-6 w-6 text-yellow-400" />
+              <Sparkles className="h-6 w-6 text-warning" />
             </div>
           )}
 

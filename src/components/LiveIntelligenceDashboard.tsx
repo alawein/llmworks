@@ -180,11 +180,11 @@ const LiveIntelligenceDashboardComponent = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'optimal':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'warning':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       case 'critical':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+        return <AlertTriangle className="h-4 w-4 text-destructive" />;
       default:
         return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
@@ -392,7 +392,7 @@ const LiveIntelligenceDashboardComponent = () => {
                     </div>
                   </div>
 
-                  {alert.resolved && <CheckCircle className="h-4 w-4 text-green-500" />}
+                  {alert.resolved && <CheckCircle className="h-4 w-4 text-success" />}
                 </div>
               </div>
             ))}

@@ -294,11 +294,11 @@ const EpicConfrontationMomentsComponent = ({
               <div className="p-2 bg-yellow-400/20 rounded-full animate-pulse">
                 {(() => {
                   const IconComponent = getEffectIcon(moment.type);
-                  return <IconComponent className="h-5 w-5 text-yellow-400" />;
+                  return <IconComponent className="h-5 w-5 text-warning" />;
                 })()}
               </div>
               <div>
-                <div className="font-bold text-yellow-400 uppercase tracking-wide">
+                <div className="font-bold text-warning uppercase tracking-wide">
                   {moment.type.replace('-', ' ')}
                 </div>
                 <div className="text-sm text-white">{moment.description}</div>

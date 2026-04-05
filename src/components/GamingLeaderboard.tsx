@@ -190,7 +190,7 @@ const GamingLeaderboardComponent = () => {
   const getRankIcon = (position: number) => {
     switch (position) {
       case 1:
-        return <Crown className="h-5 w-5 text-yellow-400" />;
+        return <Crown className="h-5 w-5 text-warning" />;
       case 2:
         return <Trophy className="h-5 w-5 text-gray-300" />;
       case 3:
@@ -311,7 +311,7 @@ const GamingLeaderboardComponent = () => {
                             {entry.isHuman && (
                               <Badge
                                 variant="outline"
-                                className="text-xs glass-minimal border-green-400/30 text-green-400"
+                                className="text-xs glass-minimal border-green-400/30 text-success"
                               >
                                 HUMAN
                               </Badge>
@@ -378,8 +378,8 @@ const GamingLeaderboardComponent = () => {
                           <div className="text-xs text-muted-foreground">ELO Rating</div>
 
                           <div className="flex items-center gap-2 text-xs">
-                            <span className="text-green-400">{entry.wins}W</span>
-                            <span className="text-red-400">{entry.losses}L</span>
+                            <span className="text-success">{entry.wins}W</span>
+                            <span className="text-destructive">{entry.losses}L</span>
                             <Badge variant="outline" className="text-xs">
                               {winRate}%
                             </Badge>

@@ -240,13 +240,13 @@ const StrategicCommandPanelComponent = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'online':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'offline':
         return <Power className="h-4 w-4 text-gray-500" />;
       case 'maintenance':
-        return <Settings className="h-4 w-4 text-yellow-500" />;
+        return <Settings className="h-4 w-4 text-warning" />;
       case 'error':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+        return <AlertTriangle className="h-4 w-4 text-destructive" />;
       default:
         return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
@@ -388,7 +388,7 @@ const StrategicCommandPanelComponent = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Queue Depth</span>
-                    <span className="text-sm font-bold text-green-500">23</span>
+                    <span className="text-sm font-bold text-success">23</span>
                   </div>
                 </CardContent>
               </Card>
@@ -408,11 +408,11 @@ const StrategicCommandPanelComponent = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Failed Attempts</span>
-                    <span className="text-sm font-bold text-red-500">0</span>
+                    <span className="text-sm font-bold text-destructive">0</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Active Firewalls</span>
-                    <span className="text-sm font-bold text-green-500">3</span>
+                    <span className="text-sm font-bold text-success">3</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">Last Scan</span>
@@ -551,7 +551,7 @@ const StrategicCommandPanelComponent = () => {
               <CardContent className="p-0">
                 <div
                   ref={terminalRef}
-                  className="font-mono text-xs text-green-400 p-4 h-64 overflow-y-auto scrollbar-elegant"
+                  className="font-mono text-xs text-success p-4 h-64 overflow-y-auto scrollbar-elegant"
                   style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                 >
                   <div className="text-primary mb-2">
@@ -580,12 +580,12 @@ const StrategicCommandPanelComponent = () => {
                           executeCommand();
                         }
                       }}
-                      className="border-0 bg-transparent text-green-400 p-0 h-auto focus-visible:ring-0"
+                      className="border-0 bg-transparent text-success p-0 h-auto focus-visible:ring-0"
                       placeholder="Enter command..."
                       disabled={isExecuting}
                     />
                     {isExecuting && (
-                      <div className="ml-2 text-yellow-400 animate-pulse">executing...</div>
+                      <div className="ml-2 text-warning animate-pulse">executing...</div>
                     )}
                   </div>
                 </div>

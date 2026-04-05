@@ -314,11 +314,11 @@ export const SystemHealthDashboard = () => {
   const getStatusIcon = (status: ServiceStatus['status']) => {
     switch (status) {
       case 'healthy':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'degraded':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       case 'down':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-destructive" />;
       case 'maintenance':
         return <Settings className="h-4 w-4 text-blue-500" />;
     }
@@ -340,9 +340,9 @@ export const SystemHealthDashboard = () => {
   const getAlertIcon = (type: Alert['type']) => {
     switch (type) {
       case 'error':
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
+        return <AlertCircle className="h-4 w-4 text-destructive" />;
       case 'warning':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       case 'info':
         return <Bell className="h-4 w-4 text-blue-500" />;
     }
@@ -392,13 +392,13 @@ export const SystemHealthDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">System Status</p>
-              <p className="text-2xl font-bold text-green-600">Operational</p>
+              <p className="text-2xl font-bold text-success">Operational</p>
               <div className="flex items-center gap-1 mt-1">
-                <CheckCircle className="h-3 w-3 text-green-500" />
-                <span className="text-xs text-green-600">{avgUptime.toFixed(1)}% uptime</span>
+                <CheckCircle className="h-3 w-3 text-success" />
+                <span className="text-xs text-success">{avgUptime.toFixed(1)}% uptime</span>
               </div>
             </div>
-            <Server className="h-8 w-8 text-green-500" />
+            <Server className="h-8 w-8 text-success" />
           </div>
         </Card>
 
@@ -410,13 +410,13 @@ export const SystemHealthDashboard = () => {
               <div className="flex items-center gap-1 mt-1">
                 {unacknowledgedAlerts > 0 ? (
                   <>
-                    <AlertTriangle className="h-3 w-3 text-yellow-500" />
-                    <span className="text-xs text-yellow-600">Needs attention</span>
+                    <AlertTriangle className="h-3 w-3 text-warning" />
+                    <span className="text-xs text-warning">Needs attention</span>
                   </>
                 ) : (
                   <>
-                    <CheckCircle className="h-3 w-3 text-green-500" />
-                    <span className="text-xs text-green-600">All clear</span>
+                    <CheckCircle className="h-3 w-3 text-success" />
+                    <span className="text-xs text-success">All clear</span>
                   </>
                 )}
               </div>
@@ -681,7 +681,7 @@ export const SystemHealthDashboard = () => {
 
           {alerts.length === 0 && (
             <div className="text-center py-8 text-muted-foreground">
-              <CheckCircle className="h-12 w-12 mx-auto mb-4 text-green-500" />
+              <CheckCircle className="h-12 w-12 mx-auto mb-4 text-success" />
               <p>No active alerts. All systems operational.</p>
             </div>
           )}

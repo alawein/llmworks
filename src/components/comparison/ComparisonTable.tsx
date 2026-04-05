@@ -69,7 +69,7 @@ export const ComparisonTable = ({ models }: ComparisonTableProps) => {
 
   const getCellStyle = (modelIdx: number, metricKey: string) => {
     const rank = rankings[metricKey]?.indexOf(modelIdx);
-    if (rank === 0) return 'bg-green-500/10 text-green-600 font-medium';
+    if (rank === 0) return 'bg-green-500/10 text-success font-medium';
     if (rank === models.length - 1) return 'bg-red-500/10 text-red-500';
     return '';
   };

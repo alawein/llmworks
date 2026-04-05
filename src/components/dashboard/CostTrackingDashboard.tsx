@@ -302,9 +302,9 @@ export const CostTrackingDashboard = () => {
   const getTrendIcon = (direction: ModelUsage['trend']['direction']) => {
     switch (direction) {
       case 'up':
-        return <ArrowUpRight className="h-4 w-4 text-red-500" />;
+        return <ArrowUpRight className="h-4 w-4 text-destructive" />;
       case 'down':
-        return <ArrowDownRight className="h-4 w-4 text-green-500" />;
+        return <ArrowDownRight className="h-4 w-4 text-success" />;
       case 'stable':
         return <div className="h-4 w-4" />;
     }
@@ -331,8 +331,8 @@ export const CostTrackingDashboard = () => {
               <p className="text-sm text-muted-foreground">Total Spent</p>
               <p className="text-2xl font-bold text-foreground">${totalSpent.toFixed(2)}</p>
               <div className="flex items-center gap-1 mt-1">
-                <TrendingUp className="h-3 w-3 text-red-500" />
-                <span className="text-xs text-red-600">+15.2% this period</span>
+                <TrendingUp className="h-3 w-3 text-destructive" />
+                <span className="text-xs text-destructive">+15.2% this period</span>
               </div>
             </div>
             <DollarSign className="h-8 w-8 text-primary" />
@@ -345,8 +345,8 @@ export const CostTrackingDashboard = () => {
               <p className="text-sm text-muted-foreground">Daily Average</p>
               <p className="text-2xl font-bold text-foreground">${avgDailySpend.toFixed(2)}</p>
               <div className="flex items-center gap-1 mt-1">
-                <TrendingDown className="h-3 w-3 text-green-500" />
-                <span className="text-xs text-green-600">-3.8% vs last period</span>
+                <TrendingDown className="h-3 w-3 text-success" />
+                <span className="text-xs text-success">-3.8% vs last period</span>
               </div>
             </div>
             <BarChart3 className="h-8 w-8 text-primary" />
@@ -379,8 +379,8 @@ export const CostTrackingDashboard = () => {
                 ${(totalSpent / totalEvaluations).toFixed(2)}
               </p>
               <div className="flex items-center gap-1 mt-1">
-                <Target className="h-3 w-3 text-green-500" />
-                <span className="text-xs text-green-600">-8.1% efficiency gain</span>
+                <Target className="h-3 w-3 text-success" />
+                <span className="text-xs text-success">-8.1% efficiency gain</span>
               </div>
             </div>
             <CreditCard className="h-8 w-8 text-primary" />
@@ -403,7 +403,7 @@ export const CostTrackingDashboard = () => {
                     {budget.period} • ${budget.spent.toFixed(2)} of ${budget.limit.toFixed(2)}
                   </p>
                 </div>
-                {status.status === 'danger' && <AlertTriangle className="h-5 w-5 text-red-500" />}
+                {status.status === 'danger' && <AlertTriangle className="h-5 w-5 text-destructive" />}
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
@@ -609,7 +609,7 @@ export const CostTrackingDashboard = () => {
         </h3>
         <div className="space-y-4">
           <div className="flex items-start gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-            <AlertTriangle className="h-5 w-5 text-yellow-600 mt-0.5" />
+            <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />
             <div>
               <h4 className="font-medium text-foreground">High OpenAI Usage</h4>
               <p className="text-sm text-muted-foreground mt-1">
@@ -620,7 +620,7 @@ export const CostTrackingDashboard = () => {
           </div>
 
           <div className="flex items-start gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-            <Target className="h-5 w-5 text-green-600 mt-0.5" />
+            <Target className="h-5 w-5 text-success mt-0.5" />
             <div>
               <h4 className="font-medium text-foreground">Optimization Opportunity</h4>
               <p className="text-sm text-muted-foreground mt-1">

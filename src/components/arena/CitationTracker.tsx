@@ -247,11 +247,11 @@ const CitationTrackerComponent = ({
   const getCredibilityIcon = (credibility: Citation['credibility']) => {
     switch (credibility) {
       case 'high':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'medium':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       case 'low':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-destructive" />;
       default:
         return <Search className="h-4 w-4 text-gray-500" />;
     }
@@ -260,12 +260,12 @@ const CitationTrackerComponent = ({
   const getFactCheckIcon = (status: FactCheck['status']) => {
     switch (status) {
       case 'verified':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'partially-true':
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       case 'disputed':
       case 'false':
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-destructive" />;
       default:
         return <Search className="h-4 w-4 text-gray-500" />;
     }

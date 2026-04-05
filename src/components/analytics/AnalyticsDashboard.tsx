@@ -63,8 +63,8 @@ export function AnalyticsDashboard() {
                 <p className="text-sm text-muted-foreground">{metric.label}</p>
                 <p className="text-2xl font-bold text-foreground">{metric.value}</p>
                 <div className="flex items-center gap-1 mt-1">
-                  <TrendingUp className="h-3 w-3 text-green-500" />
-                  <span className="text-xs text-green-500">{metric.change}</span>
+                  <TrendingUp className="h-3 w-3 text-success" />
+                  <span className="text-xs text-success">{metric.change}</span>
                 </div>
               </div>
               <metric.icon className="h-8 w-8 text-primary" />

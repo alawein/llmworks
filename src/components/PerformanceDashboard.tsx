@@ -152,15 +152,15 @@ export const PerformanceDashboard = memo(() => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div className="text-center">
-            <div className="font-medium text-green-600">Good</div>
+            <div className="font-medium text-success">Good</div>
             <div className="text-muted-foreground">90-100</div>
           </div>
           <div className="text-center">
-            <div className="font-medium text-yellow-600">Needs Improvement</div>
+            <div className="font-medium text-warning">Needs Improvement</div>
             <div className="text-muted-foreground">50-89</div>
           </div>
           <div className="text-center">
-            <div className="font-medium text-red-600">Poor</div>
+            <div className="font-medium text-destructive">Poor</div>
             <div className="text-muted-foreground">0-49</div>
           </div>
           <div className="text-center">
@@ -324,36 +324,36 @@ export const PerformanceDashboard = memo(() => {
                 <div className="flex items-center justify-between">
                   <span>Supported</span>
                   {data.swStatus.supported ? (
-                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <CheckCircle className="h-4 w-4 text-success" />
                   ) : (
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertTriangle className="h-4 w-4 text-destructive" />
                   )}
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span>Registered</span>
                   {data.swStatus.registered ? (
-                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <CheckCircle className="h-4 w-4 text-success" />
                   ) : (
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertTriangle className="h-4 w-4 text-destructive" />
                   )}
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span>Active</span>
                   {data.swStatus.active ? (
-                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <CheckCircle className="h-4 w-4 text-success" />
                   ) : (
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
+                    <AlertTriangle className="h-4 w-4 text-destructive" />
                   )}
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span>Update Available</span>
                   {data.swStatus.waiting ? (
-                    <AlertTriangle className="h-4 w-4 text-yellow-600" />
+                    <AlertTriangle className="h-4 w-4 text-warning" />
                   ) : (
-                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <CheckCircle className="h-4 w-4 text-success" />
                   )}
                 </div>
               </div>
@@ -363,9 +363,9 @@ export const PerformanceDashboard = memo(() => {
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 {data.offline ? (
-                  <WifiOff className="h-5 w-5 text-red-600" />
+                  <WifiOff className="h-5 w-5 text-destructive" />
                 ) : (
-                  <Wifi className="h-5 w-5 text-green-600" />
+                  <Wifi className="h-5 w-5 text-success" />
                 )}
                 Connection Status
               </h3>

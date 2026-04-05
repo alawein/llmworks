@@ -261,11 +261,11 @@ export const EvaluationMonitoringDashboard = () => {
       case 'running':
         return <Play className="h-4 w-4 text-blue-500" />;
       case 'completed':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       case 'failed':
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
+        return <AlertCircle className="h-4 w-4 text-destructive" />;
       case 'paused':
-        return <Pause className="h-4 w-4 text-yellow-500" />;
+        return <Pause className="h-4 w-4 text-warning" />;
       case 'queued':
         return <Clock className="h-4 w-4 text-gray-500" />;
       default:
@@ -349,13 +349,13 @@ export const EvaluationMonitoringDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Queued</p>
-              <p className="text-2xl font-bold text-yellow-600">{queuedEvaluations}</p>
+              <p className="text-2xl font-bold text-warning">{queuedEvaluations}</p>
               <div className="flex items-center gap-1 mt-1">
-                <Timer className="h-3 w-3 text-yellow-500" />
+                <Timer className="h-3 w-3 text-warning" />
                 <span className="text-xs text-muted-foreground">Waiting</span>
               </div>
             </div>
-            <Clock className="h-8 w-8 text-yellow-500" />
+            <Clock className="h-8 w-8 text-warning" />
           </div>
         </Card>
 
@@ -363,13 +363,13 @@ export const EvaluationMonitoringDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-foreground">Completed Today</p>
-              <p className="text-2xl font-bold text-green-600">{completedToday}</p>
+              <p className="text-2xl font-bold text-success">{completedToday}</p>
               <div className="flex items-center gap-1 mt-1">
-                <TrendingUp className="h-3 w-3 text-green-500" />
-                <span className="text-xs text-green-600">+3 vs yesterday</span>
+                <TrendingUp className="h-3 w-3 text-success" />
+                <span className="text-xs text-success">+3 vs yesterday</span>
               </div>
             </div>
-            <CheckCircle className="h-8 w-8 text-green-500" />
+            <CheckCircle className="h-8 w-8 text-success" />
           </div>
         </Card>
 

@@ -192,7 +192,7 @@ const AchievementPopup = ({ achievement, onDismiss }: AchievementPopupProps) => 
           <div className="absolute inset-0 rounded-xl pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-transparent to-yellow-400/20 animate-pulse" />
             <div className="absolute top-2 right-2">
-              <Crown className="h-4 w-4 text-yellow-400 animate-bounce" />
+              <Crown className="h-4 w-4 text-warning animate-bounce" />
             </div>
           </div>
         )}

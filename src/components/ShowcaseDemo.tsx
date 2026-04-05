@@ -420,7 +420,7 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
                   variant="outline"
                   size="sm"
                   onClick={stopDemo}
-                  className="glass-minimal border-red-500/30 text-red-400 hover:bg-red-500/10"
+                  className="glass-minimal border-red-500/30 text-destructive hover:bg-red-500/10"
                 >
                   Stop
                 </Button>
