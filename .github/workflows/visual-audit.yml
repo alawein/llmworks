@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm install
+      - run: rm -f package-lock.json && npm install
       - run: npx playwright install chromium --with-deps
       - name: Run visual tests
         run: npx playwright test tests/visual/ --project=chromium

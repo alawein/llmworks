@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm install
+      - run: rm -f package-lock.json && npm install
       - run: npm run lint --if-present
       - run: npm run build
 
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm install && npm run build
+      - run: rm -f package-lock.json && npm install && npm run build
         env:
           NODE_ENV: production
       - uses: amondnet/vercel-action@0fd9718f157ce3c96317d385a3c8ebd92b32909e # v1
