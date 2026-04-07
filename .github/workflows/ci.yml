@@ -32,7 +32,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: rm -f package-lock.json && npm install && npm run build
+      - run: rm -f package-lock.json && npm install
+      - run: npm run build
         env:
           NODE_ENV: production
       - name: Install Vercel CLI
