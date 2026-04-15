@@ -1,37 +1,30 @@
----
-type: canonical
-source: none
-sync: none
-sla: none
----
-
 ## Summary
 
-Describe what changed and why.
-
-## Problem
-
-What issue or need does this PR address?
-
-## Testing
-
-- [ ] Unit tests
-- [ ] Integration tests
-- [ ] Manual verification
-
-## Risk Assessment
-
-- Risk level: low | medium | high
-- User impact: none | internal | external
-
-## Rollback Plan
-
-Describe how to revert if needed.
+- What is changing?
+- Why is it needed?
 
 ## Checklist
 
-- [ ] Linked issue/ticket
-- [ ] CI checks pass
-- [ ] No secrets introduced
-- [ ] Documentation updated if behavior changed
-- [ ] Changelog updated
+- [ ] Branch follows naming rules (`feat/*`, `fix/*`, `docs/*`, `chore/*`, `test/*`)
+- [ ] Scope is intentional and focused
+- [ ] CI is green or flake is documented
+- [ ] Tests added/updated (when applicable)
+- [ ] Docs or governance guides updated when behavior or workflow changed
+- [ ] No secrets, tokens, or .env files included
+
+## Testing
+
+- [ ] Not run (explain why)
+- [ ] Local checks executed
+
+## Risk
+
+- [ ] Low (default)
+- [ ] Medium (note what could break)
+- [ ] High (requires extra validation)
+
+## Notes
+
+- If this PR changes workflow or governance, link the relevant guide under
+  [`docs/governance/`](../docs/governance/).
+- Anything reviewers should know (workarounds, follow-ups, known gaps)
