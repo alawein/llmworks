@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   analyze:
-    uses: alawein/alawein/.github/workflows/codeql.yml@main
+    uses: alawein/alawein/.github/workflows/codeql.yml@ed5ed61aef28cbdd761eeb0654808833bc4564be
     with:
       languages: 'javascript-typescript'

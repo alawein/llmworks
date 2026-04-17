@@ -1,149 +1,85 @@
----
-type: canonical
-source: none
-sync: none
-sla: none
----
-
 # LLMWorks
 
-> LLM security & testing platform
+LLMWorks is an LLM evaluation and security-testing workbench. It provides a
+browser-based surface for benchmark runs, provider-backed experiments, and
+security-oriented inspection of model behavior.
 
-## Quick Start
+This repo is not a generic chat wrapper. It exists to compare models, expose
+failure modes, and keep evaluation workflows inspectable.
+
+[llmworks.dev](https://llmworks.dev)
+
+## What it does
+
+- Runs evaluation and benchmark flows against configured providers
+- Supports security-oriented testing and inspection paths
+- Stores auth and data state through Supabase-backed flows
+- Ships local UI for dashboards, reports, and experiment review
+- Includes Playwright, accessibility, visual, and coverage-driven test surfaces
+
+## Stack
+
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS + Radix/shadcn-style primitives
+- TanStack Query
+- Supabase
+- OpenAI and Anthropic integrations where configured
+- Vitest + Playwright
+
+## Quick start
 
 ```bash
-# Clone the repository
-git clone https://github.com/alawein/llmworks.git
-cd llmworks
-
-# Install dependencies
 npm install
-
-# Start development
 npm run dev
-
-# Visit http://localhost:3004
 ```
 
-## Features
+Environment variables, including the production encryption salt, are documented
+in [`.env.example`](.env.example).
 
-- LLM Security
-- Testing Tools
+## Validation
 
-## Tech Stack
+```bash
+npm run build
+npm run lint
+npm run type-check
+npm run test:run
+npm run test:e2e
+npm run test:accessibility
+npm run test:visual
+```
 
-### Frontend
-
-- **React**
-- **TypeScript**
-- **Vite**
-
-### Backend
-
-- **Supabase**
-- **OpenAI**
-- **Anthropic**
-
-### Testing
-
-- **Vitest**
-- **Playwright**
-
-### Specialized
-
-- **LLM Integration**
-- **Security Testing**
-
-## Project Structure
+## Layout
 
 ```text
 llmworks/
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/         # Page components
-│   ├── hooks/         # Custom React hooks
-│   ├── utils/         # Utility functions
-│   ├── stores/        # State management
-│   └── types/         # TypeScript type definitions
+├── docs/              # Repo-local documentation
+├── e2e/               # Playwright coverage
 ├── public/            # Static assets
-├── docs/             # Documentation
-└── scripts/          # Build and utility scripts
+├── scripts/           # QA and operational helpers
+├── src/
+│   ├── components/    # Shared UI
+│   ├── hooks/         # Custom hooks
+│   ├── pages/         # Route-level screens
+│   ├── stores/        # Client state
+│   ├── types/         # Shared types
+│   └── utils/         # Utilities
+├── supabase/          # Backend and data support
+├── tests/             # Repo-local test surfaces
+├── AGENTS.md
+├── CLAUDE.md
+└── SSOT.md
 ```
 
-## Development
+## Runtime boundaries
 
-### Available Scripts
+- Keep route surfaces in `src/pages/`.
+- Treat production encryption and provider keys as deployment-only secrets.
+- Benchmark and security-testing logic should stay legible; do not hide core
+  evaluation behavior behind opaque wrappers.
 
-```bash
-dev: npm run dev
-build: npm run build
-test: npm run test
-lint: npm run lint
-typeCheck: npm run type-check
-preview: npm run preview
-```
+## Governance
 
-### Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-## Deployment
-
-### Docker
-
-```bash
-# Build image
-docker build -t llmworks .
-
-# Run container
-docker run -p 3004:3004 llmworks
-```
-
-### Docker Compose
-
-```bash
-# Start with profile
-docker-compose --profile llmworks up -d
-```
-
-## Testing
-
-```bash
-# Run unit tests
-npm run test
-
-# Run E2E tests
-npm run test:e2e
-
-# Run with coverage
-npm run test:coverage
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the
-[LICENSE](LICENSE) file for details.
-
-## Links
-
-- **Main Repository**: https://github.com/alawein/llmworks
-- **Documentation**: [docs/](docs/)
-- **Issues**: https://github.com/alawein/llmworks/issues
-
-## Ownership
-
-- **Maintainer:** @alawein
-- **Support:** GitHub Issues on this repository
+- [AGENTS.md](AGENTS.md): repo rules and invariants
+- [CLAUDE.md](CLAUDE.md): agent-facing context
+- [SSOT.md](SSOT.md): current state and active decisions

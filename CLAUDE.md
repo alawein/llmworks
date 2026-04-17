@@ -4,64 +4,66 @@ source: none
 sync: none
 sla: none
 authority: canonical
-audience: [agents, contributors]
-last-verified: 2026-03-22
+audience: [ai-agents, contributors]
+last_updated: 2026-04-15
+last-verified: 2026-04-15
 ---
 
-# llmworks — Claude Code Configuration
+# CLAUDE.md — LLMWorks
 
-## Project Context
+## Workspace identity
 
-LLMWorks — open-source LLM evaluation platform for security testing and benchmarking of language models. Rebranded from Aegis AI (Jan 2025). Supabase backend, OpenAI + Anthropic API integrations.
+LLMWorks is an LLM evaluation and security-testing workbench. The repo exists
+to run experiments, compare models, and expose failure modes in a way that
+stays visible to operators.
 
-## Commands
+Shared voice and workspace prompt:
+
+- <https://github.com/alawein/alawein/blob/main/docs/style/VOICE.md>
+- <https://github.com/alawein/alawein/blob/main/prompt-kits/AGENT.md>
+
+## Directory structure
+
+- `src/pages/`: route-level screens
+- `src/components/`: shared UI
+- `src/hooks/`: custom hooks
+- `src/stores/`: client state
+- `src/utils/`: utilities
+- `supabase/`: backend and data support
+- `e2e/`: Playwright coverage
+- `tests/`: repo-local verification
+- `scripts/`: QA and operational helpers
+
+## Governance rules
+
+1. Keep evaluation behavior inspectable. Do not bury core benchmark logic in
+   opaque wrappers or side effects.
+2. Treat `VITE_API_KEY_ENCRYPTION_SALT` as a deployment secret, not as a
+   checked-in convenience default.
+3. Provider keys and Supabase credentials stay out of version control.
+4. Route surfaces belong in `src/pages/`.
+5. Security-testing flows are first-class product paths. Preserve them when
+   changing dashboards or experiment UI.
+
+## Code conventions
+
+- React + TypeScript
+- Prefer the existing Radix/Tailwind component stack over a second UI layer
+- Keep provider integration and evaluation utilities explicit in naming and
+  error handling
+- Comments explain benchmark, security, or provider constraints, not obvious UI
+  behavior
+
+## Build and test commands
 
 ```bash
-npm run dev              # Vite dev server
-npm run build            # production build
-npm run test             # Vitest watch mode
-npm run test:run         # run all tests once
-npm run test:e2e         # Playwright E2E tests
-npm run test:coverage    # coverage report
-npm run test:visual      # visual regression tests
-npm run lint             # ESLint
-npm run format           # Prettier formatting
-npm run type-check       # TypeScript validation
+npm install
+npm run dev
+npm run build
+npm run lint
+npm run type-check
+npm run test:run
+npm run test:e2e
+npm run test:accessibility
+npm run test:visual
 ```
-
-## Architecture
-
-**Stack:** Vite + React 19 + TypeScript, Radix UI, Tailwind CSS 4, TanStack Query, React Router 6, Supabase (auth + DB), OpenAI + Anthropic SDKs, Recharts (charts), React Hook Form + Zod, Crypto-JS (encryption).
-
-**Structure:**
-- `src/components/` — reusable UI components
-- `src/pages/` — page components
-- `src/hooks/` — custom React hooks
-- `src/stores/` — state management
-- `src/utils/` — utility functions
-- `supabase/` — database config
-- `e2e/` — E2E test specs
-
-**Deployment:** Vercel. Docker support available. Node >= 18, npm >= 8.
-
-## Quick Links
-
-- Governance: [AGENTS.md](AGENTS.md)
-- Shared governance guides: [../../../docs/shared/](../../../docs/shared/)
-
-## Session Bootstrap
-
-Before working:
-1. Run `git log --oneline -5` to see recent work
-2. Read `docs/operations/backlog.md` for open work
-
-## Work Style
-
-- Execute, do not plan. When asked to do something, do it.
-- One change at a time. Make the smallest complete change, verify, then move to next.
-- If stuck for >2 tool calls, stop and ask.
-
-## Environment
-
-- Git configured for LF (not CRLF)
-- No credentials in chat; use `gh secret set` or `vercel env add` instead

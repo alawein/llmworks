@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.1.0] — 2026-03-06
 
 ### Added
-- Migrated to `@malawein/ui` shared component library (#1)
+- Migrated to `@alawein/ui` shared component library (#1)
 - Visual regression CI workflow with Playwright baselines
 - Lib module tests for analytics, rate-limiter, security, and utils
 - CLAUDE.md agent guidance

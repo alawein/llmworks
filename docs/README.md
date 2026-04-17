@@ -1,30 +1,22 @@
----
-type: derived
-owner: platform-engineering
-last-reviewed: 2026-03-31
-source: ../README.md
-sync: manual
-sla: none
----
-
 # Documentation Index — llmworks
 
-LLM evaluation, benchmarking, and security testing playground
+The LLMWorks docs lane covers the evaluation engine, deployment and domain
+operations, examples, security notes, and the brand/marketing material that
+supports the public product surface.
 
-## Start Here
+## Start here
 
 - [README](../README.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Security Policy](../SECURITY.md)
-- [Changelog](../CHANGELOG.md)
+- [overview.md](./overview.md)
+- [architecture.md](./architecture.md)
+- [API_REFERENCE.md](./API_REFERENCE.md)
+- [deployment.md](./deployment.md)
+- [troubleshooting.md](./troubleshooting.md)
 
-## Core Docs
+## Major lanes
 
-- [Architecture Overview](./architecture.md)
-- [Deployment and Release](./deployment.md)
-- [Troubleshooting](./troubleshooting.md)
-
-## Ownership
-
-- Owning team: alawein-core
-- Support: @alawein
+- [DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md)
+- [EXAMPLES.md](./EXAMPLES.md)
+- [operations/RUNBOOK.md](./operations/RUNBOOK.md)
+- [brand/brand-charter.md](./brand/brand-charter.md)
+- [marketing/EMAIL_TEMPLATES.md](./marketing/EMAIL_TEMPLATES.md)

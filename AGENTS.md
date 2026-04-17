@@ -4,44 +4,52 @@ source: none
 sync: none
 sla: none
 authority: canonical
-audience: [agents, contributors]
+audience: [agents, contributors, maintainers]
+last_updated: 2026-04-15
+last-verified: 2026-04-15
 ---
 
-# Governance
+# AGENTS — LLMWorks
 
-This project follows **Morphism Categorical Governance Framework**.
+## Workspace identity
 
-## Seven Invariants
+LLMWorks is a Vite/React evaluation and security-testing product for LLM
+experiments and operator-visible benchmarking.
 
-| ID | Invariant | Enforcement |
-|----|-----------| ------------|
-| I-1 | One Truth Per Domain | Maintain SSOT (single source of truth) per config type |
-| I-2 | Drift Is Debt | Config drift detected and logged; sync recommended |
-| I-3 | Observability | Log what changed, why, who, when |
-| I-4 | Scope Binding | Changes must have clear, narrow boundaries |
-| I-5 | Entropy Monotonicity | Complexity shouldn't decrease without intent |
-| I-6 | Refusal as Structure | Say "no" to scope creep |
-| I-7 | Minimal Authority | Fewest people/rules needed to govern |
+## Directory structure
 
-## Protocol
+- `src/pages/`: route screens
+- `src/components/`: shared UI
+- `src/stores/`: client state
+- `src/utils/`: utilities
+- `supabase/`: backend support
+- `e2e/`, `tests/`: required verification
+- `scripts/`: QA helpers
 
-1. Read governance docs before structural changes
-2. State the one thing you're building
-3. Verify the path (which files, which branches)
-4. Execute incrementally
-5. Refuse scope creep
+## Governance rules
 
-## Git Workflow
+1. Keep evaluation and benchmark behavior legible.
+2. Treat provider keys and encryption salt as deployment secrets only.
+3. Keep route surfaces in `src/pages/`.
+4. Do not reduce security-testing flows to decorative UI or placeholder copy.
+5. Preserve test coverage around provider integration and benchmark paths.
 
-Branches: `feat/`, `fix/`, `docs/`, `chore/`, `test/` prefixes.
-Direct work on main blocked by hooks.
+## Code conventions
 
-## Open Work
+- React + TypeScript
+- Existing Radix/Tailwind stack stays canonical
+- Comments explain benchmark, security, or provider constraints
+- Conventional commits only
 
-See: `docs/operations/backlog.md`
+## Build and test commands
 
-## Session Handoff
-
-Before ending session:
-1. Append entry to `docs/operations/session-log.md`
-2. Update backlog (mark completed, add new items)
+```bash
+npm install
+npm run build
+npm run lint
+npm run type-check
+npm run test:run
+npm run test:e2e
+npm run test:accessibility
+npm run test:visual
+```

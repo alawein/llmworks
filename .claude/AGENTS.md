@@ -1,47 +1,32 @@
 ---
-type: canonical
+type: derived
+source: org/governance-templates
+sync: script
+sla: on-change
 authority: canonical
 audience: [agents, contributors]
-source: none
-sync: none
-sla: none
+last-verified: 2026-04-16
 ---
 
-# Governance
+# llmworks — local governance mirror
 
-This project follows **Morphism Categorical Governance Framework**.
+Use the root governance files as the source of truth for this repo.
 
-## Seven Invariants
+## Authority
 
-| ID | Invariant | Enforcement |
-|----|-----------| ------------|
-| I-1 | One Truth Per Domain | Maintain SSOT (single source of truth) per config type |
-| I-2 | Drift Is Debt | Config drift detected and logged; sync recommended |
-| I-3 | Observability | Log what changed, why, who, when |
-| I-4 | Scope Binding | Changes must have clear, narrow boundaries |
-| I-5 | Entropy Monotonicity | Complexity shouldn't decrease without intent |
-| I-6 | Refusal as Structure | Say "no" to scope creep |
-| I-7 | Minimal Authority | Fewest people/rules needed to govern |
+- Root [AGENTS.md](AGENTS.md) is authoritative for repo rules and operating boundaries.
+- Root [CLAUDE.md](CLAUDE.md) is authoritative for repo context and implementation constraints.
+- Shared voice contract: <https://github.com/alawein/alawein/blob/main/docs/style/VOICE.md>
 
-## Protocol
+## Operating Rules
 
-1. Read governance docs before structural changes
-2. State the one thing you're building
-3. Verify the path (which files, which branches)
-4. Execute incrementally
-5. Refuse scope creep
+- Change the smallest complete surface and verify immediately.
+- Keep GitHub-facing `README.md` and `docs/README.md` frontmatter-free.
+- Keep `SSOT.md`, `LESSONS.md`, and `CHANGELOG.md` aligned when structure or behavior changes.
+- Treat generated or runtime state as generated. Fix the source or validator boundary instead of hand-editing artifacts.
+- Never commit secrets, tokens, or credentials.
 
-## Git Workflow
+## Handoff
 
-Branches: `feat/`, `fix/`, `docs/`, `chore/`, `test/` prefixes.
-Direct work on main blocked by hooks.
-
-## Open Work
-
-See: `docs/operations/backlog.md`
-
-## Session Handoff
-
-Before ending session:
-1. Append entry to `docs/operations/session-log.md`
-2. Update backlog (mark completed, add new items)
+- Record meaningful structural or behavioral changes in the repo-local docs that already own that contract.
+- Leave follow-up work in visible repo surfaces, not hidden chat state.

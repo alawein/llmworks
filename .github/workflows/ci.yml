@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   ci:
-    uses: alawein/alawein/.github/workflows/ci-node.yml@main
+    uses: alawein/alawein/.github/workflows/ci-node.yml@ed5ed61aef28cbdd761eeb0654808833bc4564be
     with:
       working-directory: '.'
       install-command: 'npm ci'
