@@ -46,7 +46,7 @@
   "dependencies": {
     "@alawein/theme-base": "0.3.0",
     "@alawein/tokens": "0.2.0",
-    "@alawein/ui": "^0.1.0",
+    "@alawein/ui": "^0.2.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",

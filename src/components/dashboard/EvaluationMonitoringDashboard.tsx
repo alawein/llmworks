@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, EmptyState, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
 import React, { useState, useEffect } from 'react';
 
 
@@ -627,15 +627,15 @@ export const EvaluationMonitoringDashboard = () => {
       </div>
 
       {filteredEvaluations.length === 0 && (
-        <div className="text-center py-12">
-          <Activity className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">No evaluations found</h3>
-          <p className="text-muted-foreground">
-            {statusFilter !== 'all' || typeFilter !== 'all'
+        <EmptyState
+          icon={<Activity className="h-12 w-12" />}
+          title="No evaluations found"
+          description={
+            statusFilter !== 'all' || typeFilter !== 'all'
               ? 'Try adjusting your filters.'
-              : 'Start your first evaluation to see activity here.'}
-          </p>
-        </div>
+              : 'Start your first evaluation to see activity here.'
+          }
+        />
       )}
     </div>
   );
