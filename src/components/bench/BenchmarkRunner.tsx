@@ -40,6 +40,7 @@ export const BenchmarkRunner = () => {
   const [progress, setProgress] = useState<BenchmarkProgress | null>(null);
   const [results, setResults] = useState<BenchmarkResult[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [scoringNotImplemented, setScoringNotImplemented] = useState(false);
 
   const models = [
     { id: 'gpt-4o', name: 'GPT-4o', provider: 'OpenAI' },
@@ -93,57 +94,14 @@ export const BenchmarkRunner = () => {
     setIsRunning(true);
     setResults([]);
     setShowResults(false);
+    setScoringNotImplemented(false);
 
-    const totalTasks =
-      selectedBenchmarks.reduce((sum, benchmarkId) => {
-        const benchmark = benchmarks.find((b) => b.id === benchmarkId);
-        return sum + (benchmark?.tasks || 0);
-      }, 0) * selectedModels.length;
-
-    let currentTask = 0;
-
-    // Simulate benchmark execution
-    for (const modelId of selectedModels) {
-      const model = models.find((m) => m.id === modelId);
-
-      for (const benchmarkId of selectedBenchmarks) {
-        const benchmark = benchmarks.find((b) => b.id === benchmarkId);
-        if (!benchmark || !model) continue;
-
-        for (let i = 0; i < benchmark.tasks; i++) {
-          currentTask++;
-          setProgress({
-            current: currentTask,
-            total: totalTasks,
-            currentTask: `${benchmark.name} - Task ${i + 1}`,
-            model: model.name,
-          });
-
-          // Simulate processing time
-          await new Promise((resolve) => setTimeout(resolve, 10));
-        }
-      }
-    }
-
-    // Generate mock results
-    const mockResults: BenchmarkResult[] = selectedModels
-      .map((modelId) => {
-        const model = models.find((m) => m.id === modelId);
-        return {
-          model: model?.name || modelId,
-          accuracy: Math.random() * 0.3 + 0.7, // 70-100%
-          brierScore: Math.random() * 0.2 + 0.1, // 0.1-0.3 (lower is better)
-          citationQuality: Math.random() * 0.25 + 0.75, // 75-100%
-          avgTime: Math.random() * 2000 + 1000, // 1-3 seconds
-          eloRating: Math.random() * 400 + 1000, // 1000-1400
-        };
-      })
-      .sort((a, b) => b.accuracy - a.accuracy);
-
-    setResults(mockResults);
+    // TODO: Real benchmark scoring requires calling each model's inference API
+    // and evaluating output against ground truth datasets. This is not yet implemented.
+    // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
     setIsRunning(false);
     setProgress(null);
-    setShowResults(true);
+    setScoringNotImplemented(true);
   };
 
   const exportResults = () => {
@@ -285,6 +243,20 @@ export const BenchmarkRunner = () => {
           </div>
         )}
       </Card>
+
+      {/* Not-implemented state */}
+      {scoringNotImplemented && (
+        <Card className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-accent opacity-60" />
+            <p className="font-medium text-foreground">Benchmark scoring is not yet available.</p>
+            <p className="text-sm mt-2">
+              Real model evaluations require inference API integration.
+              Results shown here would be placeholder data — they are withheld until real scoring is implemented.
+            </p>
+          </div>
+        </Card>
+      )}
 
       {/* Results Display */}
       {showResults && results.length > 0 && (
