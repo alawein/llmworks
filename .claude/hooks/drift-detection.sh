@@ -49,7 +49,7 @@ for file in CLAUDE.md AGENTS.md GUIDELINES.md; do
 
   if ! diff -q /tmp/"$file".filtered /tmp/"$file".template.filtered > /dev/null 2>&1; then
     echo "DRIFT DETECTED in $file (non-custom sections differ from the template source)"
-    echo "  Run: npx morphism sync-template --dry-run"
+    echo "  Run: npx kohyr sync-template --dry-run"
     drift_found=1
   fi
 done
