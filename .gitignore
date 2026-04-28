@@ -66,3 +66,8 @@ coverage/
 htmlcov/
 .coverage
 *.log
+
+# Claude agent platform runtime
+.claude/backups/
+.claude/proposals/
+.claude/state.json
