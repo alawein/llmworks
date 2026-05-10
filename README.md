@@ -23,7 +23,7 @@ failure modes, and keep evaluation workflows inspectable.
 - Tailwind CSS + Radix/shadcn-style primitives
 - TanStack Query
 - Supabase
-- OpenAI and Anthropic integrations where configured
+- Provider API key storage (encrypted) via Supabase
 - Vitest + Playwright
 
 ## Quick start
