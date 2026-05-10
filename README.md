@@ -12,7 +12,6 @@ failure modes, and keep evaluation workflows inspectable.
 ## What it does
 
 - Runs evaluation and benchmark flows against configured providers
-- Runs adversarial probes, jailbreak tests, and prompt injection audits against configured providers
 - Stores auth and data state through Supabase-backed flows
 - Ships local UI for dashboards, reports, and experiment review
 - Includes Playwright, accessibility, visual, and coverage-driven test surfaces
