@@ -1,5 +1,12 @@
 # LLMWorks
 
+Status:      active
+Category:    tools
+Owner:       alawein
+Visibility:  private
+Purpose:     LLM evaluation, benchmarking, and security testing playground.
+Next action: continue
+
 LLMWorks is an LLM evaluation and security-testing workbench. It provides a
 browser-based surface for benchmark runs, provider-backed experiments, and
 security-oriented inspection of model behavior.
