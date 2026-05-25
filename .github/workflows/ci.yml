@@ -28,7 +28,7 @@ jobs:
     uses: alawein/alawein/.github/workflows/ci-node.yml@ed5ed61aef28cbdd761eeb0654808833bc4564be
     with:
       working-directory: '.'
-      install-command: 'npm ci'
+      install-command: 'npm ci && (npm install @rollup/rollup-linux-x64-gnu lightningcss-linux-x64-gnu @esbuild/linux-x64 --no-save || true)'
       build-command: 'npm run lint && npm run type-check && npm run build'
       test-command: 'npm run test:run'
       package-manager: 'npm'
