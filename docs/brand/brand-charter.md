@@ -7,7 +7,7 @@ sla: none
 
 # Aegis AI — Brand Charter
 
-Last updated: {DATE}
+Last updated: 2026-05-30
 
 1. Mission Enable safer, more reliable AI by making model evaluation
    transparent, rigorous, and accessible.
