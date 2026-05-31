@@ -5,11 +5,11 @@ sync: none
 sla: none
 authority: canonical
 audience: [agents, contributors, maintainers]
-last_updated: 2026-04-15
-last-verified: 2026-04-15
+last_updated: 2026-05-31
+last-verified: 2026-05-31
 ---
 
-# AGENTS — LLMWorks
+# AGENTS: LLMWorks
 
 ## Workspace identity
 
