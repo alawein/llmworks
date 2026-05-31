@@ -5,8 +5,8 @@ sync: none
 sla: none
 authority: canonical
 audience: [ai-agents, contributors]
-last_updated: 2026-05-24
-last-verified: 2026-05-24
+last_updated: 2026-05-30
+last-verified: 2026-05-30
 ---
 
 # CLAUDE.md: LLMWorks
@@ -27,12 +27,19 @@ Shared voice and workspace prompt:
 - `src/pages/`: route-level screens
 - `src/components/`: shared UI
 - `src/hooks/`: custom hooks
-- `src/stores/`: client state
-- `src/utils/`: utilities
+- `src/lib/`: app logic helpers (analytics, SEO, environment, security)
+- `src/api/`: API route handlers (e.g. `health.ts`)
+- `src/integrations/supabase/`: Supabase client and generated types
+- `src/styles/`: shared styles
+- `src/test/`: vitest setup + accessibility/integration/performance specs
 - `supabase/`: backend and data support
-- `e2e/`: Playwright coverage
-- `tests/`: repo-local verification
-- `scripts/`: QA and operational helpers
+- `tests/`: vitest unit specs (`tests/lib/`) plus Playwright specs (`tests/e2e/`, `tests/visual/`); this is Playwright's `testDir`
+- `e2e/`: additional Playwright specs and global setup/teardown (see Gotchas; NOT wired into the default `testDir`)
+- `templates/`: static HTML design mockups (`option-a/`, `option-b/`, `option-c/`)
+- `public/`: static assets (favicons, redirects)
+- `docs/`: developer/API/deployment/security docs
+- `reports/`: generated operational reports
+- `scripts/`: ops scripts (`github-sync-report.mjs`, run via `npm run ops:sync-report`)
 
 ## Governance rules
 
@@ -53,6 +60,22 @@ Shared voice and workspace prompt:
   error handling
 - Comments explain benchmark, security, or provider constraints, not obvious UI
   behavior
+
+## Gotchas
+
+1. Playwright `testDir` is `./tests`, so `e2e/*.spec.ts` (accessibility,
+   navigation, global setup/teardown) is NOT collected by `playwright test` as
+   configured. E2E specs that must run live under `tests/` (e.g.
+   `tests/e2e/home.spec.ts`). Treat `e2e/` as orphaned until
+   `playwright.config.ts` adds it.
+2. `npm run test:visual` passes `--project=visual-regression`, but
+   `playwright.config.ts` defines no such project (only `chromium`, plus optional
+   `firefox`/`webkit` gated by `PLAYWRIGHT_INCLUDE_*` env vars). The command fails
+   with no matching project; visual snapshots live in `tests/visual/__snapshots__/`.
+3. Vitest unit specs are split across two trees: `src/test/*.test.tsx` and
+   `tests/lib/*.test.ts`. The targeted scripts (`test:accessibility`,
+   `test:integration`, `test:performance`) only point at `src/test/`; the
+   `tests/lib/` specs run only under the broad `test` / `test:run`.
 
 ## Build and test commands
 
