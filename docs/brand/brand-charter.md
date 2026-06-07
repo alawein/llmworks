@@ -5,9 +5,9 @@ sync: none
 sla: none
 ---
 
-# Aegis AI — Brand Charter
+# Aegis AI: Brand Charter
 
-Last updated: 2026-03-09
+Last updated: 2026-05-30
 
 1. Mission Enable safer, more reliable AI by making model evaluation
    transparent, rigorous, and accessible.
@@ -60,7 +60,7 @@ Last updated: 2026-03-09
 - Control & Compliance: Role‑based access patterns, audit logs, exportable
   evidence
 
-7. Narrative & Boilerplate Aegis AI is the shield for responsible AI—combining
+7. Narrative & Boilerplate Aegis AI is the shield for responsible AI, combining
    interactive exploration with standardized evaluation to illuminate how models
    think and how they perform.
 
@@ -73,7 +73,7 @@ Last updated: 2026-03-09
 9. Voice & Tone (summary)
 
 - Voice: Clear, credible, and human. Avoid hype; favor evidence.
-- Tone: Adjust by context—product UI (concise/neutral), docs (helpful/precise),
+- Tone: Adjust by context: product UI (concise/neutral), docs (helpful/precise),
   marketing (confident/inspiring), errors (empathetic/solution‑oriented).
 
 10. Copy Patterns (examples)
@@ -81,21 +81,21 @@ Last updated: 2026-03-09
 - Home H1: Evaluate AI models with confidence Subhead: Unite interactive testing
   and rigorous benchmarking to understand, compare, and trust model behavior.
   Primary CTA: Open Dashboard
-- Arena H1: The Arena — interactive evaluation Subhead: Debate, create, and
+- Arena H1: The Arena - interactive evaluation Subhead: Debate, create, and
   explain to reveal how models reason.
-- Bench H1: The Bench — rigorous benchmarking Subhead: Standardized tests,
+- Bench H1: The Bench - rigorous benchmarking Subhead: Standardized tests,
   auditable reports, longitudinal tracking.
 - Settings H1: Settings Subhead: Configure models and monitor system
   performance.
-- 404: Not found — let’s get you back on track
+- 404: Not found. Let’s get you back on track
 
 11. SEO Title/Description Templates
 
-- Home: Aegis AI — Model Evaluation Platform | Arena & Bench Desc: Evaluate AI
+- Home: Aegis AI - Model Evaluation Platform | Arena & Bench Desc: Evaluate AI
   models with interactive testing and rigorous benchmarking.
-- Arena: The Arena | Aegis AI — Interactive AI Evaluation Desc: Debates,
+- Arena: The Arena | Aegis AI - Interactive AI Evaluation Desc: Debates,
   creative tasks, and explanation challenges to reveal model behavior.
-- Bench: The Bench | Aegis AI — AI Benchmarks & Reports Desc: MMLU, TruthfulQA,
+- Bench: The Bench | Aegis AI - AI Benchmarks & Reports Desc: MMLU, TruthfulQA,
   GSM8K, and custom tests with auditable reports.
 - Settings: Settings | Aegis AI Desc: Configure models and monitor performance.
 - Dashboard: Dashboard | Aegis AI Desc: Track evaluations, activity, and
@@ -125,4 +125,4 @@ Last updated: 2026-03-09
 - Benchmark report exports and shares
 - Model comparison engagement
 
-— End of Brand Charter —
+End of Brand Charter
