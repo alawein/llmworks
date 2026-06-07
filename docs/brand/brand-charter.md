@@ -24,7 +24,7 @@ Last updated: 2026-05-30
   artifacts.
 - Reproducibility & Rigor: Methods are documented, repeatable, and peer-review
   friendly.
-- Human‑Centered: Tools empower practitioners and respect user context and
+- Human‑Centered: Tools support practitioners and respect user context and
   intent.
 - Responsible Innovation: Advance capabilities without compromising ethics or
   compliance.

@@ -11,7 +11,7 @@ sla: none
 
 - Clear and credible: communicate results and methods plainly.
 - Evidence‑first: prefer specifics over superlatives.
-- Human and respectful: write to empower practitioners.
+- Human and respectful: write for practitioners, not at them.
 - Consistent terminology: Arena, Bench, Evaluation, Run, Report, Model, Dataset.
 
 2. Tone by Context
@@ -24,7 +24,7 @@ sla: none
 3. Language Do/Don’t
 
 - Do: “View auditable report,” “Compare models,” “Verify outputs.”
-- Don’t: “Magical,” “Perfect accuracy,” “Revolutionary” without proof.
+- Don’t: “Magical,” “Perfect accuracy,” or superlative claims without evidence.
 
 4. Structural Patterns
 

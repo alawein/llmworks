@@ -137,7 +137,7 @@ access terms:
 
 ## Follow-up Email Series
 
-### Email 2: Feature Deep Dive (Send 3 days after announcement)
+### Email 2: Feature Walkthrough (Send 3 days after announcement)
 
 ```html
 Subject: Deep dive: How LLM Works transforms model evaluation Hi [FirstName],
