@@ -1,4 +1,4 @@
-# Documentation Index — llmworks
+# Documentation Index: llmworks
 
 The LLMWorks docs lane covers the evaluation engine, deployment and domain
 operations, examples, security notes, and the brand/marketing material that
