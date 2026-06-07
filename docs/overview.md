@@ -35,7 +35,7 @@ Framework. The technology stack includes:
 | API Layer            | RESTful/GraphQL APIs      | Facilitates secure access to model endpoints and training data.                    |
 | Deployment & Hosting | Vercel with GPU support   | Allows scalable inference serving, with options for on-premises deployment.        |
 
-Architecture patterns utilize provider patterns for swapping LLM backends,
+Architecture patterns use provider patterns for swapping LLM backends,
 custom hooks for state management, and event-driven designs for asynchronous
 training jobs. Decisions prioritize security (e.g., data encryption for prompts)
 and performance (e.g., batched inference for cost savings).
