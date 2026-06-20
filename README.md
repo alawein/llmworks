@@ -1,7 +1,7 @@
 # LLMWorks
 
 Status:      active
-Category:    tools
+Category:    ventures
 Owner:       alawein
 Visibility:  private
 Purpose:     LLM evaluation, benchmarking, and security testing playground.
