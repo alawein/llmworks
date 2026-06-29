@@ -9,6 +9,7 @@ supports the public product surface.
 - [README](../README.md)
 - [overview.md](./overview.md)
 - [architecture.md](./architecture.md)
+- [architecture/topology.md](./architecture/topology.md)
 - [API_REFERENCE.md](./API_REFERENCE.md)
 - [deployment.md](./deployment.md)
 - [troubleshooting.md](./troubleshooting.md)
