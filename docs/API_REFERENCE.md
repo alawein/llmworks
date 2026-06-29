@@ -9,7 +9,7 @@ sla: none
 
 ## Overview
 
-LLM Works provides a comprehensive API for programmatic access to LLM evaluation
+LLM Works provides a thorough API for programmatic access to LLM evaluation
 capabilities. This document covers all available endpoints, data structures, and
 integration patterns.
 

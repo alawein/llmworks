@@ -745,11 +745,11 @@ print(f"Winner: {results['winner']} (p={results['p_value']:.3f})")
 
 ### Example 2: Multi-Dimensional Model Evaluation
 
-**Scenario**: Comprehensive evaluation across multiple capabilities for model
+**Scenario**: thorough evaluation across multiple capabilities for model
 selection.
 
 ```javascript
-class ComprehensiveEvaluator {
+class ThoroughEvaluator {
   constructor(apiKey) {
     this.client = new LLMWorksClient({ apiKey });
     this.dimensions = {
@@ -876,7 +876,7 @@ class ComprehensiveEvaluator {
 }
 
 // Usage
-const evaluator = new ComprehensiveEvaluator('your-api-key');
+const evaluator = new ThoroughEvaluator('your-api-key');
 
 const testSuites = {
   reasoning: [
@@ -886,7 +886,7 @@ const testSuites = {
   creativity: [
     { prompt: 'Write a unique story about...', category: 'writing' },
     {
-      prompt: 'Design an innovative solution for...',
+      prompt: 'Design an novel solution for...',
       category: 'problem_solving',
     },
   ],
