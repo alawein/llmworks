@@ -192,7 +192,7 @@ Create your own evaluation suites:
 
 ## Dashboard
 
-The Dashboard provides comprehensive analytics and monitoring for all
+The Dashboard provides thorough analytics and monitoring for all
 evaluations.
 
 ### Dashboard Sections
@@ -272,7 +272,7 @@ Add and manage model connections:
 
 ## Accessibility Features
 
-LLM Works includes comprehensive accessibility features for users with
+LLM Works includes thorough accessibility features for users with
 disabilities.
 
 ### Accessibility Toolbar

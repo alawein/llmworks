@@ -14,7 +14,7 @@ sla: none
 ```
 🧵 THREAD: Big news! We're now LLM Works! 1/7
 
-🚀 From Aegis AI to LLM Works — same powerful LLM evaluation platform, clearer mission.
+🚀 From Aegis AI to LLM Works , same capable LLM evaluation platform, clearer mission.
 
 New home: llmworks.dev
 New focus: Making LLM evaluation transparent, systematic, and trustworthy. 2/7
@@ -32,7 +32,7 @@ For existing users:
 ✅ Zero disruption to your workflow 4/7
 
 For new users:
-Now it's crystal clear what we offer — professional-grade evaluation tools for teams who need systematic, auditable LLM assessment. 5/7
+Now it's crystal clear what we offer , professional-grade evaluation tools for teams who need systematic, auditable LLM assessment. 5/7
 
 Why the rebrand?
 We realized our mission needed clearer expression: making LLM evaluation evidence-based, transparent, and trustworthy for researchers, ML engineers, and product teams. 6/7
@@ -49,7 +49,7 @@ Community: [forum/discord link]
 ```
 🎉 Exciting news: We're now LLM Works!
 
-After months of growth and user feedback, we've evolved from Aegis AI into LLM Works — a name that better reflects our mission to make LLM evaluation transparent, systematic, and trustworthy.
+After months of growth and user feedback, we've evolved from Aegis AI into LLM Works , a name that better reflects our mission to make LLM evaluation transparent, systematic, and trustworthy.
 
 🚀 **What's new:**
 • Clear brand identity focused on LLM evaluation
@@ -115,7 +115,7 @@ Slide 5:
 
 - **Profile Photo**: 400×400px analytical prism icon on primary blue background
 - **Cover Photos**:
-  - Twitter: 1500×500px with "LLM Works — Evaluate LLMs with confidence" tagline
+ - Twitter: 1500×500px with "LLM Works : Evaluate LLMs with confidence" tagline
   - LinkedIn: 1584×396px with key features visualization
   - Facebook: 820×312px with hero messaging
 
@@ -148,7 +148,7 @@ Try it: llmworks.dev/arena
 Template 2 - Bench Focus:
 "📊 Feature Spotlight: The Bench
 
-Run comprehensive benchmark suites with automated reporting.
+Run thorough benchmark suites with automated reporting.
 
 ✨ What's included:
 • MMLU, TruthfulQA, GSM8K

@@ -215,11 +215,11 @@ Subject: We're now LLM Works! New domain: llmworks.dev
 
 Hi [Name],
 
-We're excited to announce our rebrand to LLM Works with a new home at llmworks.dev!
+We're ready to announce our rebrand to LLM Works with a new home at llmworks.dev!
 
 What's changing:
 ✓ New website: llmworks.dev (your bookmarks will redirect automatically)
-✓ Same powerful evaluation platform you know and trust
+✓ Same capable evaluation platform you know and trust
 ✓ Enhanced features and improved performance
 
 What stays the same:
@@ -240,7 +240,7 @@ The LLM Works Team
 🚀 Big news! We're now LLM Works!
 
 New domain: llmworks.dev
-Same powerful LLM evaluation platform
+Same capable LLM evaluation platform
 Enhanced features & performance
 
 All your bookmarks will redirect automatically.
