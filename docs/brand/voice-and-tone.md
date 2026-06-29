@@ -5,7 +5,7 @@ sync: none
 sla: none
 ---
 
-# Aegis AI — Voice & Tone Guide
+# Aegis AI :  Voice & Tone Guide
 
 1. Voice Principles
 
@@ -35,11 +35,11 @@ sla: none
 
 5. Microcopy Examples
 
-- Empty state (Bench): “No results yet — run your first benchmark to generate a
+- Empty state (Bench): “No results yet , run your first benchmark to generate a
   report.”
 - Error (Arena): “Run failed due to rate limit. Try again or adjust model
   settings.”
-- Success: “Report generated — download or share the link.”
+- Success: “Report generated , download or share the link.”
 - Tooltips: short utility, <8 words.
 
 6. Terminology Glossary (starter)
@@ -69,4 +69,4 @@ sla: none
 - Review new pages against this guide.
 - Update quarterly based on user feedback.
 
-— End of Voice & Tone Guide —
+, End of Voice & Tone Guide ,

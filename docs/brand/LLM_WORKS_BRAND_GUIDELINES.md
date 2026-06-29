@@ -61,7 +61,7 @@ sla: none
 ### Brand Personality
 
 - **Evidence-first**: Data-driven, transparent, verifiable
-- **Human-centered**: Accessible, clear, empowering
+- **Human-centered**: Accessible, clear, enabling
 - **Professional**: Credible, trustworthy, systematic
 - **Open**: Collaborative, transparent, community-driven
 

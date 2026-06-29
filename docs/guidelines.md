@@ -32,7 +32,7 @@ audience: [contributors]
 
 ## Code Style
 
-[Project-specific style guidelines—linter configs, formatting rules, etc.]
+[Project-specific style guidelines, linter configs, formatting rules, etc.]
 
 ## Testing
 
@@ -44,4 +44,4 @@ audience: [contributors]
 
 - README.md: Project overview, quick start, installation
 - Code comments: Why, not what. Comments explain intent.
-- Architecture docs: `docs/architecture/` — design decisions
+- Architecture docs: `docs/architecture/` , design decisions
