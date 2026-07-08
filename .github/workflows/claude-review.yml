@@ -1,0 +1,68 @@
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, master]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+
+concurrency:
+  group: claude-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require review token
+        run: |
+          if [ -z "${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}" ]; then
+            echo "::error::CLAUDE_CODE_OAUTH_TOKEN is not set; the Claude review cannot run."
+            exit 1
+          fi
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@f87768c6d25f92ae6efa7175e223ef77d4cbf97f # v1.0.166
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          use_sticky_comment: true
+          # Default permission mode denies the sticky-comment tool and diff
+          # reads (verified on alawein/alawein run 28906962685: green review,
+          # 4 permission denials, no comment posted; run 28907543224 still
+          # denied 7 with the narrower list). Grant what a review needs:
+          # read the diff and history, post the one comment (sticky tool
+          # preferred, gh pr comment as fallback).
+          claude_args: --allowedTools "mcp__github_comment__update_claude_comment,Bash(git diff:*),Bash(git log:*),Bash(git fetch:*),Bash(git show:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr list:*),Bash(gh pr comment:*)"
+          prompt: |
+            Review this pull request for correctness bugs, security issues, and
+            obvious reuse/simplification gaps. Be concise; report only
+            high-confidence findings. Do NOT approve or merge. You MUST post
+            exactly one comment before finishing, even when there are no
+            findings (then say the review found nothing). Post it with the
+            mcp__github_comment__update_claude_comment tool; if that tool is
+            unavailable or fails, use
+            `gh pr comment <number> --body "..."` and start the body with
+            "**Claude Review**".
+      - name: Fail on swallowed execution error
+        if: always()
+        run: |
+          # The action can conclude green while its execution log records
+          # is_error (seen live: an invalid token yields success + no comment).
+          # Absent file means the action skipped before running Claude
+          # (e.g. GitHub's workflow-change validation) - nothing to check.
+          out=/home/runner/work/_temp/claude-execution-output.json
+          [ -f "$out" ] || exit 0
+          if jq -e '[.[] | select(.is_error == true)] | length > 0' "$out" >/dev/null; then
+            echo "::error::Claude review recorded is_error; no review was produced."
+            exit 1
+          fi

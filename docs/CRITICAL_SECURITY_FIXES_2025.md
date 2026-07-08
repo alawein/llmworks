@@ -43,7 +43,7 @@ CREATE POLICY "Users can only view their own analytics events"
 - Anonymous events completely hidden from regular users
 - Admin-only access to full analytics via `is_admin()` function
 - Aggregated safe views for public statistics
-- Comprehensive audit logging for all analytics access
+- thorough audit logging for all analytics access
 
 ### 2. OTP Long Expiry (WARNING) ✅ FIXED
 
@@ -155,7 +155,7 @@ const signUp = async (email: string, password: string) => {
 
 - Multiple security layers for each component
 - Fail-secure defaults
-- Comprehensive validation at every level
+- thorough validation at every level
 
 ### 2. Zero Trust Analytics
 

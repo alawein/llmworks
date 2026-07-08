@@ -21,14 +21,14 @@ sla: none
 Subject: We're now LLM Works! Same platform, clearer mission Hi [FirstName], We
 have important news to share: **We're now LLM Works!** After months of growth
 and feedback from users like you, we realized our mission needed clearer
-expression. Today, we're proud to introduce LLM Works — a name that perfectly
+expression. Today, we're proud to introduce LLM Works , a name that perfectly
 captures what we do: making LLM evaluation transparent, systematic, and
 trustworthy. ## What's Changing ✨ 🌐 **New website**: llmworks.dev (all your
 bookmarks will redirect automatically) 🎯 **Clearer mission**: Evidence-first
 LLM evaluation for professional teams 🎨 **Fresh visual identity**: Analytical
 design that reflects our technical focus ## What Stays Exactly the Same ✅ ✅
 Your account, evaluation history, and all saved work ✅ The Arena: Interactive
-testing you know and love ✅ The Bench: Comprehensive benchmarking suites ✅ All
+testing you know and love ✅ The Bench: thorough benchmarking suites ✅ All
 existing features and functionality ✅ Our commitment to privacy-first,
 local-processing architecture ✅ Open-source development and community-driven
 approach ## Why This Change Matters As LLM adoption accelerates across
@@ -69,11 +69,11 @@ Subject: [Company Name] account transition: We're now LLM Works Dear
 [ContactName], I'm reaching out to inform you of an important evolution in our
 platform that affects your [Company Name] evaluation infrastructure. ## Platform
 Evolution Effective January 12, 2025, our evaluation platform has evolved into
-**LLM Works** — a rebranding that better reflects our mission to provide
+**LLM Works** , a rebranding that better reflects our mission to provide
 professional LLM evaluation with the transparency and auditability your
 organization needs. ## Technical Impact (Minimal) ✅ **No downtime** during
 transition ✅ **All URLs redirect** automatically to llmworks.dev ✅ **API
-endpoints unchanged** — no code changes required ✅ **All evaluation data and
+endpoints unchanged** : no code changes required ✅ **All evaluation data and
 audit trails preserved** ✅ **Account access and team permissions continue as
 before** ## What This Means for [Company Name] **Enhanced Focus**: Deeper
 investment in enterprise features you've requested: - Extended audit trail
@@ -104,16 +104,16 @@ Success Manager LLM Works --- **Direct Line**: [phone] **Email**: [email]
 
 ```html
 Subject: Early Access: Welcome to LLM Works! Hi [FirstName], Welcome to **LLM
-Works** — systematic LLM evaluation with auditable results! As one of our early
+Works** , systematic LLM evaluation with auditable results! As one of our early
 access users, you're among the first to experience our rebranded platform that
 makes LLM evaluation transparent, systematic, and trustworthy. ## What's Ready
 for You 🏟️ **The Arena**: Test models through debates, creative challenges, and
 explanations ⚖️ **The Bench**: Run MMLU, TruthfulQA, and custom benchmark suites
 🔍 **Verifier System**: Get cryptographic audit trails for all evaluations 📊
 **Dynamic Rankings**: Track model performance with Elo scoring ## Your Early
-Access Benefits ✨ **Full platform access** — no feature limitations 🚀
-**Priority support** — direct line to our development team 📝 **Feedback
-channel** — shape the future of LLM evaluation 🎯 **Free usage** — no charges
+Access Benefits ✨ **Full platform access** , no feature limitations 🚀
+**Priority support** : direct line to our development team 📝 **Feedback
+channel** : shape the future of LLM evaluation 🎯 **Free usage** , no charges
 during early access period ## Getting Started 1. **Login** at
 [llmworks.dev/dashboard](https://llmworks.dev/dashboard) 2. **Add your models**
 in Settings → Model Configuration 3. **Run your first evaluation** in either
@@ -140,7 +140,7 @@ access terms:
 ### Email 2: Feature Walkthrough (Send 3 days after announcement)
 
 ```html
-Subject: Deep dive: How LLM Works transforms model evaluation Hi [FirstName],
+Subject: detailed look: How LLM Works transforms model evaluation Hi [FirstName],
 Following up on our LLM Works announcement, I wanted to share how our evaluation
 framework can transform your approach to model selection and monitoring. ## The
 Problem with Ad-Hoc Evaluation Most teams evaluate LLMs inconsistently: ❌
@@ -167,11 +167,11 @@ Subject: How teams are using LLM Works for better AI decisions Hi [FirstName],
 It's been a week since we launched LLM Works, and the response has been
 incredible. Here's how teams are already using the platform: ## Research Teams
 *"LLM Works helped us reproduce evaluation results for our paper. The audit
-trails were perfect for peer review."* — AI Research Lab ## Product Teams *"We
+trails were perfect for peer review."* : AI Research Lab ## Product Teams *"We
 use The Bench for weekly model monitoring. Caught a performance regression that
-would have affected 10k users."* — ML Platform Team ## Compliance Teams
+would have affected 10k users."* , ML Platform Team ## Compliance Teams
 *"Finally, evaluation reports our legal team actually trusts. The Verifier
-proofs are exactly what we needed."* — Healthcare AI Startup ## What's Working
+proofs are exactly what we needed."* , Healthcare AI Startup ## What's Working
 Best 📈 **Most popular feature**: Arena head-to-head comparisons ⚡ **Biggest
 time-saver**: Automated benchmark scheduling 🔍 **Most valuable**: Audit trail
 generation for compliance ## This Week's New Feature **Custom Evaluation
@@ -182,7 +182,7 @@ repository just hit 500 stars! 🌟 The community is contributing new benchmark
 templates and evaluation protocols. Want to contribute? Check out our
 [contribution
 guide](https://github.com/alawein/aegis-ai-evaluator/blob/main/CONTRIBUTING.md).
-Keep the feedback coming — it's shaping our roadmap! The LLM Works Team
+Keep the feedback coming , it's shaping our roadmap! The LLM Works Team
 ```
 
 ---

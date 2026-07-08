@@ -116,7 +116,7 @@ Add to `<head>` in index.html:
 ### Online Generators
 
 - [Favicon.io](https://favicon.io) - Generate from SVG
-- [RealFaviconGenerator](https://realfavicongenerator.net) - Comprehensive
+- [RealFaviconGenerator](https://realfavicongenerator.net) - thorough
 - [Figma Favicons Plugin](https://figma.com) - If using Figma design
 
 ### Command Line Tools
