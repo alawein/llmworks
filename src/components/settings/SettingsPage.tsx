@@ -359,23 +359,23 @@ export const SettingsPage = () => {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <Label>Include metadata</Label>
-                      <Switch
-                        checked={exportSettings.includeMetadata}
-                        onCheckedChange={(checked) =>
-                          setExportSettings({ ...exportSettings, includeMetadata: checked })
-                        }
-                        aria-label="Include metadata in export"
-                      />
+                    <Switch
+                      checked={exportSettings.includeMetadata}
+                      onCheckedChange={(checked) =>
+                        setExportSettings({ ...exportSettings, includeMetadata: checked })
+                      }
+                      aria-label="Include metadata in export"
+                    />
                   </div>
                   <div className="flex items-center justify-between">
                     <Label>Include raw outputs</Label>
-                      <Switch
-                        checked={exportSettings.includeRawOutputs}
-                        onCheckedChange={(checked) =>
-                          setExportSettings({ ...exportSettings, includeRawOutputs: checked })
-                        }
-                        aria-label="Include raw outputs in export"
-                      />
+                    <Switch
+                      checked={exportSettings.includeRawOutputs}
+                      onCheckedChange={(checked) =>
+                        setExportSettings({ ...exportSettings, includeRawOutputs: checked })
+                      }
+                      aria-label="Include raw outputs in export"
+                    />
                   </div>
                 </div>
 

@@ -6,6 +6,7 @@ interface RippleEffectProps {
   className?: string;
   duration?: number;
   color?: string;
+  interactive?: boolean;
 }
 
 export const RippleEffect = memo(
@@ -14,6 +15,7 @@ export const RippleEffect = memo(
     className,
     duration = 600,
     color = 'hsl(var(--primary) / 0.3)',
+    interactive = true,
   }: RippleEffectProps) => {
     const [ripples, setRipples] = useState<
       Array<{
@@ -58,9 +60,9 @@ export const RippleEffect = memo(
       <div
         className={cn('relative overflow-hidden', className)}
         onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        role="button"
-        tabIndex={0}
+        onKeyDown={interactive ? handleKeyDown : undefined}
+        role={interactive ? 'button' : undefined}
+        tabIndex={interactive ? 0 : undefined}
       >
         {children}
         {ripples.map((ripple) => (

@@ -47,6 +47,71 @@ test.describe('Accessibility', () => {
     }
   });
 
+  test('should not expose benchmark display rows as controls', async ({ page }) => {
+    await page.goto('/');
+    await waitForAppShell(page);
+
+    const modelRankings = page.locator('ul[aria-label="Model rankings"]');
+    await expect(modelRankings).toBeVisible();
+    await expect(modelRankings.getByRole('button')).toHaveCount(0);
+
+    const evaluationMetrics = page.locator('ul[aria-label="Evaluation metrics"]');
+    await expect(evaluationMetrics).toBeVisible();
+    await expect(evaluationMetrics.getByRole('button')).toHaveCount(0);
+  });
+
+  test('should expose expanded state on dashboard toggles', async ({ page }) => {
+    await page.goto('/');
+    await waitForAppShell(page);
+
+    const intelligenceToggle = page.getByRole('button', {
+      name: /expand sample intelligence dashboard/i,
+    });
+    await intelligenceToggle.scrollIntoViewIfNeeded();
+    await expect(intelligenceToggle).toHaveAttribute('aria-expanded', 'false');
+
+    await intelligenceToggle.click();
+    await expect(
+      page.getByRole('button', { name: /collapse sample intelligence dashboard/i })
+    ).toHaveAttribute('aria-expanded', 'true');
+
+    const specsToggle = page.getByRole('button', {
+      name: /expand technical specifications/i,
+    });
+    await specsToggle.scrollIntoViewIfNeeded();
+    await expect(specsToggle).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('should copy displayed API endpoint paths', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: {
+          writeText: async (text: string) => {
+            (window as Window & { __copiedText?: string }).__copiedText = text;
+          },
+        },
+      });
+    });
+
+    await page.goto('/');
+    await waitForAppShell(page);
+
+    await page
+      .getByRole('heading', { name: 'Technical Specifications', exact: true })
+      .scrollIntoViewIfNeeded();
+    await page.getByRole('tab', { name: /^api$/i }).click();
+    await page
+      .getByRole('button', { name: /copy supabase\.functions\.invoke\("benchmarks"\) endpoint/i })
+      .click();
+
+    await expect
+      .poll(() =>
+        page.evaluate(() => (window as Window & { __copiedText?: string }).__copiedText)
+      )
+      .toBe('supabase.functions.invoke("benchmarks")');
+  });
+
   test('should have proper focus management', async ({ page }) => {
     await page.goto('/');
     await waitForAppShell(page);

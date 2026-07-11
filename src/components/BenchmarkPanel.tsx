@@ -68,7 +68,7 @@ const EvaluationCard = memo(({ title, metric, status, icon: Icon, trend }: Evalu
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <RippleEffect>
+    <RippleEffect interactive={false}>
       <GlowOnHover glowIntensity="subtle">
         <Card
           className="relative p-4 glass-subtle border-border/20 transition-all duration-500 hover:shadow-lg group cursor-pointer"
@@ -241,7 +241,7 @@ export const BenchmarkPanel = memo(() => {
                 <ul className="space-y-3 list-none p-0 m-0" aria-label="Model rankings">
                   {mockBenchmarkData.map((model, index) => (
                     <li key={model.name}>
-                      <RippleEffect>
+                      <RippleEffect interactive={false}>
                         <div className="group flex items-center justify-between p-3 glass-subtle hover:shadow-md transition-all duration-300 cursor-pointer relative overflow-hidden">
                           {/* Rank indicator with glow */}
                           <div className="flex items-center gap-4">
