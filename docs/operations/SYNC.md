@@ -9,12 +9,16 @@ sla: none
 
 ## What syncs where
 
-| Surface | Source of truth | Notes |
-|--------|------------------|--------|
-| **Project row** in Notion “Projects (Canonical)” | [`alawein/alawein` `projects.json`](https://github.com/alawein/alawein/blob/main/projects.json) | LLMWorks is under **`featured`**. Batch sync is org-level only. |
-| **This repo’s activity** (PRs / issues / commits) | GitHub API | Use the sync report script below for scans and dashboards. |
+| Surface                                           | Source of truth                                                                                 | Notes                                                           |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **Project row** in Notion “Projects (Canonical)”  | [`alawein/alawein` `projects.json`](https://github.com/alawein/alawein/blob/main/projects.json) | LLMWorks is under **`featured`**. Batch sync is org-level only. |
+| **This repo’s activity** (PRs / issues / commits) | GitHub API                                                                                      | Use the sync report script below for scans and dashboards.      |
 
-There is **no** per-repo push to Notion in CI yet. The placeholder workflow [`.github/workflows/notion-sync.yml`](../../.github/workflows/notion-sync.yml) documents how to wire it when secrets exist.
+There is **no** per-repo push to Notion in CI. Keep Notion writes in the org repo
+until there is a real reusable workflow with org-level secrets. Any future
+`workflow_call` path must explicitly forward the required named secrets or use
+`secrets: inherit`, and grant the permissions required by the Notion write step.
+This repo only generates a GitHub sync report.
 
 ## Generate a sync report (commits + open PRs + open issues)
 
