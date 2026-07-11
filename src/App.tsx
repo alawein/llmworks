@@ -95,6 +95,7 @@ const App = () => {
     });
 
     // Register service worker for caching and offline functionality
+    // Update/success callbacks stay omitted until there is a user-facing refresh UX.
     registerSW({
       onError: (error) => {
         console.error('Service worker registration failed:', error);
