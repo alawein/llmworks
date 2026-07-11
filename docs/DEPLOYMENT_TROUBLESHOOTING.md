@@ -141,8 +141,8 @@ VITE_API_URL=               # Defaults to environment-specific URLs
 VITE_CDN_URL=               # Optional CDN for assets
 VITE_WS_URL=                # WebSocket URL for real-time features
 
-# Security
-VITE_API_KEY_ENCRYPTION_SALT=  # For API key encryption (has default)
+# Provider integrations
+# The current client does not consume provider keys or an encryption salt.
 
 # Monitoring
 VITE_SENTRY_DSN=            # Error tracking (optional)

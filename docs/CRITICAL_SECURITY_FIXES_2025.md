@@ -90,12 +90,7 @@ max_frequency = 60  # Rate limiting
 **New Security Architecture**:
 
 ```typescript
-// No more hardcoded defaults
-if (!salt || salt === 'default-dev-key-change-in-prod') {
-  if (import.meta.env.PROD) {
-    throw new Error('Production requires proper encryption salt');
-  }
-}
+// Historical example only. The current client has no encryption-salt consumer.
 ```
 
 ### 4. Missing Email Redirect Configuration ✅ FIXED
@@ -181,15 +176,9 @@ const signUp = async (email: string, password: string) => {
 
 ### Before Production Deployment
 
-1. **Environment Variables** (CRITICAL):
-
-```bash
-# Generate secure encryption salt
-openssl rand -hex 32
-
-# Set in production environment
-VITE_API_KEY_ENCRYPTION_SALT=<generated-salt>
-```
+1. **Environment Variables**: Do not set a Vite client encryption salt. The
+   current app has no provider-key encryption path; future provider work must
+   keep encryption and keys on the server.
 
 2. **Database Migration**:
 
@@ -280,7 +269,7 @@ AND action = 'api_key_accessed';
 ## 🎯 Next Steps
 
 1. **Deploy** security migration to production
-2. **Configure** production encryption salt
+2. **Keep provider keys out of browser configuration**
 3. **Assign** initial admin user
 4. **Monitor** security audit logs
 5. **Test** all authentication flows

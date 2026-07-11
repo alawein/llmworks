@@ -174,8 +174,9 @@ To verify the security fixes are working:
 
 ## Production Deployment Notes
 
-1. **Environment Variables**: Set unique `VITE_API_KEY_ENCRYPTION_SALT` in
-   production
+1. **Environment Variables**: Do not configure `VITE_API_KEY_ENCRYPTION_SALT`.
+   The current client has no provider-key encryption path; production provider
+   integrations must keep keys server-side.
 2. **Database Migration**: Apply migration in maintenance window
 3. **Config Update**: Deploy Supabase config changes
 4. **User Communication**: Inform users of shorter OTP validity

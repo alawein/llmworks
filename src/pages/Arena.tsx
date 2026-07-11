@@ -146,6 +146,14 @@ const Arena = memo(() => {
             <TabsTrigger value="explanation">Explanation Challenge</TabsTrigger>
           </TabsList>
 
+          <div
+            role="status"
+            className="mb-8 rounded-lg border border-accent/30 bg-accent/10 px-4 py-3 text-sm text-foreground"
+          >
+            All Arena modes are scripted demos. No provider calls, verified citations, or measured
+            model results are produced.
+          </div>
+
           <TabsContent value="overview" className="space-y-8">
             {/* Interaction Modes */}
             <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8">

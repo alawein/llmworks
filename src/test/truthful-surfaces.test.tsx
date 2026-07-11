@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DebateMode } from '@/components/arena/DebateMode';
 import { ModelComparisonDashboard } from '@/components/comparison/ModelComparisonDashboard';
+import Arena from '@/pages/Arena';
 
 vi.mock('@/components/comparison/RadarComparisonChart', () => ({
   RadarComparisonChart: () => <div data-testid="radar-chart" />,
@@ -14,6 +16,18 @@ vi.mock('@/components/comparison/BarComparisonChart', () => ({
 }));
 
 describe('truthful demo surfaces', () => {
+  it('keeps the scripted-demo disclosure visible for every arena mode', () => {
+    render(
+      <MemoryRouter>
+        <Arena />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText(/all arena modes are scripted demos.*no provider calls/i)
+    ).toBeInTheDocument();
+  });
+
   it('labels the scripted debate as a demo before a user starts it', () => {
     render(<DebateMode />);
 
