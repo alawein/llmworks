@@ -68,8 +68,10 @@ jobs:
           # - Token-Permissions
           # - Vulnerabilities
 
-      # Upload SARIF results to GitHub Security tab
+      # Upload SARIF results only after GitHub Code Security/code scanning is enabled.
+      # For private repositories, GitHub rejects SARIF uploads while that feature is off.
       - name: Upload SARIF to GitHub Security
+        if: vars.CODE_SCANNING_ENABLED == 'true'
         uses: github/codeql-action/upload-sarif@603b797f8b14b413fe025cd935a91c16c4782713 # v3
         with:
           sarif_file: results.sarif
