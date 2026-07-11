@@ -96,13 +96,6 @@ const App = () => {
 
     // Register service worker for caching and offline functionality
     registerSW({
-      onUpdate: (registration) => {
-        console.log('New content available! Please refresh.');
-        // Could show a toast notification here
-      },
-      onSuccess: () => {
-        console.log('Content cached for offline use.');
-      },
       onError: (error) => {
         console.error('Service worker registration failed:', error);
       },

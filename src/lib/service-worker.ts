@@ -19,13 +19,11 @@ export const registerSW = async (
   config: ServiceWorkerConfig = {}
 ): Promise<ServiceWorkerRegistration | null> => {
   if (!isSwSupported()) {
-    console.log('[SW] Service Workers not supported');
     return null;
   }
 
   // Don't register in development
   if (import.meta.env.DEV) {
-    console.log('[SW] Skipping registration in development');
     return null;
   }
 
@@ -33,8 +31,6 @@ export const registerSW = async (
     const registration = await navigator.serviceWorker.register('/sw.js', {
       scope: '/',
     });
-
-    console.log('[SW] Registration successful:', registration.scope);
 
     // Handle updates
     registration.addEventListener('updatefound', () => {
@@ -45,11 +41,9 @@ export const registerSW = async (
         if (newWorker.state === 'installed') {
           if (navigator.serviceWorker.controller) {
             // New content is available
-            console.log('[SW] New content available');
             config.onUpdate?.(registration);
           } else {
             // Content is cached for offline use
-            console.log('[SW] Content cached for offline use');
             config.onSuccess?.(registration);
           }
         }
@@ -58,7 +52,6 @@ export const registerSW = async (
 
     // Listen for the service worker to take control
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('[SW] New service worker took control');
       window.location.reload();
     });
 
@@ -81,7 +74,6 @@ export const unregisterSW = async (): Promise<boolean> => {
     const registration = await navigator.serviceWorker.getRegistration();
     if (registration) {
       const unregistered = await registration.unregister();
-      console.log('[SW] Unregistered:', unregistered);
       return unregistered;
     }
     return true;
@@ -101,7 +93,6 @@ export const updateSW = async (): Promise<void> => {
     const registration = await navigator.serviceWorker.getRegistration();
     if (registration) {
       await registration.update();
-      console.log('[SW] Update check completed');
     }
   } catch (error) {
     console.error('[SW] Update failed:', error);
