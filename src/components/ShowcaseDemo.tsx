@@ -387,7 +387,11 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
               size="sm"
               onClick={() => setAutoMode((prev) => !prev)}
               className={`glass-minimal border-primary/30 ${autoMode ? 'bg-primary/10' : ''}`}
-              aria-label={autoMode ? 'Switch showcase demo to manual mode' : 'Switch showcase demo to auto mode'}
+              aria-label={
+                autoMode
+                  ? 'Auto mode: switch showcase demo to manual mode'
+                  : 'Manual mode: switch showcase demo to auto mode'
+              }
             >
               {autoMode ? (
                 <EyeOff className="h-4 w-4" aria-hidden="true" />

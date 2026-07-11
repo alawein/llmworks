@@ -112,6 +112,15 @@ test.describe('Accessibility', () => {
       .toBe('supabase.functions.invoke("benchmarks")');
   });
 
+  test('should include visible demo toggle labels in accessible names', async ({ page }) => {
+    await page.goto('/');
+    await waitForAppShell(page);
+
+    await expect(
+      page.getByRole('button', { name: /auto mode: switch showcase demo to manual mode/i })
+    ).toBeVisible();
+  });
+
   test('should have proper focus management', async ({ page }) => {
     await page.goto('/');
     await waitForAppShell(page);
