@@ -13,8 +13,8 @@ async function globalSetup(config: FullConfig) {
     // Warm up the application
     await page.goto(baseURL);
 
-    // Wait for the app shell; ongoing background work can keep `networkidle` open.
-    await page.getByRole('heading', { level: 1, name: /Architect Superior/i }).waitFor();
+    // Wait for a structural app-shell signal; ongoing background work can keep `networkidle` open.
+    await page.getByRole('navigation', { name: /main navigation/i }).waitFor();
   } catch (error) {
     console.error('❌ Global setup failed:', error);
     throw error;
