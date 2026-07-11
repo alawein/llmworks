@@ -1,7 +1,6 @@
-import { Toaster as Sonner, TooltipProvider } from "@alawein/ui";
+import { Toaster as Sonner, TooltipProvider } from '@alawein/ui';
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Toaster } from '@/components/ui/toaster';
-
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AnalyticsListener from '@/components/AnalyticsListener';
@@ -22,9 +21,9 @@ import { DynamicBackground } from '@/components/DynamicBackground';
 import { InteractiveBackground } from '@/components/MagneticElements';
 import { ThemeCustomizer } from '@/components/ThemeCustomizer';
 import { AchievementSystem } from '@/components/AchievementSystem';
-// import { initSecurity } from "@/lib/security";
-// import { initAdvancedSEO } from "@/lib/advanced-seo";
-// import { initMonitoring } from "@/lib/monitoring";
+import { initSecurity } from '@/lib/security';
+import { initAdvancedSEO } from '@/lib/advanced-seo';
+import { initMonitoring } from '@/lib/monitoring';
 
 const Index = lazy(() => import('./pages/Index'));
 const Arena = lazy(() => import('./pages/Arena'));
@@ -81,9 +80,9 @@ const AppRoutes = () => {
 const App = () => {
   useEffect(() => {
     // Initialize production systems
-    // initSecurity();
-    // initAdvancedSEO();
-    // initMonitoring();
+    initSecurity();
+    initAdvancedSEO();
+    initMonitoring();
 
     // Initialize smooth scrolling
     initSmoothScroll();

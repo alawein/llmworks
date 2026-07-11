@@ -40,3 +40,15 @@ export async function secureFetch(url: string, options: RequestInit = {}): Promi
     credentials: 'same-origin',
   });
 }
+
+export function initSecurity(): void {
+  let referrerPolicy = document.querySelector<HTMLMetaElement>('meta[name="referrer"]');
+
+  if (!referrerPolicy) {
+    referrerPolicy = document.createElement('meta');
+    referrerPolicy.name = 'referrer';
+    document.head.appendChild(referrerPolicy);
+  }
+
+  referrerPolicy.content = 'strict-origin-when-cross-origin';
+}
