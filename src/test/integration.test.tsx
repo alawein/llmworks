@@ -310,8 +310,8 @@ describe('Integration Tests', () => {
     });
   });
 
-  describe('Query Client Integration', () => {
-    it('should handle query errors gracefully', async () => {
+  describe('App Resilience Integration', () => {
+    it('should render the app shell without crashing', async () => {
       const { default: App } = await import('@/App');
       const { container } = render(<App />);
 
