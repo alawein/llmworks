@@ -1,11 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: '13.0.4';
-  };
   public: {
     Tables: {
       analytics_events: {
@@ -44,6 +39,131 @@ export type Database = {
           url?: string | null;
           user_agent?: string | null;
           user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      benchmark_results: {
+        Row: {
+          benchmark_id: string;
+          created_at: string;
+          id: string;
+          metrics: Json;
+          model_id: string;
+          output: Json | null;
+          run_id: string | null;
+          score: number | null;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          benchmark_id: string;
+          created_at?: string;
+          id?: string;
+          metrics?: Json;
+          model_id: string;
+          output?: Json | null;
+          run_id?: string | null;
+          score?: number | null;
+          status?: string;
+          user_id: string;
+        };
+        Update: {
+          benchmark_id?: string;
+          created_at?: string;
+          id?: string;
+          metrics?: Json;
+          model_id?: string;
+          output?: Json | null;
+          run_id?: string | null;
+          score?: number | null;
+          status?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'benchmark_results_run_id_fkey';
+            columns: ['run_id'];
+            isOneToOne: false;
+            referencedRelation: 'benchmark_runs';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      benchmark_runs: {
+        Row: {
+          benchmark_id: string;
+          completed_at: string | null;
+          config: Json;
+          created_at: string;
+          error: string | null;
+          id: string;
+          models: Json;
+          started_at: string | null;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          benchmark_id: string;
+          completed_at?: string | null;
+          config?: Json;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          models?: Json;
+          started_at?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          benchmark_id?: string;
+          completed_at?: string | null;
+          config?: Json;
+          created_at?: string;
+          error?: string | null;
+          id?: string;
+          models?: Json;
+          started_at?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      encryption_keys: {
+        Row: {
+          created_at: string;
+          expires_at: string | null;
+          id: string;
+          is_active: boolean;
+          key_hash: string | null;
+          key_name: string | null;
+          key_version: number;
+          retired_at: string | null;
+          rotated_at: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          is_active?: boolean;
+          key_hash?: string | null;
+          key_name?: string | null;
+          key_version: number;
+          retired_at?: string | null;
+          rotated_at?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          is_active?: boolean;
+          key_hash?: string | null;
+          key_name?: string | null;
+          key_version?: number;
+          retired_at?: string | null;
+          rotated_at?: string | null;
         };
         Relationships: [];
       };
@@ -100,38 +220,62 @@ export type Database = {
       };
       models: {
         Row: {
+          access_level: string | null;
+          access_logs: Json | null;
           api_key_encrypted: string | null;
+          api_key_hash: string | null;
           config: Json;
           created_at: string;
           id: string;
           is_active: boolean;
+          key_created_at: string | null;
+          key_last_used: string | null;
+          last_rotated: string | null;
           model_id: string;
           name: string;
           provider: string;
+          rotation_required: boolean | null;
+          security_level: string | null;
           updated_at: string;
           user_id: string;
         };
         Insert: {
+          access_level?: string | null;
+          access_logs?: Json | null;
           api_key_encrypted?: string | null;
+          api_key_hash?: string | null;
           config?: Json;
           created_at?: string;
           id?: string;
           is_active?: boolean;
+          key_created_at?: string | null;
+          key_last_used?: string | null;
+          last_rotated?: string | null;
           model_id: string;
           name: string;
           provider: string;
+          rotation_required?: boolean | null;
+          security_level?: string | null;
           updated_at?: string;
           user_id: string;
         };
         Update: {
+          access_level?: string | null;
+          access_logs?: Json | null;
           api_key_encrypted?: string | null;
+          api_key_hash?: string | null;
           config?: Json;
           created_at?: string;
           id?: string;
           is_active?: boolean;
+          key_created_at?: string | null;
+          key_last_used?: string | null;
+          last_rotated?: string | null;
           model_id?: string;
           name?: string;
           provider?: string;
+          rotation_required?: boolean | null;
+          security_level?: string | null;
           updated_at?: string;
           user_id?: string;
         };
@@ -146,6 +290,8 @@ export type Database = {
           id: string;
           organization: string | null;
           role: string | null;
+          role_assigned_at: string | null;
+          role_assigned_by: string | null;
           updated_at: string;
           user_id: string;
         };
@@ -157,6 +303,8 @@ export type Database = {
           id?: string;
           organization?: string | null;
           role?: string | null;
+          role_assigned_at?: string | null;
+          role_assigned_by?: string | null;
           updated_at?: string;
           user_id: string;
         };
@@ -168,17 +316,168 @@ export type Database = {
           id?: string;
           organization?: string | null;
           role?: string | null;
+          role_assigned_at?: string | null;
+          role_assigned_by?: string | null;
           updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      security_audit_log: {
+        Row: {
+          action: string;
+          created_at: string;
+          details: Json | null;
+          id: string;
+          ip_address: unknown;
+          resource_id: string | null;
+          resource_type: string;
+          severity: string;
+          user_agent: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          action: string;
+          created_at?: string;
+          details?: Json | null;
+          id?: string;
+          ip_address?: unknown;
+          resource_id?: string | null;
+          resource_type: string;
+          severity?: string;
+          user_agent?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          action?: string;
+          created_at?: string;
+          details?: Json | null;
+          id?: string;
+          ip_address?: unknown;
+          resource_id?: string | null;
+          resource_type?: string;
+          severity?: string;
+          user_agent?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      user_roles: {
+        Row: {
+          expires_at: string | null;
+          granted_at: string;
+          granted_by: string | null;
+          id: string;
+          is_active: boolean;
+          role: string;
+          user_id: string;
+        };
+        Insert: {
+          expires_at?: string | null;
+          granted_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          is_active?: boolean;
+          role: string;
+          user_id: string;
+        };
+        Update: {
+          expires_at?: string | null;
+          granted_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          is_active?: boolean;
+          role?: string;
           user_id?: string;
         };
         Relationships: [];
       };
     };
     Views: {
-      [_ in never]: never;
+      analytics_admin_view: {
+        Row: {
+          created_at: string | null;
+          event_name: string | null;
+          event_type: string | null;
+          id: string | null;
+          payload: Json | null;
+          referrer: string | null;
+          session_id: string | null;
+          url: string | null;
+          user_agent: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          event_name?: string | null;
+          event_type?: string | null;
+          id?: string | null;
+          payload?: Json | null;
+          referrer?: string | null;
+          session_id?: string | null;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          event_name?: string | null;
+          event_type?: string | null;
+          id?: string | null;
+          payload?: Json | null;
+          referrer?: string | null;
+          session_id?: string | null;
+          url?: string | null;
+          user_agent?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      analytics_summary: {
+        Row: {
+          event_count: number | null;
+          event_name: string | null;
+          event_type: string | null;
+          time_bucket: string | null;
+          unique_sessions: number | null;
+        };
+        Relationships: [];
+      };
+      analytics_summary_safe: {
+        Row: {
+          day: string | null;
+          event_count: number | null;
+          event_name: string | null;
+          event_type: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
-      [_ in never]: never;
+      check_auth_config: { Args: never; Returns: Json };
+      is_admin: { Args: { user_uuid?: string }; Returns: boolean };
+      log_api_key_access: { Args: { model_id: string }; Returns: undefined };
+      log_security_event:
+        | {
+            Args: {
+              p_action: string;
+              p_details?: Json;
+              p_resource_id?: string;
+              p_resource_type: string;
+            };
+            Returns: undefined;
+          }
+        | {
+            Args: {
+              p_action: string;
+              p_details?: Json;
+              p_resource_id?: string;
+              p_resource_type: string;
+              p_severity?: string;
+            };
+            Returns: undefined;
+          };
+      set_initial_admin: { Args: { admin_email: string }; Returns: undefined };
     };
     Enums: {
       [_ in never]: never;

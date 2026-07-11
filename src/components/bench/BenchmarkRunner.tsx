@@ -1,15 +1,11 @@
-import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
+import { Badge, Button, Card, Checkbox, Progress } from '@alawein/ui';
 import { useState } from 'react';
 
-
-
-
-
+import { queueBenchmarkRun, type BenchmarkRunResponse } from '@/integrations/supabase/benchmarks';
 
 import {
   Play,
   BarChart3,
-  Clock,
   Target,
   CheckCircle,
   AlertTriangle,
@@ -33,12 +29,18 @@ interface BenchmarkProgress {
   model: string;
 }
 
+interface QueuedBenchmarkRun extends BenchmarkRunResponse {
+  benchmarkId: string;
+}
+
 export const BenchmarkRunner = () => {
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [selectedBenchmarks, setSelectedBenchmarks] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState<BenchmarkProgress | null>(null);
   const [results, setResults] = useState<BenchmarkResult[]>([]);
+  const [queuedRuns, setQueuedRuns] = useState<QueuedBenchmarkRun[]>([]);
+  const [benchmarkError, setBenchmarkError] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [scoringNotImplemented, setScoringNotImplemented] = useState(false);
 
@@ -93,15 +95,33 @@ export const BenchmarkRunner = () => {
 
     setIsRunning(true);
     setResults([]);
+    setQueuedRuns([]);
+    setBenchmarkError(null);
     setShowResults(false);
     setScoringNotImplemented(false);
 
-    // TODO: Real benchmark scoring requires calling each model's inference API
-    // and evaluating output against ground truth datasets. This is not yet implemented.
-    // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
-    setIsRunning(false);
-    setProgress(null);
-    setScoringNotImplemented(true);
+    try {
+      const queued = await Promise.all(
+        selectedBenchmarks.map(async (benchmarkId) => {
+          const run = await queueBenchmarkRun(benchmarkId, {
+            models: selectedModels,
+            config: { source: 'BenchmarkRunner' },
+          });
+          return { benchmarkId, ...run };
+        })
+      );
+
+      setQueuedRuns(queued);
+      // TODO: Real benchmark scoring requires calling each model's inference API
+      // and evaluating output against ground truth datasets. This is not yet implemented.
+      // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
+      setScoringNotImplemented(true);
+    } catch (error) {
+      setBenchmarkError(error instanceof Error ? error.message : 'Unable to queue benchmark run');
+    } finally {
+      setIsRunning(false);
+      setProgress(null);
+    }
   };
 
   const exportResults = () => {
@@ -244,6 +264,39 @@ export const BenchmarkRunner = () => {
         )}
       </Card>
 
+      {/* Queue status */}
+      {queuedRuns.length > 0 && (
+        <Card className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <CheckCircle className="h-8 w-8 mx-auto mb-3 text-primary opacity-70" />
+            <p className="font-medium text-foreground">Benchmark run queued.</p>
+            <p className="text-sm mt-2">
+              {queuedRuns.length} benchmark run{queuedRuns.length === 1 ? '' : 's'} queued for{' '}
+              {selectedModels.length} model{selectedModels.length === 1 ? '' : 's'}.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {queuedRuns.map((run) => (
+                <li key={run.runId}>
+                  <span className="font-medium text-foreground">{run.benchmarkId}</span>:{' '}
+                  {run.status}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Card>
+      )}
+
+      {/* Queue error */}
+      {benchmarkError && (
+        <Card className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-destructive opacity-70" />
+            <p className="font-medium text-foreground">Benchmark run could not be queued.</p>
+            <p className="text-sm mt-2">{benchmarkError}</p>
+          </div>
+        </Card>
+      )}
+
       {/* Not-implemented state */}
       {scoringNotImplemented && (
         <Card className="p-6">
@@ -251,8 +304,8 @@ export const BenchmarkRunner = () => {
             <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-accent opacity-60" />
             <p className="font-medium text-foreground">Benchmark scoring is not yet available.</p>
             <p className="text-sm mt-2">
-              Real model evaluations require inference API integration.
-              Results shown here would be placeholder data — they are withheld until real scoring is implemented.
+              Real model evaluations require inference API integration. Results shown here would be
+              placeholder data — they are withheld until real scoring is implemented.
             </p>
           </div>
         </Card>

@@ -68,8 +68,7 @@ DROP POLICY IF EXISTS "Users can view their own models" ON public.models;
 
 -- Create more restrictive model access policies
 CREATE POLICY "Users can view their own models (basic info)" ON public.models
-  FOR SELECT USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  FOR SELECT USING (auth.uid() = user_id);
 
 -- Separate policy for accessing encrypted API keys - requires additional verification
 CREATE POLICY "Users can access their model API keys with restrictions" ON public.models
