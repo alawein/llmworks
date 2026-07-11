@@ -41,4 +41,51 @@ describe('BenchmarkRunner', () => {
     expect(screen.getByText(/^benchmark run queued\.$/i)).toBeInTheDocument();
     expect(screen.getByText(/scoring is not yet available/i)).toBeInTheDocument();
   });
+
+  it('keeps successful queued runs visible when another selected benchmark fails', async () => {
+    const user = userEvent.setup();
+    queueBenchmarkRun.mockImplementation(async (benchmarkId: string) => {
+      if (benchmarkId === 'truthfulqa') {
+        throw new Error('Unauthorized');
+      }
+
+      return {
+        runId: 'run-mmlu',
+        status: 'pending',
+        message: 'Benchmark queued for processing',
+      };
+    });
+
+    render(<BenchmarkRunner />);
+
+    await user.click(screen.getByRole('button', { name: /gpt-4o/i }));
+    await user.click(screen.getByRole('button', { name: /mmlu/i }));
+    await user.click(screen.getByRole('button', { name: /truthfulqa/i }));
+    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+
+    await waitFor(() => {
+      expect(queueBenchmarkRun).toHaveBeenCalledTimes(2);
+    });
+
+    expect(screen.getByText(/^benchmark run queued\.$/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.tagName.toLowerCase() === 'li' &&
+          element.textContent === 'mmlu: pending'
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText(/truthfulqa: unauthorized/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+
+    await waitFor(() => {
+      expect(queueBenchmarkRun).toHaveBeenCalledTimes(3);
+    });
+
+    expect(queueBenchmarkRun).toHaveBeenLastCalledWith('truthfulqa', {
+      models: ['gpt-4o'],
+      config: { source: 'BenchmarkRunner' },
+    });
+  });
 });

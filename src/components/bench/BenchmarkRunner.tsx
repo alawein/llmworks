@@ -33,6 +33,11 @@ interface QueuedBenchmarkRun extends BenchmarkRunResponse {
   benchmarkId: string;
 }
 
+interface BenchmarkQueueFailure {
+  benchmarkId: string;
+  message: string;
+}
+
 export const BenchmarkRunner = () => {
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [selectedBenchmarks, setSelectedBenchmarks] = useState<string[]>([]);
@@ -40,7 +45,7 @@ export const BenchmarkRunner = () => {
   const [progress, setProgress] = useState<BenchmarkProgress | null>(null);
   const [results, setResults] = useState<BenchmarkResult[]>([]);
   const [queuedRuns, setQueuedRuns] = useState<QueuedBenchmarkRun[]>([]);
-  const [benchmarkError, setBenchmarkError] = useState<string | null>(null);
+  const [queueFailures, setQueueFailures] = useState<BenchmarkQueueFailure[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [scoringNotImplemented, setScoringNotImplemented] = useState(false);
 
@@ -95,33 +100,58 @@ export const BenchmarkRunner = () => {
 
     setIsRunning(true);
     setResults([]);
-    setQueuedRuns([]);
-    setBenchmarkError(null);
+    setQueueFailures([]);
     setShowResults(false);
     setScoringNotImplemented(false);
 
-    try {
-      const queued = await Promise.all(
-        selectedBenchmarks.map(async (benchmarkId) => {
+    const queuedBenchmarkIds = new Set(queuedRuns.map((run) => run.benchmarkId));
+    const benchmarkIdsToQueue = selectedBenchmarks.filter(
+      (benchmarkId) => !queuedBenchmarkIds.has(benchmarkId)
+    );
+
+    if (benchmarkIdsToQueue.length === 0) {
+      setIsRunning(false);
+      setProgress(null);
+      setScoringNotImplemented(true);
+      return;
+    }
+
+    const queueResults = await Promise.allSettled(
+      benchmarkIdsToQueue.map(async (benchmarkId) => {
+        try {
           const run = await queueBenchmarkRun(benchmarkId, {
             models: selectedModels,
             config: { source: 'BenchmarkRunner' },
           });
           return { benchmarkId, ...run };
-        })
-      );
+        } catch (error) {
+          throw {
+            benchmarkId,
+            message: error instanceof Error ? error.message : 'Unable to queue benchmark run',
+          };
+        }
+      })
+    );
 
-      setQueuedRuns(queued);
-      // TODO: Real benchmark scoring requires calling each model's inference API
-      // and evaluating output against ground truth datasets. This is not yet implemented.
-      // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
-      setScoringNotImplemented(true);
-    } catch (error) {
-      setBenchmarkError(error instanceof Error ? error.message : 'Unable to queue benchmark run');
-    } finally {
-      setIsRunning(false);
-      setProgress(null);
-    }
+    const queued = queueResults.flatMap((result) =>
+      result.status === 'fulfilled' ? [result.value] : []
+    );
+    const failures = queueResults.flatMap((result) =>
+      result.status === 'rejected' ? [result.reason as BenchmarkQueueFailure] : []
+    );
+
+    setQueuedRuns((previousRuns) => {
+      const byBenchmarkId = new Map(previousRuns.map((run) => [run.benchmarkId, run]));
+      queued.forEach((run) => byBenchmarkId.set(run.benchmarkId, run));
+      return Array.from(byBenchmarkId.values());
+    });
+    setQueueFailures(failures);
+    // TODO: Real benchmark scoring requires calling each model's inference API
+    // and evaluating output against ground truth datasets. This is not yet implemented.
+    // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
+    setScoringNotImplemented(queued.length > 0 || queuedRuns.length > 0);
+    setIsRunning(false);
+    setProgress(null);
   };
 
   const exportResults = () => {
@@ -287,12 +317,20 @@ export const BenchmarkRunner = () => {
       )}
 
       {/* Queue error */}
-      {benchmarkError && (
+      {queueFailures.length > 0 && (
         <Card className="p-6">
           <div className="text-center py-8 text-muted-foreground">
             <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-destructive opacity-70" />
-            <p className="font-medium text-foreground">Benchmark run could not be queued.</p>
-            <p className="text-sm mt-2">{benchmarkError}</p>
+            <p className="font-medium text-foreground">
+              Some benchmark runs could not be queued.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {queueFailures.map((failure) => (
+                <li key={failure.benchmarkId}>
+                  {failure.benchmarkId}: {failure.message}
+                </li>
+              ))}
+            </ul>
           </div>
         </Card>
       )}
