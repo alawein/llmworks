@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { DebateMode } from '@/components/arena/DebateMode';
 import { ModelComparisonDashboard } from '@/components/comparison/ModelComparisonDashboard';
+import { CostTrackingDashboard } from '@/components/dashboard/CostTrackingDashboard';
 import Arena from '@/pages/Arena';
 import Bench from '@/pages/Bench';
 import Index from '@/pages/Index';
@@ -105,5 +106,26 @@ describe('truthful demo surfaces', () => {
     expect(reportDocument.write).toHaveBeenCalledWith(
       expect.stringMatching(/illustrative sample data.*not measured results/i)
     );
+  });
+
+  it('labels cost tracking numbers as illustrative sample data', () => {
+    render(<CostTrackingDashboard />);
+
+    expect(screen.getByText(/sample cost dashboard/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/illustrative sample spend.*not measured billing data/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/sample total spent/i)).toBeInTheDocument();
+    expect(screen.getByText(/sample model usage & costs/i)).toBeInTheDocument();
+    expect(screen.getByText(/sample cost optimization recommendations/i)).toBeInTheDocument();
+  });
+
+  it('does not present sample cost controls as live actions', () => {
+    render(<CostTrackingDashboard />);
+
+    expect(screen.getByRole('button', { name: /^export sample$/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /sample budget settings/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^refresh sample$/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /^export sample details$/i })).toBeDisabled();
   });
 });
