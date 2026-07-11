@@ -32,7 +32,7 @@ The project targets Node.js 20 (see `.nvmrc`). Use `nvm use` or `nvm install` to
 ## Known Failure Modes
 
 - **Visual test snapshots out of date**: Run `npm run test:visual -- --update-snapshots` to regenerate baseline screenshots.
-- **Supabase placeholder configuration**: If the browser logs that Supabase variables are missing, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` at build time.
+- **Supabase disabled configuration**: If the browser logs that Supabase variables are missing, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` at build time. Supabase-backed auth and benchmark actions fail locally before making network calls until both variables are present.
 - **Supabase rate limits**: Authentication flows can trigger Supabase auth rate limits. Do not expose a service-role key to the browser.
 
 ## FAQ
@@ -45,4 +45,3 @@ Provider integrations are not implemented. Add a server-side provider integratio
 
 **How do I run only one test file?**
 Use `npx vitest run <path>` or `npx playwright test <path>` targeting the specific file.
-

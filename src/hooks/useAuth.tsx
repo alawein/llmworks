@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { getSupabaseConfigurationError, supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
+
+type AuthMetadata = Record<string, unknown>;
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -25,6 +34,11 @@ export function useAuth() {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      return { data: null, error: configurationError };
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -32,7 +46,12 @@ export function useAuth() {
     return { data, error };
   };
 
-  const signUp = async (email: string, password: string, metadata?: any) => {
+  const signUp = async (email: string, password: string, metadata?: AuthMetadata) => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      return { data: null, error: configurationError };
+    }
+
     // Get the current URL for proper redirect after email confirmation
     const redirectUrl = `${window.location.origin}/auth/callback`;
 
@@ -48,11 +67,21 @@ export function useAuth() {
   };
 
   const signOut = async () => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      return { error: configurationError };
+    }
+
     const { error } = await supabase.auth.signOut();
     return { error };
   };
 
   const resetPassword = async (email: string) => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      return { data: null, error: configurationError };
+    }
+
     const redirectUrl = `${window.location.origin}/auth/reset-password`;
 
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -62,6 +91,11 @@ export function useAuth() {
   };
 
   const updatePassword = async (newPassword: string) => {
+    const configurationError = getSupabaseConfigurationError();
+    if (configurationError) {
+      return { data: null, error: configurationError };
+    }
+
     const { data, error } = await supabase.auth.updateUser({
       password: newPassword,
     });
