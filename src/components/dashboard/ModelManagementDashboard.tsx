@@ -32,6 +32,7 @@ import {
   Database,
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { debugLog } from '@/lib/logger';
 
 interface Model {
   id: string;
@@ -246,7 +247,7 @@ export const ModelManagementDashboard = () => {
   const handleModelAction = (action: string, model: Model) => {
     trackEvent('model_action', { action, modelId: model.id });
     // Implementation would update model status, etc.
-    console.log(`Action: ${action} on model: ${model.name}`);
+    debugLog(`Action: ${action} on model: ${model.name}`);
   };
 
   const totalActiveModels = models.filter((m) => m.status === 'active').length;

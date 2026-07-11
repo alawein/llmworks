@@ -3,6 +3,8 @@
  * Manages environment-specific settings and feature toggles
  */
 
+import { debugLog } from './logger';
+
 export type Environment = 'development' | 'staging' | 'production';
 
 export interface EnvironmentConfig {
@@ -350,7 +352,7 @@ export function resetConfig(): void {
 
 // Log configuration on initialization (development only)
 if (isDevelopment()) {
-  console.log('Environment Configuration:', {
+  debugLog('Environment Configuration:', {
     environment: currentConfig.environment,
     apiUrl: currentConfig.apiUrl,
     features: currentConfig.features,

@@ -3,6 +3,8 @@
  * Implements comprehensive error tracking, performance monitoring, and alerting
  */
 
+import { debugLog } from './logger';
+
 export interface ErrorContext {
   userId?: string;
   sessionId: string;
@@ -589,7 +591,7 @@ export const initMonitoring = () => {
     };
   }
 
-  console.log('📊 Production monitoring initialized');
+  debugLog('📊 Production monitoring initialized');
 };
 
 // Export singletons for external use

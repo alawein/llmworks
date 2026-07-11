@@ -4,6 +4,7 @@
  */
 
 import { getConfig, isProduction } from './environment';
+import { debugLog } from './logger';
 
 export interface FeatureFlag {
   name: string;
@@ -382,7 +383,7 @@ export function useFeatureFlag(flagName: string, context?: UserContext): boolean
 export function initFeatureFlags(): void {
   // Log enabled features in development
   if (!isProduction()) {
-    console.log('Feature Flags:', getEnabledFeatures());
+    debugLog('Feature Flags:', getEnabledFeatures());
   }
 
   // Set up debug interface in development

@@ -23,6 +23,7 @@ import {
   Sun,
   Monitor,
 } from 'lucide-react';
+import { debugLog } from '@/lib/logger';
 
 export const SettingsPage = () => {
   const [notifications, setNotifications] = useState({
@@ -81,7 +82,7 @@ export const SettingsPage = () => {
         reader.onload = (e) => {
           try {
             const data = JSON.parse(e.target?.result as string);
-            console.log('Imported data:', data);
+            debugLog('Imported data:', data);
             // Handle import logic here
           } catch (error) {
             console.error('Failed to parse import file:', error);
@@ -123,7 +124,7 @@ export const SettingsPage = () => {
         </div>
         <div className="flex gap-2">
           <Button
-            onClick={() => console.log('Settings saved')}
+            onClick={() => debugLog('Settings saved')}
             variant="hero"
             className="hover-scale"
           >

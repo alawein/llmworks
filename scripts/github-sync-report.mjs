@@ -114,7 +114,7 @@ async function main() {
   await mkdir(reportsDir, { recursive: true });
   const outPath = join(reportsDir, `sync-report.${slug}.json`);
   await writeFile(outPath, JSON.stringify(report, null, 2) + "\n", "utf8");
-  console.log(`Wrote ${outPath}`);
+  process.stdout.write(`Wrote ${outPath}\n`);
 }
 
 main().catch((e) => {

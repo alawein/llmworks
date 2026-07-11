@@ -30,8 +30,8 @@ describe('Performance utilities', () => {
       expect(result).toBe(5);
     });
 
-    it('logs the measurement to console', () => {
-      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    it('routes the measurement through debug diagnostics', () => {
+      const consoleSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
       measure('test-op', () => 42);
       expect(consoleSpy).toHaveBeenCalled();
       expect(consoleSpy.mock.calls[0][0]).toContain('[Performance] test-op:');
@@ -46,7 +46,7 @@ describe('Performance utilities', () => {
     });
 
     it('logs with "(failed)" suffix when function throws', () => {
-      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
       try {
         measure('fail-op', () => {
           throw new Error('oops');
@@ -75,8 +75,8 @@ describe('Performance utilities', () => {
       ).rejects.toThrow('async boom');
     });
 
-    it('logs the measurement to console', async () => {
-      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    it('routes async measurements through debug diagnostics', async () => {
+      const consoleSpy = vi.spyOn(console, 'debug').mockImplementation(() => {});
       await measureAsync('timed', async () => 'result');
       expect(consoleSpy).toHaveBeenCalled();
       const logCall = consoleSpy.mock.calls[0][0];

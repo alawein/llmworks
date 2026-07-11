@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { ModelComparisonDashboard } from '@/components/comparison/ModelComparisonDashboard';
+import { debugLog } from '@/lib/logger';
 
 const Compare = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +13,7 @@ const Compare = () => {
     const models = searchParams.get('models');
     if (models) {
       // The ModelComparisonDashboard will handle the shared models
-      console.log('Shared comparison:', models.split(','));
+      debugLog('Shared comparison:', models.split(','));
     }
   }, [searchParams]);
 

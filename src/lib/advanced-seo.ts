@@ -3,6 +3,7 @@
  * Implements comprehensive SEO best practices and structured data
  */
 import React from 'react';
+import { debugLog } from './logger';
 
 export interface SEOConfig {
   title: string;
@@ -479,5 +480,5 @@ export const initAdvancedSEO = () => {
     }
   });
 
-  console.log('🚀 Advanced SEO features initialized');
+  debugLog('🚀 Advanced SEO features initialized');
 };

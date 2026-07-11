@@ -15,6 +15,7 @@ import {
   Palette,
   Zap,
 } from 'lucide-react';
+import { debugLog } from '@/lib/logger';
 
 interface PortfolioPresentationProps {
   className?: string;
@@ -209,7 +210,7 @@ const PortfolioPresentationComponent = ({
 
   const exportToPDF = () => {
     // This would integrate with a PDF generation library
-    console.log('Exporting portfolio to PDF...');
+    debugLog('Exporting portfolio to PDF...');
   };
 
   const sharePortfolio = () => {
