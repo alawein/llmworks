@@ -32,6 +32,10 @@ test-results/
 # Ops reports (generated locally or in CI artifacts)
 reports/sync-report.*.json
 
+# Supabase local runtime state
+supabase/.branches/
+supabase/.temp/
+
 # Logs
 *.log
 

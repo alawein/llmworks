@@ -1,15 +1,11 @@
-import { Badge, Button, Card, Checkbox, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
+import { Badge, Button, Card, Checkbox, Progress } from '@alawein/ui';
 import { useState } from 'react';
 
-
-
-
-
+import { queueBenchmarkRun, type BenchmarkRunResponse } from '@/integrations/supabase/benchmarks';
 
 import {
   Play,
   BarChart3,
-  Clock,
   Target,
   CheckCircle,
   AlertTriangle,
@@ -33,12 +29,46 @@ interface BenchmarkProgress {
   model: string;
 }
 
+interface QueuedBenchmarkRun extends BenchmarkRunResponse {
+  benchmarkId: string;
+  queueKey: string;
+  models: string[];
+  config: Record<string, unknown>;
+}
+
+interface BenchmarkQueueFailure {
+  benchmarkId: string;
+  queueKey: string;
+  models: string[];
+  message: string;
+}
+
+const benchmarkRunnerConfig: Record<string, unknown> = { source: 'BenchmarkRunner' };
+
+const normalizeModelIds = (modelIds: string[]) =>
+  [...modelIds].sort((first, second) => first.localeCompare(second));
+
+const createBenchmarkQueueKey = (
+  benchmarkId: string,
+  modelIds: string[],
+  config: Record<string, unknown>
+) =>
+  JSON.stringify({
+    benchmarkId,
+    models: normalizeModelIds(modelIds),
+    config,
+  });
+
+const formatModelIds = (modelIds: string[]) => modelIds.join(', ');
+
 export const BenchmarkRunner = () => {
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [selectedBenchmarks, setSelectedBenchmarks] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState<BenchmarkProgress | null>(null);
   const [results, setResults] = useState<BenchmarkResult[]>([]);
+  const [queuedRuns, setQueuedRuns] = useState<QueuedBenchmarkRun[]>([]);
+  const [queueFailures, setQueueFailures] = useState<BenchmarkQueueFailure[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [scoringNotImplemented, setScoringNotImplemented] = useState(false);
 
@@ -93,15 +123,67 @@ export const BenchmarkRunner = () => {
 
     setIsRunning(true);
     setResults([]);
+    setQueueFailures([]);
     setShowResults(false);
     setScoringNotImplemented(false);
 
+    const modelsToQueue = normalizeModelIds(selectedModels);
+    const queueRequests = selectedBenchmarks.map((benchmarkId) => ({
+      benchmarkId,
+      queueKey: createBenchmarkQueueKey(benchmarkId, modelsToQueue, benchmarkRunnerConfig),
+      models: modelsToQueue,
+      config: benchmarkRunnerConfig,
+    }));
+    const queuedRunKeys = new Set(queuedRuns.map((run) => run.queueKey));
+    const requestsToQueue = queueRequests.filter(
+      (request) => !queuedRunKeys.has(request.queueKey)
+    );
+
+    if (requestsToQueue.length === 0) {
+      setIsRunning(false);
+      setProgress(null);
+      setScoringNotImplemented(true);
+      return;
+    }
+
+    const queueResults = await Promise.allSettled(
+      requestsToQueue.map(async (request) => {
+        try {
+          const run = await queueBenchmarkRun(request.benchmarkId, {
+            models: request.models,
+            config: request.config,
+          });
+          return { ...request, ...run };
+        } catch (error) {
+          throw {
+            benchmarkId: request.benchmarkId,
+            queueKey: request.queueKey,
+            models: request.models,
+            message: error instanceof Error ? error.message : 'Unable to queue benchmark run',
+          };
+        }
+      })
+    );
+
+    const queued = queueResults.flatMap((result) =>
+      result.status === 'fulfilled' ? [result.value] : []
+    );
+    const failures = queueResults.flatMap((result) =>
+      result.status === 'rejected' ? [result.reason as BenchmarkQueueFailure] : []
+    );
+
+    setQueuedRuns((previousRuns) => {
+      const byQueueKey = new Map(previousRuns.map((run) => [run.queueKey, run]));
+      queued.forEach((run) => byQueueKey.set(run.queueKey, run));
+      return Array.from(byQueueKey.values());
+    });
+    setQueueFailures(failures);
     // TODO: Real benchmark scoring requires calling each model's inference API
     // and evaluating output against ground truth datasets. This is not yet implemented.
     // See: docs/superpowers/specs/2026-04-25-active-product-integrity-design.md L1
+    setScoringNotImplemented(queued.length > 0 || queuedRuns.length > 0);
     setIsRunning(false);
     setProgress(null);
-    setScoringNotImplemented(true);
   };
 
   const exportResults = () => {
@@ -244,6 +326,48 @@ export const BenchmarkRunner = () => {
         )}
       </Card>
 
+      {/* Queue status */}
+      {queuedRuns.length > 0 && (
+        <Card className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <CheckCircle className="h-8 w-8 mx-auto mb-3 text-primary opacity-70" />
+            <p className="font-medium text-foreground">
+              {queuedRuns.length === 1 ? 'Benchmark run queued.' : 'Benchmark runs queued.'}
+            </p>
+            <p className="text-sm mt-2">
+              {queuedRuns.length} benchmark run{queuedRuns.length === 1 ? '' : 's'} queued.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {queuedRuns.map((run) => (
+                <li key={run.queueKey}>
+                  <span className="font-medium text-foreground">{run.benchmarkId}</span>:{' '}
+                  {run.status} for {formatModelIds(run.models)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Card>
+      )}
+
+      {/* Queue error */}
+      {queueFailures.length > 0 && (
+        <Card className="p-6">
+          <div className="text-center py-8 text-muted-foreground">
+            <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-destructive opacity-70" />
+            <p className="font-medium text-foreground">
+              Some benchmark runs could not be queued.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              {queueFailures.map((failure) => (
+                <li key={failure.queueKey}>
+                  {failure.benchmarkId}: {failure.message} for {formatModelIds(failure.models)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Card>
+      )}
+
       {/* Not-implemented state */}
       {scoringNotImplemented && (
         <Card className="p-6">
@@ -251,8 +375,8 @@ export const BenchmarkRunner = () => {
             <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-accent opacity-60" />
             <p className="font-medium text-foreground">Benchmark scoring is not yet available.</p>
             <p className="text-sm mt-2">
-              Real model evaluations require inference API integration.
-              Results shown here would be placeholder data — they are withheld until real scoring is implemented.
+              Real model evaluations require inference API integration. Results shown here would be
+              placeholder data — they are withheld until real scoring is implemented.
             </p>
           </div>
         </Card>

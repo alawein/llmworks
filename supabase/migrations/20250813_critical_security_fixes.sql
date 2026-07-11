@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS public.user_roles (
 ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
 
 -- Create admin check function
-CREATE OR REPLACE FUNCTION public.is_admin(check_user_id UUID DEFAULT auth.uid())
+CREATE OR REPLACE FUNCTION public.is_admin(user_uuid UUID DEFAULT auth.uid())
 RETURNS BOOLEAN
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -46,8 +46,8 @@ SET search_path = ''
 AS $$
 BEGIN
   RETURN EXISTS (
-    SELECT 1 FROM public.user_roles 
-    WHERE user_id = check_user_id 
+    SELECT 1 FROM public.user_roles
+    WHERE user_id = user_uuid
     AND role = 'admin'
     AND is_active = true
     AND (expires_at IS NULL OR expires_at > now())
@@ -72,7 +72,7 @@ GRANT SELECT ON public.analytics_admin_view TO authenticated;
 
 -- Create aggregated analytics for regular users (no sensitive data)
 CREATE OR REPLACE VIEW public.analytics_summary_safe AS
-SELECT 
+SELECT
   event_type,
   event_name,
   DATE_TRUNC('day', created_at) as day,
@@ -89,7 +89,7 @@ GRANT SELECT ON public.analytics_summary_safe TO authenticated;
 -- ============================================
 
 -- Add security metadata to models table if not exists
-ALTER TABLE public.models 
+ALTER TABLE public.models
 ADD COLUMN IF NOT EXISTS security_level TEXT DEFAULT 'standard' CHECK (security_level IN ('standard', 'enhanced', 'critical')),
 ADD COLUMN IF NOT EXISTS last_rotated TIMESTAMP WITH TIME ZONE,
 ADD COLUMN IF NOT EXISTS rotation_required BOOLEAN DEFAULT false,
@@ -101,9 +101,8 @@ DROP POLICY IF EXISTS "Users can access their model API keys with restrictions" 
 
 -- Separate policies for viewing models vs accessing keys
 CREATE POLICY "Users can view model metadata only" ON public.models
-  FOR SELECT 
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
+  FOR SELECT
+  USING (auth.uid() = user_id);
 
 -- Function to log API key access
 CREATE OR REPLACE FUNCTION public.log_api_key_access(model_id UUID)
@@ -113,8 +112,8 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
 BEGIN
-  UPDATE public.models 
-  SET 
+  UPDATE public.models
+  SET
     key_last_used = now(),
     access_logs = access_logs || jsonb_build_object(
       'accessed_at', now(),
@@ -142,6 +141,19 @@ CREATE TABLE IF NOT EXISTS public.security_audit_log (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
+-- 20250812 created this table first without severity. IF NOT EXISTS above
+-- would otherwise leave later function calls and indexes pointing at a
+-- missing column.
+ALTER TABLE public.security_audit_log
+  ADD COLUMN IF NOT EXISTS severity TEXT DEFAULT 'info' CHECK (severity IN ('info', 'warning', 'critical'));
+
+UPDATE public.security_audit_log
+SET severity = 'info'
+WHERE severity IS NULL;
+
+ALTER TABLE public.security_audit_log
+  ALTER COLUMN severity SET NOT NULL;
+
 -- Enable RLS
 ALTER TABLE public.security_audit_log ENABLE ROW LEVEL SECURITY;
 
@@ -150,6 +162,8 @@ CREATE POLICY "Only admins can view audit logs" ON public.security_audit_log
   FOR SELECT USING (public.is_admin());
 
 -- Function to log security events
+DROP FUNCTION IF EXISTS public.log_security_event(TEXT, TEXT, TEXT, JSONB);
+
 CREATE OR REPLACE FUNCTION public.log_security_event(
   p_action TEXT,
   p_resource_type TEXT,
@@ -167,10 +181,10 @@ BEGIN
     user_id, action, resource_type, resource_id, severity, details,
     ip_address, user_agent
   ) VALUES (
-    auth.uid(), 
-    p_action, 
-    p_resource_type, 
-    p_resource_id, 
+    auth.uid(),
+    p_action,
+    p_resource_type,
+    p_resource_id,
     p_severity,
     p_details,
     (current_setting('request.headers', true)::json->>'x-forwarded-for')::inet,
@@ -201,7 +215,7 @@ BEGIN
     'password_min_length', 8,
     'email_verification_required', true
   );
-  
+
   -- Log the check
   PERFORM public.log_security_event(
     'auth_config_checked',
@@ -210,7 +224,7 @@ BEGIN
     'info',
     config
   );
-  
+
   RETURN config;
 END;
 $$;
@@ -229,6 +243,18 @@ CREATE TABLE IF NOT EXISTS public.encryption_keys (
   rotated_at TIMESTAMP WITH TIME ZONE,
   expires_at TIMESTAMP WITH TIME ZONE
 );
+
+-- 20250812 created this table first with only rotation metadata. Preserve
+-- existing deployments and add the columns this migration expects.
+ALTER TABLE public.encryption_keys
+  ADD COLUMN IF NOT EXISTS key_name TEXT,
+  ADD COLUMN IF NOT EXISTS key_hash TEXT,
+  ADD COLUMN IF NOT EXISTS rotated_at TIMESTAMP WITH TIME ZONE,
+  ADD COLUMN IF NOT EXISTS expires_at TIMESTAMP WITH TIME ZONE;
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_encryption_keys_key_name
+  ON public.encryption_keys(key_name)
+  WHERE key_name IS NOT NULL;
 
 -- Enable RLS
 ALTER TABLE public.encryption_keys ENABLE ROW LEVEL SECURITY;
@@ -255,20 +281,21 @@ BEGIN
   IF EXISTS (SELECT 1 FROM public.user_roles WHERE role = 'admin' AND is_active = true) THEN
     RAISE EXCEPTION 'Admin already exists. Use admin panel to manage roles.';
   END IF;
-  
+
   -- Get user ID from email
-  SELECT id INTO admin_user_id 
-  FROM auth.users 
+  SELECT id INTO admin_user_id
+  FROM auth.users
   WHERE email = admin_email;
-  
+
   IF admin_user_id IS NULL THEN
     RAISE EXCEPTION 'User with email % not found', admin_email;
   END IF;
-  
+
   -- Grant admin role
   INSERT INTO public.user_roles (user_id, role, granted_by, granted_at)
-  VALUES (admin_user_id, 'admin', admin_user_id, now());
-  
+  VALUES (admin_user_id, 'admin', admin_user_id, now())
+  ON CONFLICT (user_id, role) DO NOTHING;
+
   -- Log the event
   PERFORM public.log_security_event(
     'initial_admin_set',
@@ -300,7 +327,7 @@ COMMENT ON TABLE public.user_roles IS 'Role-based access control for platform us
 COMMENT ON TABLE public.security_audit_log IS 'Comprehensive audit trail for security events';
 COMMENT ON TABLE public.encryption_keys IS 'Management of encryption keys for API key security';
 COMMENT ON FUNCTION public.is_admin IS 'Check if user has admin privileges';
-COMMENT ON FUNCTION public.log_security_event IS 'Log security-related events for audit trail';
+COMMENT ON FUNCTION public.log_security_event(TEXT, TEXT, TEXT, TEXT, JSONB) IS 'Log security-related events for audit trail';
 COMMENT ON FUNCTION public.check_auth_config IS 'Check and return recommended auth configuration';
 COMMENT ON VIEW public.analytics_admin_view IS 'Admin-only view of all analytics events';
 COMMENT ON VIEW public.analytics_summary_safe IS 'Aggregated analytics safe for all users';
