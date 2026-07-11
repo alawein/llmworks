@@ -31,9 +31,8 @@ Required environment variables (see `.env.example` in the repo root):
 
 | Variable | Purpose |
 |---|---|
-| `VITE_API_KEY_ENCRYPTION_SALT` | Client-side encryption salt for stored provider keys. Deployment secret only. |
 | `VITE_SUPABASE_URL` | Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | Supabase public anon key |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Supabase public publishable key |
 
-Provider API keys (OpenAI, Anthropic, etc.) are entered by users at runtime and stored encrypted in Supabase. They are not build-time environment variables.
+The app currently has no provider API integration or client-side key-encryption path. Do not add provider keys or encryption salts as Vite client environment variables.
 

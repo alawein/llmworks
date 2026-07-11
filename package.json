@@ -39,7 +39,7 @@
     "test:performance": "vitest run src/test/performance.test.ts",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "test:visual": "playwright test --project=visual-regression",
+    "test:visual": "playwright test tests/visual",
     "test:watch": "vitest",
     "type-check": "tsc --noEmit"
   },

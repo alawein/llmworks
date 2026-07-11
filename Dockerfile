@@ -1,5 +1,5 @@
 # Multi-stage build for production optimization
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -20,7 +20,7 @@ ARG VITE_API_URL
 ARG VITE_CDN_URL
 ARG VITE_WS_URL
 ARG VITE_SUPABASE_URL
-ARG VITE_SUPABASE_ANON_KEY
+ARG VITE_SUPABASE_PUBLISHABLE_KEY
 ARG VITE_SENTRY_DSN
 
 # Set environment variables
@@ -30,7 +30,7 @@ ENV VITE_API_URL=$VITE_API_URL
 ENV VITE_CDN_URL=$VITE_CDN_URL
 ENV VITE_WS_URL=$VITE_WS_URL
 ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
-ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+ENV VITE_SUPABASE_PUBLISHABLE_KEY=$VITE_SUPABASE_PUBLISHABLE_KEY
 ENV VITE_SENTRY_DSN=$VITE_SENTRY_DSN
 
 # Build the application

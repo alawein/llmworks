@@ -80,8 +80,8 @@ export const ModelComparisonDashboard = () => {
   const handleExport = useCallback(async () => {
     await exportToPDF(selectedModelData);
     toast({
-      title: 'PDF exported',
-      description: 'Your comparison report has been downloaded.',
+      title: 'Illustrative report opened',
+      description: 'The print view is labeled as sample data, not measured results.',
     });
   }, [selectedModelData, exportToPDF, toast]);
 
@@ -92,7 +92,8 @@ export const ModelComparisonDashboard = () => {
         <div>
           <h1 className="text-3xl font-bold text-foreground">Model Comparison</h1>
           <p className="text-muted-foreground mt-1">
-            Compare up to {MAX_MODELS} LLM models side-by-side
+            Illustrative sample data — not measured results. Compare up to {MAX_MODELS} LLM models
+            side-by-side to explore the interface.
           </p>
         </div>
         <div className="flex gap-2">

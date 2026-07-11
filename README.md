@@ -7,21 +7,22 @@ Visibility:  private
 Purpose:     LLM evaluation, benchmarking, and security testing playground.
 Next action: continue
 
-LLMWorks is an LLM evaluation and security-testing workbench. It provides a
-browser-based surface for benchmark runs, provider-backed experiments, and
-security-oriented inspection of model behavior. This repo is not a generic chat
-wrapper: it compares models, exposes failure modes, and keeps evaluation
-workflows inspectable.
+LLMWorks is an LLM evaluation and security-testing workbench UI. It provides
+browser-based surfaces for evaluation concepts, comparison workflows, and
+security-oriented inspection. Current arena and comparison data is explicitly
+scripted or illustrative; provider execution and benchmark scoring are not yet
+implemented in this repository.
 
 [![CI](https://github.com/alawein/llmworks/actions/workflows/ci.yml/badge.svg)](https://github.com/alawein/llmworks/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Value proposition
 
-LLMWorks runs evaluation and benchmark flows against configured providers,
-stores auth and data state through Supabase-backed flows, and ships local UI for
-dashboards, reports, and experiment review. Playwright, accessibility, visual,
-and coverage-driven test surfaces guard regressions.
+LLMWorks ships a Vite/React interface with Supabase authentication support,
+local dashboards, demo evaluation flows, and illustrative comparison reports.
+It does not currently call model-provider SDKs or calculate benchmark scores.
+Playwright, accessibility, visual, and coverage-driven test surfaces guard UI
+regressions.
 
 ## Demo and status
 
@@ -36,7 +37,7 @@ npm install
 npm run dev
 ```
 
-Environment variables, including the production encryption salt, are documented
+Environment variables for the Vite client and Supabase connection are documented
 in [`.env.example`](.env.example).
 
 Validation:
@@ -53,8 +54,10 @@ npm run test:visual
 
 ## Architecture
 
-Vite + React SPA with Supabase-backed persistence. Route surfaces stay in
-`src/pages/`. Provider API keys are encrypted at rest via Supabase.
+Vite + React SPA with Supabase authentication and migration-managed schema.
+Route surfaces stay in `src/pages/`. The repository currently has no provider
+SDK integration, benchmark scoring implementation, or client-side key
+encryption path; these claims will be added only when backed by code.
 
 ```text
 llmworks/

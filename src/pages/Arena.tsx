@@ -47,16 +47,16 @@ const Arena = memo(() => {
     setSEO({
       title: 'The Arena | LLM Works',
       description:
-        'Open‑source interactive evaluation that runs in your browser. Debates, creative tasks, explanations.',
+        'Scripted interactive evaluation demos for debates, creative tasks, and explanations.',
       path: '/arena',
     });
     injectJsonLd(
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        name: 'The Arena — Interactive AI Evaluation',
+        name: 'The Arena — Interactive AI Evaluation Demos',
         url: `${window.location.origin}/arena`,
-        description: 'Local‑first multi‑agent testing: debates, creative, explanations.',
+        description: 'Scripted demonstrations of multi-agent evaluation interfaces.',
         isPartOf: {
           '@type': 'SoftwareApplication',
           name: 'LLM Works',
@@ -71,36 +71,36 @@ const Arena = memo(() => {
       id: 'debate',
       icon: Swords,
       title: 'Debate Mode',
-      description: 'Pit models against each other in structured debates',
+      description: 'Explore a scripted two-sided debate interface',
       features: ['Proponent vs Skeptic', 'Citation Requirements', 'Multi-round scoring'],
-      status: 'Available',
+      status: 'Scripted demo',
       color: 'bg-accent/10 text-accent',
     },
     {
       id: 'enhanced-debate',
       icon: Trophy,
       title: 'Neural Arena',
-      description: 'Epic AI battles with real-time combat visualization',
+      description: 'Explore scripted battle-state visualizations',
       features: ['AI Personality Avatars', 'Epic Confrontation Effects', 'Battle State Animations'],
-      status: 'Available',
+      status: 'Scripted demo',
       color: 'bg-yellow-500/10 text-yellow-600',
     },
     {
       id: 'creative',
       icon: Lightbulb,
       title: 'Creative Sandbox',
-      description: 'Collaborative creative tasks with iterative refinement',
+      description: 'Explore a scripted creative-task workflow',
       features: ['Creator + Refiner roles', 'Brand voice adherence', 'Creative scoring'],
-      status: 'Available',
+      status: 'Scripted demo',
       color: 'bg-primary/10 text-primary',
     },
     {
       id: 'explanation',
       icon: GraduationCap,
       title: 'Explanation Challenge',
-      description: 'Test adaptive explanation abilities',
+      description: 'Explore a scripted explanation workflow',
       features: ['Expert + Student roles', 'Clarity optimization', 'Empathy scoring'],
-      status: 'Available',
+      status: 'Scripted demo',
       color: 'bg-accent/10 text-accent',
     },
   ];
@@ -115,16 +115,16 @@ const Arena = memo(() => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
             <Swords className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent neural-text">
-              INTERACTIVE EVALUATION
+              INTERACTIVE EVALUATION DEMOS
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            THE ARENA — INTERACTIVE TESTING
+            THE ARENA — SCRIPTED DEMOS
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Test models through debates, creative tasks, and explanations. Get comparative analysis
-            through structured interactions.
+            Explore evaluation interface concepts through scripted debates, creative tasks, and
+            explanations. No mode currently invokes a model provider or produces measured results.
           </p>
         </div>
 
@@ -161,7 +161,7 @@ const Arena = memo(() => {
                       >
                         <mode.icon className={`h-8 w-8 ${mode.color.split(' ')[1]}`} />
                       </div>
-                      <Badge variant={mode.status === 'Available' ? 'default' : 'secondary'}>
+                      <Badge variant="secondary">
                         {mode.status}
                       </Badge>
                     </div>
@@ -179,19 +179,12 @@ const Arena = memo(() => {
                     </div>
 
                     <Button
-                      variant={mode.status === 'Available' ? 'hero' : 'secondary'}
+                      variant="hero"
                       className="w-full"
-                      onClick={() => mode.status === 'Available' && setActiveMode(mode.id)}
-                      disabled={mode.status !== 'Available'}
+                      onClick={() => setActiveMode(mode.id)}
                     >
-                      {mode.status === 'Available' ? (
-                        <>
-                          <Play className="h-4 w-4" />
-                          Launch Mode
-                        </>
-                      ) : (
-                        'Coming Soon'
-                      )}
+                      <Play className="h-4 w-4" />
+                      Open Scripted Demo
                     </Button>
                   </div>
                 </Card>
@@ -274,30 +267,30 @@ const Arena = memo(() => {
         <Card className="p-8 gradient-surface shadow-medium">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-foreground mb-4">Start Interactive Testing</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-4">Explore Evaluation Demos</h3>
               <p className="text-muted-foreground mb-4">
-                Configure your models, set up interaction parameters, and run evaluations that
-                reveal model capabilities and limitations.
+                Explore the UI for configured-model evaluation workflows. Provider execution,
+                citation verification, and benchmark scoring are not implemented in this app.
               </p>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-accent" />
-                  <span className="text-sm text-muted-foreground">Multi-agent orchestration</span>
+                  <span className="text-sm text-muted-foreground">Scripted multi-agent layouts</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MessageCircle className="h-4 w-4 text-accent" />
-                  <span className="text-sm text-muted-foreground">Real-time interaction</span>
+                  <span className="text-sm text-muted-foreground">Scripted interaction states</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Trophy className="h-4 w-4 text-accent" />
-                  <span className="text-sm text-muted-foreground">AI-powered judging</span>
+                  <span className="text-sm text-muted-foreground">Illustrative scoring displays</span>
                 </div>
               </div>
             </div>
             <div className="flex flex-col gap-3">
               <Button variant="hero" size="lg">
                 <Settings className="h-4 w-4" />
-                Configure Models
+                View Model Setup
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button variant="outline">View Documentation</Button>
