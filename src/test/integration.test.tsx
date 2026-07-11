@@ -65,7 +65,6 @@ vi.mock('@/hooks/useCommandPalette', () => ({
 vi.mock('@/components/KeyboardShortcuts', () => ({
   KeyboardShortcuts: () => null,
   KeyboardProvider: ({ children }: { children: React.ReactNode }) => children,
-  useKeyboard: () => ({ addShortcut: vi.fn(), removeShortcut: vi.fn(), toggleHelp: vi.fn() }),
 }));
 
 // Test wrapper component for individual components (not full App)

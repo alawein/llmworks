@@ -20,7 +20,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useState, useEffect, memo } from 'react';
 import { trackEvent } from '@/lib/analytics';
-import { withErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const Dashboard = memo(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -370,5 +370,12 @@ const Dashboard = memo(() => {
 
 Dashboard.displayName = 'Dashboard';
 
+const DashboardWithErrorBoundary = () => (
+  <ErrorBoundary>
+    <Dashboard />
+  </ErrorBoundary>
+);
+DashboardWithErrorBoundary.displayName = 'DashboardWithErrorBoundary';
+
 export { Dashboard };
-export default withErrorBoundary(Dashboard);
+export default DashboardWithErrorBoundary;

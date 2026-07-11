@@ -12,7 +12,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 
-import { useKeyboard } from '@/components/KeyboardShortcuts';
+import { useKeyboard } from '@/components/keyboard-context';
 
 interface TourStep {
   id: string;
