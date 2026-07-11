@@ -82,35 +82,6 @@ jobs:
           path: results.sarif
           retention-days: 90
 
-      - name: Generate summary report
-        if: always()
-        run: |
-          echo "## OpenSSF Scorecard Security Analysis" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Security analysis completed for commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Checks Performed (18 total):" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Binary-Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Branch-Protection" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ CI-Tests" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ CII-Best-Practices" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Code-Review" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Contributors" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Dangerous-Workflow" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Dependency-Update-Tool (Renovate)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Fuzzing" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ License" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Maintained" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Packaging" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Pinned-Dependencies" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ SAST" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Security-Policy" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Signed-Releases" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Token-Permissions" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Vulnerabilities" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "View detailed results in the [Security tab](https://github.com/${{ github.repository }}/security/code-scanning)" >> $GITHUB_STEP_SUMMARY
-
   # Store scorecard results in repository
   store-results:
     name: Store Scorecard Results
