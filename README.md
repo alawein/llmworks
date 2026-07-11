@@ -68,10 +68,11 @@ llmworks/
 ├── src/
 │   ├── components/
 │   ├── hooks/
+│   ├── integrations/
+│   ├── lib/
 │   ├── pages/
-│   ├── stores/
-│   ├── types/
-│   └── utils/
+│   ├── styles/
+│   └── test/
 ├── supabase/
 ├── tests/
 ├── AGENTS.md

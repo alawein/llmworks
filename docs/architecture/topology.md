@@ -19,7 +19,6 @@ llmworks/
 ├── public/
 ├── scripts/
 ├── src/
-│   ├── App.css
 │   ├── App.tsx
 │   ├── api/
 │   ├── components/
@@ -43,7 +42,8 @@ llmworks/
 - `src/components/` holds shared UI grouped by feature area (arena, bench, dashboard).
 - `src/hooks/` and `src/lib/` own client helpers and shared logic.
 - `src/api/` and `src/integrations/` wrap provider and Supabase calls.
-- `supabase/` holds auth, persistence, and encrypted key storage schema.
+- `supabase/` holds auth, persistence, RLS, edge functions, and migration-managed
+  schema. Provider-key encryption is not implemented by the current app.
 - `e2e/` and `tests/` cover Playwright and unit surfaces; `public/` serves static assets.
 
 ## Related
