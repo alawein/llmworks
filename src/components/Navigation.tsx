@@ -175,7 +175,7 @@ const NavigationComponent = () => {
               className="btn-elegant relative group hover:bg-primary/10 transition-all duration-300"
             >
               <a
-                href="https://github.com/alawein/aegis-ai-evaluator"
+                href="https://github.com/alawein/llmworks"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => handleNavClick('github')}
@@ -369,7 +369,7 @@ const NavigationComponent = () => {
                   className="btn-elegant w-full justify-start relative group hover:bg-primary/10"
                 >
                   <a
-                    href="https://github.com/alawein/aegis-ai-evaluator"
+                    href="https://github.com/alawein/llmworks"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => handleNavClick('github')}

@@ -86,7 +86,7 @@ const CommandPaletteComponent: React.FC<CommandPaletteProps> = ({ open, onOpenCh
         title: 'View Source',
         description: 'Open GitHub repository',
         icon: Github,
-        action: () => window.open('https://github.com/alawein/aegis-ai-evaluator', '_blank'),
+        action: () => window.open('https://github.com/alawein/llmworks', '_blank'),
         category: 'External',
         keywords: ['github', 'source', 'code', 'repository', 'open source'],
       },

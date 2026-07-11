@@ -170,4 +170,4 @@ A: You can review static UI locally, but Supabase-backed queueing requires the
 backend services.
 
 For additional help, visit the
-[GitHub repository](https://github.com/alawein/aegis-ai-evaluator).
+[GitHub repository](https://github.com/alawein/llmworks).

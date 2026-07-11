@@ -54,7 +54,7 @@ const TermsPage = () => {
               <p className="text-muted-foreground">
                 We may update these terms from time to time. Changes will be posted in our{' '}
                 <a
-                  href="https://github.com/alawein/aegis-ai-evaluator"
+                  href="https://github.com/alawein/llmworks"
                   className="text-primary hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -70,7 +70,7 @@ const TermsPage = () => {
               <p className="text-muted-foreground">
                 Questions about these terms? Open an issue on our{' '}
                 <a
-                  href="https://github.com/alawein/aegis-ai-evaluator"
+                  href="https://github.com/alawein/llmworks"
                   className="text-primary hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"

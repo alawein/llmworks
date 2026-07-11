@@ -34,8 +34,8 @@ sla: none
 
 ```bash
 # Clone the repository
-git clone https://github.com/alawein/aegis-ai-evaluator.git
-cd aegis-ai-evaluator
+git clone https://github.com/alawein/llmworks.git
+cd llmworks
 
 # Install dependencies
 npm install
@@ -992,5 +992,5 @@ Brief description of changes
 5. **Announcement**: Update documentation and notify users
 
 For questions or support, join our
-[GitHub Discussions](https://github.com/alawein/aegis-ai-evaluator/discussions)
+[GitHub Discussions](https://github.com/alawein/llmworks/discussions)
 or contact the development team.
