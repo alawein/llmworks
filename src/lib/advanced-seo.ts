@@ -130,7 +130,7 @@ export const generateOrganizationSchema = () => {
       availableLanguage: ['English'],
     },
     sameAs: [
-      'https://github.com/alawein/aegis-ai-evaluator',
+      'https://github.com/alawein/llmworks',
       'https://twitter.com/llmworks',
       'https://linkedin.com/company/llmworks',
     ],
