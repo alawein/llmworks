@@ -3,6 +3,8 @@
  * Tracks Core Web Vitals and provides performance insights
  */
 
+import { debugLog } from './logger';
+
 export interface PerformanceMetrics {
   // Core Web Vitals
   lcp?: number; // Largest Contentful Paint
@@ -176,7 +178,7 @@ class PerformanceMonitor {
 
   private log(message: string, value?: number): void {
     if (this.config.debug) {
-      console.log(`[Performance] ${message}`, value);
+      debugLog(`[Performance] ${message}`, value);
     }
   }
 
@@ -266,11 +268,11 @@ export const measureAsync = async <T>(name: string, fn: () => Promise<T>): Promi
   try {
     const result = await fn();
     const duration = performance.now() - start;
-    console.log(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
+    debugLog(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
     return result;
   } catch (error) {
     const duration = performance.now() - start;
-    console.log(`[Performance] ${name} (failed): ${duration.toFixed(2)}ms`);
+    debugLog(`[Performance] ${name} (failed): ${duration.toFixed(2)}ms`);
     throw error;
   }
 };
@@ -281,11 +283,11 @@ export const measure = <T>(name: string, fn: () => T): T => {
   try {
     const result = fn();
     const duration = performance.now() - start;
-    console.log(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
+    debugLog(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
     return result;
   } catch (error) {
     const duration = performance.now() - start;
-    console.log(`[Performance] ${name} (failed): ${duration.toFixed(2)}ms`);
+    debugLog(`[Performance] ${name} (failed): ${duration.toFixed(2)}ms`);
     throw error;
   }
 };
@@ -320,5 +322,5 @@ export const analyzeResourceTiming = (): void => {
   analysis.slowestResources.sort((a, b) => b.loadTime - a.loadTime);
   analysis.slowestResources = analysis.slowestResources.slice(0, 10);
 
-  console.log('[Performance] Resource Analysis:', analysis);
+  debugLog('[Performance] Resource Analysis:', analysis);
 };

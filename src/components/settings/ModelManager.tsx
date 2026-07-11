@@ -22,6 +22,7 @@ import {
   Key,
   Server,
 } from 'lucide-react';
+import { debugLog } from '@/lib/logger';
 
 interface ModelConfig {
   id: string;
@@ -117,7 +118,7 @@ export const ModelManager = () => {
 
   const testConnection = async (modelId: string) => {
     // Mock API test
-    console.log(`Testing connection for model: ${modelId}`);
+    debugLog(`Testing connection for model: ${modelId}`);
   };
 
   return (

@@ -4,6 +4,7 @@
  */
 
 import { getConfig } from './environment';
+import { debugLog } from './logger';
 
 export interface RateLimitConfig {
   windowMs: number; // Time window in milliseconds
@@ -426,7 +427,7 @@ export function initRateLimiting(): void {
   const config = getConfig();
 
   if (config.security.rateLimiting) {
-    console.log('Rate limiting enabled');
+    debugLog('Rate limiting enabled');
 
     // Set up global rate limiter for debugging
     if (config.features.debugMode && typeof window !== 'undefined') {

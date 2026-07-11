@@ -4,6 +4,7 @@
  */
 
 import { getConfig, isFeatureEnabled } from './environment';
+import { debugLog } from './logger';
 
 export interface AnalyticsEvent {
   event: string;
@@ -70,7 +71,7 @@ class AnalyticsManager {
 
     const config = getConfig();
     if (!config.features.analytics) {
-      console.log('Analytics disabled in configuration');
+      debugLog('Analytics disabled in configuration');
       return;
     }
 
@@ -86,7 +87,7 @@ class AnalyticsManager {
     this.setupEventListeners();
     this.initialized = true;
 
-    console.log('Analytics system initialized');
+    debugLog('Analytics system initialized');
   }
 
   /**
@@ -215,7 +216,7 @@ class AnalyticsManager {
       this.session.events.push(analyticsEvent);
     }
 
-    console.log('Analytics event tracked:', analyticsEvent);
+    debugLog('Analytics event tracked:', analyticsEvent);
   }
 
   // Placeholder methods for remaining functionality
@@ -230,31 +231,31 @@ class AnalyticsManager {
   }
 
   private initializeGoogleAnalytics(): void {
-    console.log('Google Analytics initialization placeholder');
+    debugLog('Google Analytics initialization placeholder');
   }
 
   private setupPerformanceTracking(): void {
-    console.log('Performance tracking setup placeholder');
+    debugLog('Performance tracking setup placeholder');
   }
 
   private setupScrollTracking(): void {
-    console.log('Scroll tracking setup placeholder');
+    debugLog('Scroll tracking setup placeholder');
   }
 
   private setupClickTracking(): void {
-    console.log('Click tracking setup placeholder');
+    debugLog('Click tracking setup placeholder');
   }
 
   private setupFormTracking(): void {
-    console.log('Form tracking setup placeholder');
+    debugLog('Form tracking setup placeholder');
   }
 
   private setupErrorTracking(): void {
-    console.log('Error tracking setup placeholder');
+    debugLog('Error tracking setup placeholder');
   }
 
   private setupEventListeners(): void {
-    console.log('Event listeners setup placeholder');
+    debugLog('Event listeners setup placeholder');
   }
 }
 
@@ -266,13 +267,13 @@ export const analyticsManager = new AnalyticsManager();
  */
 export async function initAnalytics(): Promise<void> {
   if (!isFeatureEnabled('analytics')) {
-    console.log('Analytics disabled via feature flag');
+    debugLog('Analytics disabled via feature flag');
     return;
   }
 
   try {
     await analyticsManager.init();
-    console.log('Analytics system initialized');
+    debugLog('Analytics system initialized');
   } catch (error) {
     console.error('Analytics initialization failed:', error);
   }
@@ -341,7 +342,7 @@ function save(event: Partial<AnalyticsEvent>) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
 
     // Also send to console for debugging
-    console.debug('[analytics]', enrichedEvent);
+    debugLog('[analytics]', enrichedEvent);
   } catch (error) {
     console.warn('Analytics save failed:', error);
   }

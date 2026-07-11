@@ -8,6 +8,7 @@ import { EnvironmentalEffects } from './EnvironmentalEffects';
 import { ModelEnergySignatures } from './ModelEnergySignatures';
 import { CitationTracker } from './CitationTracker';
 import { PlayCircle, PauseCircle, Settings, Volume2, VolumeX, Eye, EyeOff } from 'lucide-react';
+import { debugLog } from '@/lib/logger';
 
 
 interface Debater {
@@ -416,11 +417,11 @@ const EnhancedDebateArenaComponent = ({
             <CitationTracker
               arguments={debateState.arguments}
               onCitationVerified={(citation, isValid) => {
-                console.log('Citation verified:', citation, isValid);
+                debugLog('Citation verified:', citation, isValid);
                 // Could update UI indicators or scoring
               }}
               onFactCheckComplete={(factCheck) => {
-                console.log('Fact check completed:', factCheck);
+                debugLog('Fact check completed:', factCheck);
                 // Could influence debate scoring
               }}
               academicMode={debateState.academicMode}
@@ -465,7 +466,7 @@ const EnhancedDebateArenaComponent = ({
           {/* Argument Impact System */}
           <ArgumentImpactSystem
             onImpact={(impact) => {
-              console.log('Argument impact:', impact);
+              debugLog('Argument impact:', impact);
               // Could trigger sound effects here if enabled
             }}
             academicMode={debateState.academicMode}
@@ -476,11 +477,11 @@ const EnhancedDebateArenaComponent = ({
           <ComboDetectionSystem
             arguments={debateState.arguments}
             onComboDetected={(combo) => {
-              console.log('Combo detected:', combo);
+              debugLog('Combo detected:', combo);
               // Could trigger sound effects here if enabled
             }}
             onComboComplete={(combo, finalScore) => {
-              console.log('Combo complete:', combo, finalScore);
+              debugLog('Combo complete:', combo, finalScore);
               // Add bonus points to the combo performer
               const bonusPoints = Math.floor(finalScore / 10);
               dispatch({
@@ -497,7 +498,7 @@ const EnhancedDebateArenaComponent = ({
             argumentExchanges={debateState.arguments}
             academicMode={debateState.academicMode}
             onEpicMoment={(moment) => {
-              console.log('Epic moment:', moment);
+              debugLog('Epic moment:', moment);
               // Could trigger sound effects here if enabled
             }}
           />

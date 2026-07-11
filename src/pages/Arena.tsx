@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { setSEO, injectJsonLd } from '@/lib/seo';
 import { trackEvent } from '@/lib/analytics';
+import { debugLog } from '@/lib/logger';
 
 const DebateMode = lazy(() =>
   import('@/components/arena/DebateMode').then((m) => ({ default: m.DebateMode }))
@@ -256,7 +257,7 @@ const Arena = memo(() => {
                 }}
                 onDebateComplete={(winner, finalScore) => {
                   trackEvent('enhanced_debate_complete', { winner, finalScore });
-                  console.log('Debate completed:', { winner, finalScore });
+                  debugLog('Debate completed:', { winner, finalScore });
                 }}
               />
             </Suspense>
