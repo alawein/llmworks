@@ -80,7 +80,8 @@ llmworks/
 ```
 
 See [docs/architecture.md](docs/architecture.md) for the evaluation engine
-layout.
+layout. See [docs/architecture/topology.md](docs/architecture/topology.md) for
+the on-disk layout map.
 
 ## Deployment
 
