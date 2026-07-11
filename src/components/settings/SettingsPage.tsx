@@ -165,7 +165,7 @@ export const SettingsPage = () => {
                     value={preferences.theme}
                     onValueChange={(value) => setPreferences({ ...preferences, theme: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Theme">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -197,7 +197,7 @@ export const SettingsPage = () => {
                     value={preferences.language}
                     onValueChange={(value) => setPreferences({ ...preferences, language: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Language">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -217,7 +217,7 @@ export const SettingsPage = () => {
                     value={preferences.timezone}
                     onValueChange={(value) => setPreferences({ ...preferences, timezone: value })}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Timezone">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -272,7 +272,19 @@ export const SettingsPage = () => {
                       {key === 'systemUpdates' && 'Get notified about platform updates'}
                     </div>
                   </div>
-                  <Switch checked={value} onCheckedChange={() => toggleNotification(key)} />
+                  <Switch
+                    checked={value}
+                    onCheckedChange={() => toggleNotification(key)}
+                    aria-label={`Toggle ${
+                      key === 'evaluationComplete'
+                        ? 'evaluation complete notifications'
+                        : key === 'modelErrors'
+                          ? 'model error notifications'
+                          : key === 'weeklyReports'
+                            ? 'weekly report notifications'
+                            : 'system update notifications'
+                    }`}
+                  />
                 </div>
               ))}
             </div>
@@ -294,7 +306,7 @@ export const SettingsPage = () => {
                     Help improve LLM Works by sharing anonymous usage data
                   </div>
                 </div>
-                <Switch defaultChecked />
+                <Switch defaultChecked aria-label="Toggle data analytics sharing" />
               </div>
 
               <div className="flex items-center justify-between p-4 rounded-lg border border-border">
@@ -304,7 +316,7 @@ export const SettingsPage = () => {
                     Automatically send error reports to help fix issues
                   </div>
                 </div>
-                <Switch defaultChecked />
+                <Switch defaultChecked aria-label="Toggle automatic error reporting" />
               </div>
 
               <div className="flex items-center justify-between p-4 rounded-lg border border-border">
@@ -315,7 +327,7 @@ export const SettingsPage = () => {
                   </div>
                 </div>
                 <Select defaultValue="30">
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-32" aria-label="Model data retention period">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -352,6 +364,7 @@ export const SettingsPage = () => {
                       onCheckedChange={(checked) =>
                         setExportSettings({ ...exportSettings, includeMetadata: checked })
                       }
+                      aria-label="Include metadata in export"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -361,6 +374,7 @@ export const SettingsPage = () => {
                       onCheckedChange={(checked) =>
                         setExportSettings({ ...exportSettings, includeRawOutputs: checked })
                       }
+                      aria-label="Include raw outputs in export"
                     />
                   </div>
                 </div>
@@ -432,7 +446,7 @@ export const SettingsPage = () => {
                   <span className="text-sm text-muted-foreground">
                     Enable detailed logging and debugging
                   </span>
-                  <Switch />
+                  <Switch aria-label="Toggle debug mode" />
                 </div>
               </div>
             </div>

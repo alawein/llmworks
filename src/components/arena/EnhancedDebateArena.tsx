@@ -364,11 +364,14 @@ const EnhancedDebateArenaComponent = ({
               size="sm"
               onClick={() => dispatch({ type: 'TOGGLE_ACADEMIC_MODE' })}
               className={`glass-minimal ${debateState.academicMode ? 'bg-primary/10' : ''}`}
+              aria-label={
+                debateState.academicMode ? 'Hide academic mode details' : 'Show academic mode details'
+              }
             >
               {debateState.academicMode ? (
-                <Eye className="h-4 w-4" />
+                <Eye className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <EyeOff className="h-4 w-4" />
+                <EyeOff className="h-4 w-4" aria-hidden="true" />
               )}
             </Button>
 
@@ -377,11 +380,12 @@ const EnhancedDebateArenaComponent = ({
               size="sm"
               onClick={() => dispatch({ type: 'TOGGLE_SOUND' })}
               className="glass-minimal"
+              aria-label={debateState.soundEnabled ? 'Mute debate demo sound' : 'Unmute debate demo sound'}
             >
               {debateState.soundEnabled ? (
-                <Volume2 className="h-4 w-4" />
+                <Volume2 className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <VolumeX className="h-4 w-4" />
+                <VolumeX className="h-4 w-4" aria-hidden="true" />
               )}
             </Button>
 
@@ -389,8 +393,13 @@ const EnhancedDebateArenaComponent = ({
               onClick={() => setIsPlaying(!isPlaying)}
               disabled={debateState.phase === 'complete'}
               className="bg-primary hover:bg-primary/90"
+              aria-label={isPlaying ? 'Pause debate demo' : 'Play debate demo'}
             >
-              {isPlaying ? <PauseCircle className="h-4 w-4" /> : <PlayCircle className="h-4 w-4" />}
+              {isPlaying ? (
+                <PauseCircle className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <PlayCircle className="h-4 w-4" aria-hidden="true" />
+              )}
             </Button>
           </div>
         </div>

@@ -68,7 +68,7 @@ const EvaluationCard = memo(({ title, metric, status, icon: Icon, trend }: Evalu
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <RippleEffect>
+    <RippleEffect interactive={false}>
       <GlowOnHover glowIntensity="subtle">
         <Card
           className="relative p-4 glass-subtle border-border/20 transition-all duration-500 hover:shadow-lg group cursor-pointer"
@@ -238,17 +238,15 @@ export const BenchmarkPanel = memo(() => {
               </div>
 
               <StaggeredChildren staggerDelay={80}>
-                <div className="space-y-3" role="list" aria-label="Model rankings">
+                <ul className="space-y-3 list-none p-0 m-0" aria-label="Model rankings">
                   {mockBenchmarkData.map((model, index) => (
-                    <RippleEffect key={model.name}>
-                      <div
-                        className="group flex items-center justify-between p-3 glass-subtle hover:shadow-md transition-all duration-300 cursor-pointer relative overflow-hidden"
-                        role="listitem"
-                      >
-                        {/* Rank indicator with glow */}
-                        <div className="flex items-center gap-4">
-                          <div
-                            className={`
+                    <li key={model.name}>
+                      <RippleEffect interactive={false}>
+                        <div className="group flex items-center justify-between p-3 glass-subtle hover:shadow-md transition-all duration-300 cursor-pointer relative overflow-hidden">
+                          {/* Rank indicator with glow */}
+                          <div className="flex items-center gap-4">
+                            <div
+                              className={`
                             strategic-rank flex items-center justify-center w-8 h-6 text-xs font-bold transition-all duration-300 group-hover:scale-110
                             ${
                               index === 0
@@ -262,55 +260,56 @@ export const BenchmarkPanel = memo(() => {
                                       : 'performance-standard'
                             }
                           `}
-                          >
-                            #{index + 1}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="heading-refined text-sm group-hover:text-primary transition-colors">
-                              {model.name}
-                            </span>
-                            <span className="body-elegant text-xs text-muted-foreground">
-                              Strategic AI Model
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                          <Progress
-                            value={model.score}
-                            className="w-20 h-2"
-                            aria-label={`${model.name} score: ${model.score}%`}
-                          />
-                          <div className="text-right">
-                            <div className="heading-display text-sm font-bold group-hover:text-primary transition-colors">
-                              {model.score}
+                            >
+                              #{index + 1}
                             </div>
-                            <div className="flex items-center gap-1 justify-end">
-                              <TrendIcon
-                                trend={model.trend}
-                                className="group-hover:scale-110 transition-transform"
-                              />
-                              <span
-                                className={`body-elegant text-xs transition-colors ${
-                                  model.trend === 'up'
-                                    ? 'text-success group-hover:text-success/80'
-                                    : model.trend === 'down'
-                                      ? 'text-destructive group-hover:text-destructive/80'
-                                      : 'text-muted-foreground group-hover:text-muted-foreground/80'
-                                }`}
-                              >
-                                {model.change}
+                            <div className="flex flex-col">
+                              <span className="heading-refined text-sm group-hover:text-primary transition-colors">
+                                {model.name}
+                              </span>
+                              <span className="body-elegant text-xs text-muted-foreground">
+                                Strategic AI Model
                               </span>
                             </div>
                           </div>
-                        </div>
 
-                        {/* Hover effect overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
-                      </div>
-                    </RippleEffect>
+                          <div className="flex items-center gap-3">
+                            <Progress
+                              value={model.score}
+                              className="w-20 h-2"
+                              aria-label={`${model.name} score: ${model.score}%`}
+                            />
+                            <div className="text-right">
+                              <div className="heading-display text-sm font-bold group-hover:text-primary transition-colors">
+                                {model.score}
+                              </div>
+                              <div className="flex items-center gap-1 justify-end">
+                                <TrendIcon
+                                  trend={model.trend}
+                                  className="group-hover:scale-110 transition-transform"
+                                />
+                                <span
+                                  className={`body-elegant text-xs transition-colors ${
+                                    model.trend === 'up'
+                                      ? 'text-success group-hover:text-success/80'
+                                      : model.trend === 'down'
+                                        ? 'text-destructive group-hover:text-destructive/80'
+                                        : 'text-muted-foreground group-hover:text-muted-foreground/80'
+                                  }`}
+                                >
+                                  {model.change}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Hover effect overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                        </div>
+                      </RippleEffect>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </StaggeredChildren>
             </div>
 
@@ -322,17 +321,19 @@ export const BenchmarkPanel = memo(() => {
               </div>
 
               <StaggeredChildren staggerDelay={100}>
-                <div className="grid grid-cols-1 gap-3" role="list" aria-label="Evaluation metrics">
+                <ul
+                  className="grid grid-cols-1 gap-3 list-none p-0 m-0"
+                  aria-label="Evaluation metrics"
+                >
                   {evaluationMetrics.map((metric, index) => (
-                    <div
+                    <li
                       key={metric.title}
-                      role="listitem"
                       style={{ '--stagger-index': index + 3 } as React.CSSProperties}
                     >
                       <EvaluationCard {...metric} />
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </StaggeredChildren>
             </div>
 

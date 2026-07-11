@@ -264,14 +264,21 @@ const LiveIntelligenceDashboardComponent = () => {
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
               className="glass-minimal p-2"
+              aria-label={
+                isExpanded
+                  ? 'Collapse sample intelligence dashboard'
+                  : 'Expand sample intelligence dashboard'
+              }
+              aria-expanded={isExpanded}
+              aria-controls="sample-intelligence-dashboard-panel"
             >
-              <Maximize2 className="h-4 w-4" />
+              <Maximize2 className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent id="sample-intelligence-dashboard-panel" className="space-y-6">
         {/* System Metrics Grid */}
         <div>
           <h3 className="heading-refined text-sm mb-4 flex items-center gap-2">

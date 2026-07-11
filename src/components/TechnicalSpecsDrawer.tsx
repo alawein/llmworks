@@ -83,6 +83,19 @@ const TechnicalSpecsDrawerComponent = () => {
     );
   };
 
+  const handleCopyEndpoint = async (path: string) => {
+    try {
+      if (!navigator.clipboard?.writeText) {
+        console.warn('Clipboard API is not available for endpoint copy');
+        return;
+      }
+
+      await navigator.clipboard.writeText(path);
+    } catch (error) {
+      console.warn('Failed to copy endpoint path', error);
+    }
+  };
+
   const technicalSpecs: TechnicalSpec[] = [
     {
       category: 'Current App Stack',
@@ -352,14 +365,23 @@ const TechnicalSpecsDrawerComponent = () => {
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
               className="glass-minimal p-2"
+              aria-label={
+                isExpanded ? 'Collapse technical specifications' : 'Expand technical specifications'
+              }
+              aria-expanded={isExpanded}
+              aria-controls="technical-specifications-panel"
             >
-              {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              {isExpanded ? (
+                <Minimize2 className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Maximize2 className="h-4 w-4" aria-hidden="true" />
+              )}
             </Button>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent>
+      <CardContent id="technical-specifications-panel">
         <Tabs value={activeSpec} onValueChange={setActiveSpec} className="space-y-6">
           <TabsList className="glass-subtle p-1 rounded-xl grid grid-cols-5 w-full max-w-2xl">
             <TabsTrigger value="system" className="text-xs">
@@ -453,8 +475,14 @@ const TechnicalSpecsDrawerComponent = () => {
                           </div>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="glass-minimal p-1">
-                        <Copy className="h-3 w-3" />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="glass-minimal p-1"
+                        aria-label={`Copy ${endpoint.path} endpoint`}
+                        onClick={() => void handleCopyEndpoint(endpoint.path)}
+                      >
+                        <Copy className="h-3 w-3" aria-hidden="true" />
                       </Button>
                     </div>
 
