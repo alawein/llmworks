@@ -1,41 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// Since @morphism/security-headers doesn't exist as a package,
-// mock the entire @/lib/security module to avoid the unresolvable import
-vi.mock('@/lib/security', () => {
-  const getFilteredHeaders = () => {
-    const allHeaders: Record<string, string> = {
-      'X-Content-Type-Options': 'nosniff',
-      'X-Frame-Options': 'DENY',
-      'X-XSS-Protection': '1; mode=block',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
-    };
-    return allHeaders;
-  };
-
-  return {
-    applySecurityHeaders: vi.fn((headers: Record<string, string> = {}) => {
-      return {
-        ...headers,
-        ...getFilteredHeaders(),
-      };
-    }),
-    secureFetch: vi.fn(async (url: string, options: RequestInit = {}) => {
-      const securityHeaders = getFilteredHeaders();
-      const mergedHeaders = {
-        ...(options.headers as Record<string, string> || {}),
-        ...securityHeaders,
-      };
-      return fetch(url, {
-        ...options,
-        headers: mergedHeaders,
-        credentials: 'same-origin',
-      });
-    }),
-  };
-});
-
-import { applySecurityHeaders, secureFetch } from '@/lib/security';
+import { applySecurityHeaders, initSecurity, secureFetch } from '@/lib/security';
 
 // ─── applySecurityHeaders ───────────────────────────────────────────────────
 
@@ -151,9 +116,7 @@ describe('secureFetch', () => {
   it('propagates fetch errors', async () => {
     fetchMock.mockRejectedValueOnce(new Error('Network error'));
 
-    await expect(secureFetch('https://api.example.com/data')).rejects.toThrow(
-      'Network error'
-    );
+    await expect(secureFetch('https://api.example.com/data')).rejects.toThrow('Network error');
   });
 
   it('does not include Strict-Transport-Security or CSP in request headers', async () => {
@@ -164,5 +127,22 @@ describe('secureFetch', () => {
 
     expect(headers['Strict-Transport-Security']).toBeUndefined();
     expect(headers['Content-Security-Policy']).toBeUndefined();
+  });
+});
+
+// ─── initSecurity ───────────────────────────────────────────────────────────
+
+describe('initSecurity', () => {
+  beforeEach(() => {
+    document.head.innerHTML = '';
+  });
+
+  it('sets the client referrer policy meta tag once', () => {
+    initSecurity();
+    initSecurity();
+
+    const referrerPolicyTags = document.head.querySelectorAll('meta[name="referrer"]');
+    expect(referrerPolicyTags).toHaveLength(1);
+    expect(referrerPolicyTags[0]).toHaveAttribute('content', 'strict-origin-when-cross-origin');
   });
 });
