@@ -1,8 +1,6 @@
 import { FullConfig } from '@playwright/test';
 
-async function globalTeardown(config: FullConfig) {
-  console.log('🧹 Starting global teardown...');
-
+async function globalTeardown(_config: FullConfig) {
   try {
     // Clean up any global resources
     // This could include clearing test databases,
@@ -13,12 +11,8 @@ async function globalTeardown(config: FullConfig) {
     // - Clean up test data
     // - Generate final reports
 
-    console.log('📊 Generating test reports...');
-
     // Any final cleanup or reporting tasks
     process.env.TEST_COMPLETED = 'true';
-
-    console.log('✅ Global teardown completed successfully');
   } catch (error) {
     console.error('❌ Global teardown failed:', error);
     // Don't throw error to avoid masking test failures

@@ -1,8 +1,6 @@
 import { chromium, FullConfig } from '@playwright/test';
 
-async function globalSetup(config: FullConfig) {
-  console.log('🚀 Starting global setup...');
-
+async function globalSetup(_config: FullConfig) {
   // Launch browser for setup tasks
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -10,7 +8,6 @@ async function globalSetup(config: FullConfig) {
 
   try {
     // Warm up the application
-    console.log('🔥 Warming up application...');
     await page.goto(process.env.BASE_URL || 'http://localhost:4173');
 
     // Wait for the app to be ready
@@ -23,8 +20,6 @@ async function globalSetup(config: FullConfig) {
         navigator.serviceWorker.register('/sw.js');
       }
     });
-
-    console.log('✅ Global setup completed successfully');
   } catch (error) {
     console.error('❌ Global setup failed:', error);
     throw error;
