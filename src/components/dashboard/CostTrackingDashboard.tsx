@@ -463,34 +463,40 @@ export const CostTrackingDashboard = () => {
             </Popover>
           </div>
 
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled
-              title="Sample data only; export is not wired to provider billing data."
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export Sample
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled
-              title="Sample data only; budget settings are not wired."
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Sample Budget Settings
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled
-              title="Sample data only; refresh is not wired to live provider data."
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh Sample
-            </Button>
+          <div className="flex flex-col items-start sm:items-end gap-2">
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; export is not wired to provider billing data."
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export Sample
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; budget settings are not wired."
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                Sample Budget Settings
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; refresh is not wired to live provider data."
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh Sample
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground sm:text-right">
+              Sample-only controls are disabled until live provider billing and export wiring is
+              available.
+            </p>
           </div>
         </div>
       </Card>

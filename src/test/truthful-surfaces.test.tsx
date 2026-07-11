@@ -123,6 +123,7 @@ describe('truthful demo surfaces', () => {
   it('does not present sample cost controls as live actions', () => {
     render(<CostTrackingDashboard />);
 
+    expect(screen.getByText(/sample-only controls are disabled/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^export sample$/i })).toBeDisabled();
     expect(screen.getByRole('button', { name: /sample budget settings/i })).toBeDisabled();
     expect(screen.getByRole('button', { name: /^refresh sample$/i })).toBeDisabled();
