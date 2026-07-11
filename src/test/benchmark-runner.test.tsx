@@ -72,10 +72,10 @@ describe('BenchmarkRunner', () => {
       screen.getByText(
         (_, element) =>
           element?.tagName.toLowerCase() === 'li' &&
-          element.textContent === 'mmlu: pending'
+          element.textContent === 'mmlu: pending for gpt-4o'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText(/truthfulqa: unauthorized/i)).toBeInTheDocument();
+    expect(screen.getByText(/truthfulqa: unauthorized for gpt-4o/i)).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /start benchmark/i }));
 
@@ -87,5 +87,59 @@ describe('BenchmarkRunner', () => {
       models: ['gpt-4o'],
       config: { source: 'BenchmarkRunner' },
     });
+  });
+
+  it('queues the same benchmark again for a distinct model selection', async () => {
+    const user = userEvent.setup();
+    queueBenchmarkRun
+      .mockResolvedValueOnce({
+        runId: 'run-mmlu-gpt4o',
+        status: 'pending',
+        message: 'Benchmark queued for processing',
+      })
+      .mockResolvedValueOnce({
+        runId: 'run-mmlu-two-models',
+        status: 'pending',
+        message: 'Benchmark queued for processing',
+      });
+
+    render(<BenchmarkRunner />);
+
+    await user.click(screen.getByRole('button', { name: /gpt-4o/i }));
+    await user.click(screen.getByRole('button', { name: /mmlu/i }));
+    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+
+    await waitFor(() => {
+      expect(queueBenchmarkRun).toHaveBeenCalledTimes(1);
+    });
+
+    expect(screen.getByText(/^benchmark run queued\.$/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.tagName.toLowerCase() === 'li' &&
+          element.textContent === 'mmlu: pending for gpt-4o'
+      )
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /claude 3\.5 sonnet/i }));
+    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+
+    await waitFor(() => {
+      expect(queueBenchmarkRun).toHaveBeenCalledTimes(2);
+    });
+
+    expect(queueBenchmarkRun).toHaveBeenLastCalledWith('mmlu', {
+      models: ['claude-3.5-sonnet', 'gpt-4o'],
+      config: { source: 'BenchmarkRunner' },
+    });
+    expect(screen.getByText(/^benchmark runs queued\.$/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.tagName.toLowerCase() === 'li' &&
+          element.textContent === 'mmlu: pending for claude-3.5-sonnet, gpt-4o'
+      )
+    ).toBeInTheDocument();
   });
 });

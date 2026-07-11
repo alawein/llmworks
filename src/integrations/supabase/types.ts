@@ -50,7 +50,7 @@ export type Database = {
           metrics: Json;
           model_id: string;
           output: Json | null;
-          run_id: string | null;
+          run_id: string;
           score: number | null;
           status: string;
           user_id: string;
@@ -62,7 +62,7 @@ export type Database = {
           metrics?: Json;
           model_id: string;
           output?: Json | null;
-          run_id?: string | null;
+          run_id: string;
           score?: number | null;
           status?: string;
           user_id: string;
@@ -74,18 +74,18 @@ export type Database = {
           metrics?: Json;
           model_id?: string;
           output?: Json | null;
-          run_id?: string | null;
+          run_id?: string;
           score?: number | null;
           status?: string;
           user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'benchmark_results_run_id_fkey';
-            columns: ['run_id'];
+            foreignKeyName: 'benchmark_results_run_owner_fkey';
+            columns: ['run_id', 'user_id', 'benchmark_id'];
             isOneToOne: false;
             referencedRelation: 'benchmark_runs';
-            referencedColumns: ['id'];
+            referencedColumns: ['id', 'user_id', 'benchmark_id'];
           },
         ];
       };
@@ -457,26 +457,16 @@ export type Database = {
       check_auth_config: { Args: never; Returns: Json };
       is_admin: { Args: { user_uuid?: string }; Returns: boolean };
       log_api_key_access: { Args: { model_id: string }; Returns: undefined };
-      log_security_event:
-        | {
-            Args: {
-              p_action: string;
-              p_details?: Json;
-              p_resource_id?: string;
-              p_resource_type: string;
-            };
-            Returns: undefined;
-          }
-        | {
-            Args: {
-              p_action: string;
-              p_details?: Json;
-              p_resource_id?: string;
-              p_resource_type: string;
-              p_severity?: string;
-            };
-            Returns: undefined;
-          };
+      log_security_event: {
+        Args: {
+          p_action: string;
+          p_details?: Json;
+          p_resource_id?: string;
+          p_resource_type: string;
+          p_severity?: string;
+        };
+        Returns: undefined;
+      };
       set_initial_admin: { Args: { admin_email: string }; Returns: undefined };
     };
     Enums: {

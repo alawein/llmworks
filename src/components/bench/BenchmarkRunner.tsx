@@ -31,12 +31,35 @@ interface BenchmarkProgress {
 
 interface QueuedBenchmarkRun extends BenchmarkRunResponse {
   benchmarkId: string;
+  queueKey: string;
+  models: string[];
+  config: Record<string, unknown>;
 }
 
 interface BenchmarkQueueFailure {
   benchmarkId: string;
+  queueKey: string;
+  models: string[];
   message: string;
 }
+
+const benchmarkRunnerConfig: Record<string, unknown> = { source: 'BenchmarkRunner' };
+
+const normalizeModelIds = (modelIds: string[]) =>
+  [...modelIds].sort((first, second) => first.localeCompare(second));
+
+const createBenchmarkQueueKey = (
+  benchmarkId: string,
+  modelIds: string[],
+  config: Record<string, unknown>
+) =>
+  JSON.stringify({
+    benchmarkId,
+    models: normalizeModelIds(modelIds),
+    config,
+  });
+
+const formatModelIds = (modelIds: string[]) => modelIds.join(', ');
 
 export const BenchmarkRunner = () => {
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
@@ -104,12 +127,19 @@ export const BenchmarkRunner = () => {
     setShowResults(false);
     setScoringNotImplemented(false);
 
-    const queuedBenchmarkIds = new Set(queuedRuns.map((run) => run.benchmarkId));
-    const benchmarkIdsToQueue = selectedBenchmarks.filter(
-      (benchmarkId) => !queuedBenchmarkIds.has(benchmarkId)
+    const modelsToQueue = normalizeModelIds(selectedModels);
+    const queueRequests = selectedBenchmarks.map((benchmarkId) => ({
+      benchmarkId,
+      queueKey: createBenchmarkQueueKey(benchmarkId, modelsToQueue, benchmarkRunnerConfig),
+      models: modelsToQueue,
+      config: benchmarkRunnerConfig,
+    }));
+    const queuedRunKeys = new Set(queuedRuns.map((run) => run.queueKey));
+    const requestsToQueue = queueRequests.filter(
+      (request) => !queuedRunKeys.has(request.queueKey)
     );
 
-    if (benchmarkIdsToQueue.length === 0) {
+    if (requestsToQueue.length === 0) {
       setIsRunning(false);
       setProgress(null);
       setScoringNotImplemented(true);
@@ -117,16 +147,18 @@ export const BenchmarkRunner = () => {
     }
 
     const queueResults = await Promise.allSettled(
-      benchmarkIdsToQueue.map(async (benchmarkId) => {
+      requestsToQueue.map(async (request) => {
         try {
-          const run = await queueBenchmarkRun(benchmarkId, {
-            models: selectedModels,
-            config: { source: 'BenchmarkRunner' },
+          const run = await queueBenchmarkRun(request.benchmarkId, {
+            models: request.models,
+            config: request.config,
           });
-          return { benchmarkId, ...run };
+          return { ...request, ...run };
         } catch (error) {
           throw {
-            benchmarkId,
+            benchmarkId: request.benchmarkId,
+            queueKey: request.queueKey,
+            models: request.models,
             message: error instanceof Error ? error.message : 'Unable to queue benchmark run',
           };
         }
@@ -141,9 +173,9 @@ export const BenchmarkRunner = () => {
     );
 
     setQueuedRuns((previousRuns) => {
-      const byBenchmarkId = new Map(previousRuns.map((run) => [run.benchmarkId, run]));
-      queued.forEach((run) => byBenchmarkId.set(run.benchmarkId, run));
-      return Array.from(byBenchmarkId.values());
+      const byQueueKey = new Map(previousRuns.map((run) => [run.queueKey, run]));
+      queued.forEach((run) => byQueueKey.set(run.queueKey, run));
+      return Array.from(byQueueKey.values());
     });
     setQueueFailures(failures);
     // TODO: Real benchmark scoring requires calling each model's inference API
@@ -299,16 +331,17 @@ export const BenchmarkRunner = () => {
         <Card className="p-6">
           <div className="text-center py-8 text-muted-foreground">
             <CheckCircle className="h-8 w-8 mx-auto mb-3 text-primary opacity-70" />
-            <p className="font-medium text-foreground">Benchmark run queued.</p>
+            <p className="font-medium text-foreground">
+              {queuedRuns.length === 1 ? 'Benchmark run queued.' : 'Benchmark runs queued.'}
+            </p>
             <p className="text-sm mt-2">
-              {queuedRuns.length} benchmark run{queuedRuns.length === 1 ? '' : 's'} queued for{' '}
-              {selectedModels.length} model{selectedModels.length === 1 ? '' : 's'}.
+              {queuedRuns.length} benchmark run{queuedRuns.length === 1 ? '' : 's'} queued.
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               {queuedRuns.map((run) => (
-                <li key={run.runId}>
+                <li key={run.queueKey}>
                   <span className="font-medium text-foreground">{run.benchmarkId}</span>:{' '}
-                  {run.status}
+                  {run.status} for {formatModelIds(run.models)}
                 </li>
               ))}
             </ul>
@@ -326,8 +359,8 @@ export const BenchmarkRunner = () => {
             </p>
             <ul className="mt-4 space-y-2 text-sm">
               {queueFailures.map((failure) => (
-                <li key={failure.benchmarkId}>
-                  {failure.benchmarkId}: {failure.message}
+                <li key={failure.queueKey}>
+                  {failure.benchmarkId}: {failure.message} for {formatModelIds(failure.models)}
                 </li>
               ))}
             </ul>

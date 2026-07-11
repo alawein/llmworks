@@ -15,12 +15,13 @@ CREATE TABLE IF NOT EXISTS public.benchmark_runs (
   completed_at TIMESTAMP WITH TIME ZONE,
   error TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  CONSTRAINT benchmark_runs_identity_unique UNIQUE (id, user_id, benchmark_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.benchmark_results (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  run_id UUID REFERENCES public.benchmark_runs(id) ON DELETE CASCADE,
+  run_id UUID NOT NULL,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   benchmark_id TEXT NOT NULL,
   model_id TEXT NOT NULL,
@@ -30,7 +31,11 @@ CREATE TABLE IF NOT EXISTS public.benchmark_results (
   status TEXT NOT NULL DEFAULT 'pending' CHECK (
     status IN ('pending', 'running', 'completed', 'failed', 'cancelled')
   ),
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  CONSTRAINT benchmark_results_run_owner_fkey
+    FOREIGN KEY (run_id, user_id, benchmark_id)
+    REFERENCES public.benchmark_runs(id, user_id, benchmark_id)
+    ON DELETE CASCADE
 );
 
 ALTER TABLE public.benchmark_runs ENABLE ROW LEVEL SECURITY;
@@ -42,16 +47,7 @@ DROP POLICY IF EXISTS "Users can update their own benchmark runs" ON public.benc
 DROP POLICY IF EXISTS "Users can delete their own benchmark runs" ON public.benchmark_runs;
 
 CREATE POLICY "Users can view their own benchmark runs" ON public.benchmark_runs
-  FOR SELECT USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own benchmark runs" ON public.benchmark_runs
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own benchmark runs" ON public.benchmark_runs
-  FOR UPDATE USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own benchmark runs" ON public.benchmark_runs
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR SELECT TO authenticated USING (auth.uid() = user_id);
 
 DROP POLICY IF EXISTS "Users can view their own benchmark results" ON public.benchmark_results;
 DROP POLICY IF EXISTS "Users can create their own benchmark results" ON public.benchmark_results;
@@ -59,16 +55,7 @@ DROP POLICY IF EXISTS "Users can update their own benchmark results" ON public.b
 DROP POLICY IF EXISTS "Users can delete their own benchmark results" ON public.benchmark_results;
 
 CREATE POLICY "Users can view their own benchmark results" ON public.benchmark_results
-  FOR SELECT USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own benchmark results" ON public.benchmark_results
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own benchmark results" ON public.benchmark_results
-  FOR UPDATE USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own benchmark results" ON public.benchmark_results
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR SELECT TO authenticated USING (auth.uid() = user_id);
 
 DROP TRIGGER IF EXISTS update_benchmark_runs_updated_at ON public.benchmark_runs;
 CREATE TRIGGER update_benchmark_runs_updated_at

@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
@@ -70,11 +71,15 @@ describe('benchmark edge-function client', () => {
 });
 
 describe('benchmark database schema agreement', () => {
-  const repoRoot = process.cwd();
+  const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
   const migrationSql = readdirSync(join(repoRoot, 'supabase', 'migrations'))
     .filter((file) => file.endsWith('.sql'))
     .map((file) => readFileSync(join(repoRoot, 'supabase', 'migrations', file), 'utf8'))
     .join('\n');
+  const benchmarkMigrationSql = readFileSync(
+    join(repoRoot, 'supabase', 'migrations', '20260711000000_benchmark_runs.sql'),
+    'utf8'
+  );
   const generatedTypes = readFileSync(
     join(repoRoot, 'src', 'integrations', 'supabase', 'types.ts'),
     'utf8'
@@ -88,6 +93,28 @@ describe('benchmark database schema agreement', () => {
   it('keeps generated Supabase table types aligned with benchmark migrations', () => {
     expect(generatedTypes).toContain('benchmark_runs:');
     expect(generatedTypes).toContain('benchmark_results:');
+    expect(generatedTypes).toContain('run_id: string;');
+    expect(generatedTypes).toContain('score: number | null;');
+    expect(generatedTypes).toContain('status: string;');
+    expect(generatedTypes).toContain('user_id: string;');
+    expect(generatedTypes).toContain("columns: ['run_id', 'user_id', 'benchmark_id'];");
+  });
+
+  it('keeps benchmark results bound to their parent benchmark run', () => {
+    expect(benchmarkMigrationSql).toMatch(/run_id UUID NOT NULL/i);
+    expect(benchmarkMigrationSql).toMatch(
+      /FOREIGN KEY \(run_id, user_id, benchmark_id\)\s+REFERENCES public\.benchmark_runs\(id, user_id, benchmark_id\)/i
+    );
+  });
+
+  it('keeps benchmark writes behind the trusted edge function path', () => {
+    expect(benchmarkMigrationSql).toMatch(
+      /CREATE POLICY "Users can view their own benchmark runs" ON public\.benchmark_runs\s+FOR SELECT TO authenticated/i
+    );
+    expect(benchmarkMigrationSql).toMatch(
+      /CREATE POLICY "Users can view their own benchmark results" ON public\.benchmark_results\s+FOR SELECT TO authenticated/i
+    );
+    expect(benchmarkMigrationSql).not.toMatch(/CREATE POLICY .* FOR (INSERT|UPDATE|DELETE)/i);
   });
 
   it('keeps generated Supabase table types aligned with existing security migrations', () => {

@@ -162,6 +162,8 @@ CREATE POLICY "Only admins can view audit logs" ON public.security_audit_log
   FOR SELECT USING (public.is_admin());
 
 -- Function to log security events
+DROP FUNCTION IF EXISTS public.log_security_event(TEXT, TEXT, TEXT, JSONB);
+
 CREATE OR REPLACE FUNCTION public.log_security_event(
   p_action TEXT,
   p_resource_type TEXT,
@@ -291,7 +293,8 @@ BEGIN
 
   -- Grant admin role
   INSERT INTO public.user_roles (user_id, role, granted_by, granted_at)
-  VALUES (admin_user_id, 'admin', admin_user_id, now());
+  VALUES (admin_user_id, 'admin', admin_user_id, now())
+  ON CONFLICT (user_id, role) DO NOTHING;
 
   -- Log the event
   PERFORM public.log_security_event(

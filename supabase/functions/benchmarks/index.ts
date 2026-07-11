@@ -20,9 +20,12 @@ serve(async (req) => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
+    const supabaseServiceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      supabaseUrl,
+      supabaseAnonKey,
       {
         global: {
           headers: { Authorization: req.headers.get('Authorization')! },
@@ -99,10 +102,18 @@ serve(async (req) => {
 
     // POST - Run benchmark
     if (req.method === 'POST' && benchmarkId && pathParts[2] === 'run') {
+      if (!supabaseServiceRoleKey) {
+        return new Response(JSON.stringify({ error: 'Benchmark queue is not configured' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const serviceSupabase = createClient(supabaseUrl, supabaseServiceRoleKey);
       const body = await req.json();
 
       // Create a benchmark run record
-      const { data: run, error } = await supabase
+      const { data: run, error } = await serviceSupabase
         .from('benchmark_runs')
         .insert({
           user_id: user.id,

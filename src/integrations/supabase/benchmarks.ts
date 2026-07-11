@@ -21,10 +21,14 @@ export interface BenchmarkRunResponse {
 export interface BenchmarkResult {
   id: string;
   benchmark_id: string;
-  model_id?: string;
-  run_id?: string | null;
-  metrics?: Record<string, unknown>;
-  created_at?: string;
+  model_id: string;
+  run_id: string;
+  user_id: string;
+  metrics: Record<string, unknown>;
+  output: Record<string, unknown> | null;
+  score: number | null;
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+  created_at: string;
 }
 
 const raiseIfFunctionError = (error: unknown) => {
