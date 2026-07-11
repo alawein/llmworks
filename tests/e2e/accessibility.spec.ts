@@ -22,6 +22,31 @@ test.describe('Accessibility', () => {
     }
   });
 
+  test('should keep routed content free of critical axe violations', async ({ page }) => {
+    const pages = ['/', '/arena', '/bench', '/dashboard', '/settings'];
+
+    for (const path of pages) {
+      await page.goto(path);
+      await waitForAppShell(page);
+
+      const accessibilityScanResults = await new AxeBuilder({ page })
+        .include('#main')
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+        .disableRules(['color-contrast'])
+        .analyze();
+      const criticalViolations = accessibilityScanResults.violations.filter(
+        (violation) => violation.impact === 'critical'
+      );
+
+      expect(
+        criticalViolations.map((violation) => ({
+          id: violation.id,
+          targets: violation.nodes.map((node) => node.target.join(' ')),
+        }))
+      ).toEqual([]);
+    }
+  });
+
   test('should have proper focus management', async ({ page }) => {
     await page.goto('/');
     await waitForAppShell(page);

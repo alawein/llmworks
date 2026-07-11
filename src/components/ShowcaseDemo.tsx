@@ -387,8 +387,13 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
               size="sm"
               onClick={() => setAutoMode((prev) => !prev)}
               className={`glass-minimal border-primary/30 ${autoMode ? 'bg-primary/10' : ''}`}
+              aria-label={autoMode ? 'Switch showcase demo to manual mode' : 'Switch showcase demo to auto mode'}
             >
-              {autoMode ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {autoMode ? (
+                <EyeOff className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Eye className="h-4 w-4" aria-hidden="true" />
+              )}
               <span className="hidden sm:inline ml-2">{autoMode ? 'Auto' : 'Manual'}</span>
             </Button>
 
@@ -405,16 +410,22 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
                   size="sm"
                   onClick={togglePause}
                   className="glass-minimal border-primary/30"
+                  aria-label={isPaused ? 'Resume showcase demo' : 'Pause showcase demo'}
                 >
-                  {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                  {isPaused ? (
+                    <Play className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Pause className="h-4 w-4" aria-hidden="true" />
+                  )}
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={restartDemo}
                   className="glass-minimal border-primary/30"
+                  aria-label="Restart showcase demo"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <RotateCcw className="h-4 w-4" aria-hidden="true" />
                 </Button>
                 <Button
                   variant="outline"

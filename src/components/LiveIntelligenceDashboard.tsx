@@ -264,8 +264,13 @@ const LiveIntelligenceDashboardComponent = () => {
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
               className="glass-minimal p-2"
+              aria-label={
+                isExpanded
+                  ? 'Collapse sample intelligence dashboard'
+                  : 'Expand sample intelligence dashboard'
+              }
             >
-              <Maximize2 className="h-4 w-4" />
+              <Maximize2 className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         </div>

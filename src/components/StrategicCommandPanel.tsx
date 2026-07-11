@@ -307,7 +307,12 @@ const StrategicCommandPanelComponent = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="glass-minimal">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="glass-minimal"
+              aria-label={`${notifications} notifications`}
+            >
               <Bell className="h-4 w-4 mr-2" />
               <span className="text-xs">{notifications}</span>
             </Button>

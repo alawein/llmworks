@@ -352,6 +352,9 @@ const TechnicalSpecsDrawerComponent = () => {
               size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
               className="glass-minimal p-2"
+              aria-label={
+                isExpanded ? 'Collapse technical specifications' : 'Expand technical specifications'
+              }
             >
               {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </Button>
@@ -453,8 +456,13 @@ const TechnicalSpecsDrawerComponent = () => {
                           </div>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="glass-minimal p-1">
-                        <Copy className="h-3 w-3" />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="glass-minimal p-1"
+                        aria-label={`Copy ${endpoint.path} endpoint`}
+                      >
+                        <Copy className="h-3 w-3" aria-hidden="true" />
                       </Button>
                     </div>
 
