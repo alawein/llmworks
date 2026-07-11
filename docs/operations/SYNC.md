@@ -15,8 +15,10 @@ sla: none
 | **This repo’s activity** (PRs / issues / commits) | GitHub API                                                                                      | Use the sync report script below for scans and dashboards.      |
 
 There is **no** per-repo push to Notion in CI. Keep Notion writes in the org repo
-until there is a real reusable workflow with org-level secrets. This repo only
-generates a GitHub sync report.
+until there is a real reusable workflow with org-level secrets. Any future
+`workflow_call` path must explicitly forward the required named secrets or use
+`secrets: inherit`, and grant the permissions required by the Notion write step.
+This repo only generates a GitHub sync report.
 
 ## Generate a sync report (commits + open PRs + open issues)
 
