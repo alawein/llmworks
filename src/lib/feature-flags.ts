@@ -44,8 +44,8 @@ const featureFlags: Record<string, FeatureFlag> = {
 
   'arena.realtime': {
     name: 'arena.realtime',
-    description: 'Real-time streaming responses in Arena',
-    enabled: true,
+    description: 'Planned streaming responses in Arena',
+    enabled: false,
     rolloutPercentage: 100,
   },
 
@@ -105,7 +105,7 @@ const featureFlags: Record<string, FeatureFlag> = {
 
   'dashboard.realtime': {
     name: 'dashboard.realtime',
-    description: 'Real-time dashboard updates',
+    description: 'Planned dashboard updates',
     enabled: false,
     rolloutPercentage: 75,
   },

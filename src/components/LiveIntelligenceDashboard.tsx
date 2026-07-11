@@ -1,8 +1,5 @@
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Progress } from "@alawein/ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Progress } from '@alawein/ui';
 import { memo, useState, useEffect, useMemo } from 'react';
-
-
-
 
 import {
   Activity,
@@ -55,7 +52,7 @@ const LiveIntelligenceDashboardComponent = () => {
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  // Mock real-time data
+  // Mock sample dashboard data.
   const systemMetrics = useMemo<SystemMetric[]>(
     () => [
       {
@@ -242,9 +239,11 @@ const LiveIntelligenceDashboardComponent = () => {
               <Activity className="h-5 w-5 text-primary animate-pulse" />
             </div>
             <div>
-              <CardTitle className="heading-refined text-lg">Live Intelligence Dashboard</CardTitle>
+              <CardTitle className="heading-refined text-lg">
+                Sample Intelligence Dashboard
+              </CardTitle>
               <p className="text-xs text-muted-foreground">
-                Real-time strategic command center • Last updated: {lastUpdate.toLocaleTimeString()}
+                Sample strategic command center • Demo timestamp: {lastUpdate.toLocaleTimeString()}
               </p>
             </div>
           </div>
@@ -321,7 +320,7 @@ const LiveIntelligenceDashboardComponent = () => {
         <div>
           <h3 className="heading-refined text-sm mb-4 flex items-center gap-2">
             <div className="w-1 h-4 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
-            Active Strategic Evaluations
+            Sample Evaluation Cards
           </h3>
 
           <div className="space-y-3">

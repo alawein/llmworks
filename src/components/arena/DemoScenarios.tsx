@@ -1,4 +1,4 @@
-import { Badge, Button } from "@alawein/ui";
+import { Badge, Button } from '@alawein/ui';
 import { memo, useState, useEffect } from 'react';
 import {
   Play,
@@ -12,7 +12,6 @@ import {
   MessageSquare,
   Target,
 } from 'lucide-react';
-
 
 import { type AIPersonality } from './AIPersonalityAvatar';
 
@@ -153,7 +152,7 @@ const DemoScenariosComponent = ({
         left: {
           name: 'Flash Core',
           personality: 'speed',
-          strengths: ['Quick analysis', 'Real-time processing', 'Emergency response'],
+          strengths: ['Quick analysis', 'Rapid processing', 'Emergency response'],
         },
         right: {
           name: 'Guardian Mind',

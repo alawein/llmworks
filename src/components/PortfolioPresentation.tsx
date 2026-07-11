@@ -1,4 +1,4 @@
-import { Badge, Button } from "@alawein/ui";
+import { Badge, Button } from '@alawein/ui';
 import { memo, useState, useEffect } from 'react';
 import {
   Monitor,
@@ -15,8 +15,6 @@ import {
   Palette,
   Zap,
 } from 'lucide-react';
-
-
 
 interface PortfolioPresentationProps {
   className?: string;
@@ -37,9 +35,9 @@ const PortfolioPresentationComponent = ({
       name: 'LLM Works - Strategic Command Center',
       tagline: 'Open-Source LLM Evaluation Platform',
       description:
-        'A sophisticated, enterprise-grade platform for evaluating AI language models through interactive testing and rigorous benchmarking.',
+        'A polished interface for scripted AI evaluation demos, sample comparison metrics, and benchmark run tracking while scoring is still in progress.',
       version: '2.0.0',
-      status: 'Production Ready',
+      status: 'Demo Ready',
       domain: 'llmworks.dev',
       repository: 'https://github.com/user/llm-works',
     },
@@ -67,14 +65,14 @@ const PortfolioPresentationComponent = ({
       },
       {
         title: 'Professional Dashboard Suite',
-        description: 'Real-time monitoring, command panels, and technical documentation',
+        description: 'Sample monitoring, command panels, and technical documentation',
         highlights: [
-          'Live intelligence feeds',
+          'Sample intelligence feeds',
           'Strategic command interface',
           'Technical specifications',
           'Performance metrics',
         ],
-        category: 'Enterprise',
+        category: 'Professional',
       },
       {
         title: 'Advanced UX/UI Design',
@@ -83,7 +81,7 @@ const PortfolioPresentationComponent = ({
           'Strategic Command color palette',
           'Magnetic hover effects',
           'Particle systems',
-          'Accessibility compliance',
+          'Accessibility test coverage',
         ],
         category: 'Design',
       },
@@ -101,9 +99,9 @@ const PortfolioPresentationComponent = ({
     ],
     achievements: [
       {
-        metric: '12K+',
-        label: 'Strategic Evaluations',
-        description: 'AI model assessments completed',
+        metric: 'Demo',
+        label: 'Sample Interactions',
+        description: 'Demo UI events represented',
       },
       { metric: '47', label: 'AI Models', description: 'Language models evaluated' },
       { metric: '98%', label: 'System Uptime', description: 'Platform reliability score' },
@@ -268,8 +266,8 @@ const PortfolioPresentationComponent = ({
                 </div>
                 <div className="space-y-2">
                   <Layers className="h-8 w-8 text-accent mx-auto" />
-                  <div className="font-semibold">Enterprise Ready</div>
-                  <div className="text-sm text-muted-foreground">Production Scale</div>
+                  <div className="font-semibold">Demo Ready</div>
+                  <div className="text-sm text-muted-foreground">Scoring Pending</div>
                 </div>
               </div>
             </div>
@@ -410,9 +408,9 @@ const PortfolioPresentationComponent = ({
             <div className="glass-panel p-8 max-w-3xl mx-auto text-center space-y-4">
               <h3 className="heading-refined text-2xl">Development Excellence</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Built with modern best practices, comprehensive testing, and enterprise-grade
-                architecture. This project demonstrates full-stack capabilities, sophisticated UI/UX
-                design, and scalable software engineering principles.
+                Built with modern best practices, focused tests, and clear demo disclosures. This
+                project demonstrates full-stack UI capabilities, sophisticated interaction design,
+                and a path toward provider-backed scoring.
               </p>
             </div>
           </div>
@@ -452,10 +450,10 @@ const PortfolioPresentationComponent = ({
             <div className="glass-panel p-6 max-w-lg mx-auto">
               <h3 className="heading-refined text-lg mb-4">Project Highlights</h3>
               <div className="text-sm text-muted-foreground space-y-2">
-                <div>🎮 Gaming elements with enterprise design</div>
+                <div>🎮 Gaming elements with professional interface design</div>
                 <div>🎨 Custom design system implementation</div>
                 <div>⚡ High-performance React architecture</div>
-                <div>♿ WCAG accessibility compliance</div>
+                <div>♿ Accessibility test coverage</div>
                 <div>📱 Responsive and mobile-optimized</div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { Button } from "@alawein/ui";
+import { Button } from '@alawein/ui';
 import { memo, useState, useEffect, useRef, ReactNode } from 'react';
 import {
   X,
@@ -86,9 +86,8 @@ const FeatureTourComponent = ({
     },
     {
       id: 'live-dashboard',
-      title: 'Live Intelligence Dashboard',
-      description:
-        'Monitor real-time strategic evaluations, system performance, and threat intelligence.',
+      title: 'Sample Intelligence Dashboard',
+      description: 'Review sample evaluation, system performance, and threat-intelligence cards.',
       target: '[aria-labelledby="dashboard-section"]',
       position: 'top',
       category: 'professional',
@@ -131,8 +130,7 @@ const FeatureTourComponent = ({
     {
       id: 'floating-notifications',
       title: 'Smart Notifications',
-      description:
-        'Real-time achievements, battle results, and system updates with particle effects.',
+      description: 'Sample achievements, battle results, and system updates with particle effects.',
       target: '.fixed.top-20.right-4',
       position: 'left',
       category: 'advanced',
@@ -396,7 +394,7 @@ const FeatureTourComponent = ({
               {
                 type: 'professional',
                 label: 'Professional',
-                description: 'Enterprise features',
+                description: 'Preview features',
                 icon: Target,
               },
               {

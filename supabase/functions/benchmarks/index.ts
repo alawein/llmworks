@@ -12,7 +12,7 @@ const corsHeaders = {
  * Endpoints:
  * - GET /benchmarks - List available benchmarks
  * - GET /benchmarks/:id/results - Get benchmark results
- * - POST /benchmarks/:id/run - Run a benchmark
+ * - POST /benchmarks/:id/run - Queue a benchmark run record
  */
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -23,15 +23,11 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
     const supabaseServiceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const supabase = createClient(
-      supabaseUrl,
-      supabaseAnonKey,
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
-    );
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: { Authorization: req.headers.get('Authorization')! },
+      },
+    });
 
     const {
       data: { user },
@@ -100,7 +96,7 @@ serve(async (req) => {
       }
     }
 
-    // POST - Run benchmark
+    // POST - Queue benchmark run
     if (req.method === 'POST' && benchmarkId && pathParts[2] === 'run') {
       if (!supabaseServiceRoleKey) {
         return new Response(JSON.stringify({ error: 'Benchmark queue is not configured' }), {
@@ -133,7 +129,7 @@ serve(async (req) => {
         JSON.stringify({
           runId: run.id,
           status: 'pending',
-          message: 'Benchmark run queued. Check status with GET /benchmarks/:id/results',
+          message: 'Benchmark run queued. Provider-backed scoring is not yet implemented.',
         }),
         {
           status: 202,

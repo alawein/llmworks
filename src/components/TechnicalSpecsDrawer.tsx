@@ -1,9 +1,17 @@
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Progress,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@alawein/ui';
 import { memo, useState } from 'react';
-
-
-
-
 
 import {
   FileText,
@@ -77,70 +85,54 @@ const TechnicalSpecsDrawerComponent = () => {
 
   const technicalSpecs: TechnicalSpec[] = [
     {
-      category: 'System Architecture',
+      category: 'Current App Stack',
       specs: [
         {
-          label: 'Platform',
-          value: 'Kubernetes + Docker',
-          description: 'Container orchestration platform',
+          label: 'Frontend',
+          value: 'Vite + React + TypeScript',
+          description: 'Route screens, scripted demos, and sample dashboards',
           status: 'optimal',
         },
         {
-          label: 'Load Balancer',
-          value: 'NGINX Ingress',
-          description: 'High-performance reverse proxy',
+          label: 'UI System',
+          value: 'Radix + Tailwind',
+          description: 'Shared components and design tokens',
           status: 'optimal',
         },
         {
-          label: 'Service Mesh',
-          value: 'Istio 1.19',
-          description: 'Microservices communication layer',
+          label: 'Backend',
+          value: 'Supabase',
+          description: 'Auth, database, and edge functions',
           status: 'optimal',
         },
         {
-          label: 'Message Queue',
-          value: 'Apache Kafka',
-          description: 'Distributed streaming platform',
-          status: 'optimal',
-        },
-        {
-          label: 'Cache Layer',
-          value: 'Redis Cluster',
-          description: 'In-memory data structure store',
-          status: 'optimal',
-        },
-        {
-          label: 'CDN',
-          value: 'CloudFlare Enterprise',
-          description: 'Global content delivery network',
-          status: 'optimal',
+          label: 'Benchmark Queue',
+          value: 'benchmark_runs',
+          description: 'Queues run records; scoring worker is not implemented',
+          status: 'warning',
         },
       ],
     },
     {
-      category: 'Compute Resources',
+      category: 'Planned Evaluation Work',
       specs: [
         {
-          label: 'CPU Architecture',
-          value: 'Intel Xeon Platinum 8375C',
-          description: '32 cores, 2.9GHz base frequency',
-        },
-        { label: 'Total vCPUs', value: '1,024 cores', description: 'Distributed across 32 nodes' },
-        { label: 'RAM', value: '2.5 TB DDR4', description: '64GB per node, ECC memory' },
-        {
-          label: 'GPU Acceleration',
-          value: 'NVIDIA A100 80GB',
-          description: '8x A100s for model inference',
+          label: 'Provider Calls',
+          value: 'Not implemented',
+          description: 'No frontend provider inference path exists yet',
+          status: 'warning',
         },
         {
-          label: 'Storage',
-          value: '50 TB NVMe SSD',
-          description: 'High-performance persistent storage',
+          label: 'Benchmark Scoring',
+          value: 'Not implemented',
+          description: 'Dataset execution and scoring workers are planned work',
+          status: 'warning',
         },
         {
-          label: 'Network',
-          value: '100 Gbps Ethernet',
-          description: 'Dedicated fiber optic backbone',
+          label: 'Measured Reports',
+          value: 'Not implemented',
+          description: 'Current reports and dashboards use sample data',
+          status: 'warning',
         },
       ],
     },
@@ -149,69 +141,42 @@ const TechnicalSpecsDrawerComponent = () => {
       specs: [
         {
           label: 'Primary Database',
-          value: 'PostgreSQL 15.4',
-          description: 'ACID-compliant relational database',
+          value: 'Supabase Postgres',
+          description: 'Application tables and benchmark queue tables',
         },
         {
-          label: 'Time Series DB',
-          value: 'InfluxDB 2.7',
-          description: 'High-performance metrics storage',
+          label: 'Benchmark Runs',
+          value: 'public.benchmark_runs',
+          description: 'Pending run records created by the benchmarks edge function',
         },
         {
-          label: 'Document Store',
-          value: 'MongoDB 7.0',
-          description: 'Flexible schema for model metadata',
+          label: 'Benchmark Results',
+          value: 'public.benchmark_results',
+          description: 'Reserved for future scored outputs',
         },
-        {
-          label: 'Search Engine',
-          value: 'Elasticsearch 8.10',
-          description: 'Full-text search and analytics',
-        },
-        {
-          label: 'Graph Database',
-          value: 'Neo4j 5.12',
-          description: 'Relationship mapping and analysis',
-        },
-        { label: 'Vector Database', value: 'Pinecone', description: 'Semantic similarity search' },
       ],
     },
   ];
 
   const apiEndpoints: APIEndpoint[] = [
     {
-      method: 'POST',
-      path: '/api/v2/evaluations',
-      description: 'Create new strategic evaluation',
-      parameters: ['model_a', 'model_b', 'task_config', 'priority'],
-      response: 'evaluation_id, status, estimated_completion',
-    },
-    {
       method: 'GET',
-      path: '/api/v2/evaluations/{id}',
-      description: 'Get evaluation status and results',
-      parameters: ['include_details', 'format'],
-      response: 'evaluation_data, progress, results',
-    },
-    {
-      method: 'GET',
-      path: '/api/v2/models',
-      description: 'List available models and capabilities',
-      parameters: ['category', 'status', 'sort'],
-      response: 'models[], metadata, pagination',
+      path: 'supabase.functions.invoke("benchmarks")',
+      description: 'List planned benchmark presets',
+      response: 'benchmark definitions',
     },
     {
       method: 'POST',
-      path: '/api/v2/models/register',
-      description: 'Register new model for evaluation',
-      parameters: ['model_config', 'access_credentials', 'capabilities'],
-      response: 'model_id, validation_status, deployment_url',
+      path: 'supabase.functions.invoke("benchmarks/:id/run")',
+      description: 'Queue a benchmark run record',
+      parameters: ['models', 'config'],
+      response: 'runId, pending status, scoring-pending message',
     },
     {
       method: 'GET',
-      path: '/api/v2/metrics/system',
-      description: 'Get real-time system metrics',
-      parameters: ['time_range', 'granularity', 'metrics'],
-      response: 'system_health, performance_data, alerts',
+      path: 'supabase.functions.invoke("benchmarks/:id/results")',
+      description: 'Read persisted result rows for the signed-in user',
+      response: 'benchmark_results[]',
     },
   ];
 
@@ -224,47 +189,40 @@ const TechnicalSpecsDrawerComponent = () => {
           technology: 'Vite + TypeScript',
           status: 'active',
           load: 23,
-          description: 'Strategic Command Center interface',
+          description: 'Scripted demos, sample dashboards, and run-tracking UI',
         },
         {
-          name: 'API Gateway',
-          technology: 'Kong Gateway',
+          name: 'Route Surfaces',
+          technology: 'React Router',
           status: 'active',
-          load: 45,
-          description: 'Rate limiting and authentication',
-        },
-        {
-          name: 'WebSocket Service',
-          technology: 'Socket.io',
-          status: 'active',
-          load: 12,
-          description: 'Real-time updates and notifications',
+          load: 18,
+          description: 'Arena, Bench, Compare, Settings, and Dashboard screens',
         },
       ],
     },
     {
-      layer: 'Application Layer',
+      layer: 'Backend Layer',
       components: [
         {
-          name: 'Evaluation Engine',
-          technology: 'Node.js + Python',
+          name: 'Supabase Auth',
+          technology: 'Supabase',
           status: 'active',
-          load: 67,
-          description: 'Core strategic evaluation processing',
+          load: 12,
+          description: 'Authenticated user context for backend operations',
         },
         {
-          name: 'Model Registry',
-          technology: 'FastAPI',
+          name: 'Benchmarks Function',
+          technology: 'Supabase Edge Functions',
           status: 'active',
-          load: 34,
-          description: 'Model metadata and capability management',
+          load: 8,
+          description: 'Lists presets and queues benchmark run records',
         },
         {
-          name: 'Result Analyzer',
-          technology: 'Python + NumPy',
+          name: 'Scoring Worker',
+          technology: 'Planned',
           status: 'maintenance',
           load: 0,
-          description: 'Statistical analysis and ranking',
+          description: 'Future provider inference and scoring path',
         },
       ],
     },
@@ -272,51 +230,18 @@ const TechnicalSpecsDrawerComponent = () => {
       layer: 'Data Layer',
       components: [
         {
-          name: 'Primary Database',
-          technology: 'PostgreSQL',
+          name: 'Application Database',
+          technology: 'Supabase Postgres',
           status: 'active',
-          load: 56,
-          description: 'Evaluation results and user data',
+          load: 20,
+          description: 'App data, roles, audit log, and benchmark queue records',
         },
         {
-          name: 'Cache Cluster',
-          technology: 'Redis',
-          status: 'active',
-          load: 23,
-          description: 'Session and frequently accessed data',
-        },
-        {
-          name: 'Object Storage',
-          technology: 'MinIO S3',
-          status: 'active',
-          load: 15,
-          description: 'Model artifacts and large files',
-        },
-      ],
-    },
-    {
-      layer: 'Infrastructure Layer',
-      components: [
-        {
-          name: 'Container Orchestration',
-          technology: 'Kubernetes',
-          status: 'active',
-          load: 78,
-          description: 'Service deployment and scaling',
-        },
-        {
-          name: 'Service Mesh',
-          technology: 'Istio',
-          status: 'active',
-          load: 34,
-          description: 'Inter-service communication',
-        },
-        {
-          name: 'Monitoring Stack',
-          technology: 'Prometheus + Grafana',
-          status: 'active',
-          load: 45,
-          description: 'Metrics collection and visualization',
+          name: 'Benchmark Results',
+          technology: 'Postgres table',
+          status: 'maintenance',
+          load: 0,
+          description: 'Reserved for future measured benchmark output',
         },
       ],
     },
@@ -324,50 +249,46 @@ const TechnicalSpecsDrawerComponent = () => {
 
   const securitySpecs = [
     {
-      feature: 'Multi-Factor Authentication',
-      status: 'Enabled',
-      description: 'TOTP + Hardware keys supported',
+      feature: 'Authentication',
+      status: 'Supabase',
+      description: 'Signed-in users are required for benchmark edge-function access',
     },
     {
-      feature: 'Zero Trust Network',
-      status: 'Active',
-      description: 'Every request verified and encrypted',
+      feature: 'Row-Level Security',
+      status: 'Configured',
+      description: 'Benchmark tables scope records to the owning user',
     },
     {
-      feature: 'Data Encryption',
-      status: 'AES-256',
-      description: 'At rest and in transit encryption',
-    },
-    { feature: 'API Rate Limiting', status: 'Configured', description: '1000 req/min per API key' },
-    {
-      feature: 'Audit Logging',
-      status: 'Comprehensive',
-      description: 'All actions logged and immutable',
+      feature: 'Provider Secrets',
+      status: 'Operator-managed',
+      description: 'Do not claim server-side encryption until implementation exists',
     },
     {
-      feature: 'Vulnerability Scanning',
-      status: 'Automated',
-      description: 'Daily security assessments',
+      feature: 'Sample Data Labels',
+      status: 'Required',
+      description: 'Demos and exports must disclose sample data before presenting metrics',
     },
   ];
 
   const performanceMetrics = [
     {
-      metric: 'Average Response Time',
-      value: '89ms',
-      target: '<100ms',
-      status: 'optimal' as const,
+      metric: 'Benchmark Queue',
+      value: 'Pending',
+      target: 'Scoring worker planned',
+      status: 'warning' as const,
     },
     {
-      metric: 'Throughput',
-      value: '1,247 req/min',
-      target: '>1000 req/min',
-      status: 'optimal' as const,
+      metric: 'Provider Calls',
+      value: 'Not wired',
+      target: 'Future integration',
+      status: 'warning' as const,
     },
-    { metric: 'Uptime SLA', value: '99.97%', target: '99.9%', status: 'optimal' as const },
-    { metric: 'Error Rate', value: '0.03%', target: '<0.1%', status: 'optimal' as const },
-    { metric: 'P95 Latency', value: '156ms', target: '<200ms', status: 'optimal' as const },
-    { metric: 'Concurrent Users', value: '2,847', target: '>2000', status: 'optimal' as const },
+    {
+      metric: 'Dashboard Metrics',
+      value: 'Sample',
+      target: 'Measured after scoring ships',
+      status: 'warning' as const,
+    },
   ];
 
   const getStatusColor = (status: string) => {
@@ -416,7 +337,7 @@ const TechnicalSpecsDrawerComponent = () => {
             <div>
               <CardTitle className="heading-refined text-lg">Technical Specifications</CardTitle>
               <p className="text-xs text-muted-foreground">
-                Comprehensive platform architecture and capabilities reference
+                Current stack and planned capability reference
               </p>
             </div>
           </div>
@@ -509,8 +430,8 @@ const TechnicalSpecsDrawerComponent = () => {
 
           <TabsContent value="api" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="heading-refined text-sm">REST API Endpoints</h3>
-              <Badge className="performance-elite strategic-rank">v2.1.4</Badge>
+              <h3 className="heading-refined text-sm">Current Backend Surface</h3>
+              <Badge className="performance-standard strategic-rank">Supabase</Badge>
             </div>
 
             <div className="space-y-3">
@@ -564,7 +485,7 @@ const TechnicalSpecsDrawerComponent = () => {
 
           <TabsContent value="architecture" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="heading-refined text-sm">System Architecture Layers</h3>
+              <h3 className="heading-refined text-sm">Current Architecture Layers</h3>
               <Button variant="outline" size="sm" className="glass-minimal">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 View Diagram
@@ -615,8 +536,8 @@ const TechnicalSpecsDrawerComponent = () => {
 
           <TabsContent value="security" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="heading-refined text-sm">Security Framework</h3>
-              <Badge className="performance-elite strategic-rank">SOC 2 Type II</Badge>
+              <h3 className="heading-refined text-sm">Security Notes</h3>
+              <Badge className="performance-standard strategic-rank">Current state</Badge>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -639,8 +560,8 @@ const TechnicalSpecsDrawerComponent = () => {
 
           <TabsContent value="performance" className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="heading-refined text-sm">Performance Metrics</h3>
-              <Badge className="performance-elite strategic-rank">SLA: 99.9%</Badge>
+              <h3 className="heading-refined text-sm">Implementation Status</h3>
+              <Badge className="performance-standard strategic-rank">No SLA claim</Badge>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

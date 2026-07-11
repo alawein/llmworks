@@ -195,7 +195,7 @@ const DynamicLeaderboardComponent = () => {
           </div>
           <div>
             <h3 className="heading-refined text-xl">Strategic Leaderboard</h3>
-            <p className="text-sm text-muted-foreground">Live rankings • Updates every 30s</p>
+            <p className="text-sm text-muted-foreground">Sample rankings • Demo data refresh</p>
           </div>
         </div>
 

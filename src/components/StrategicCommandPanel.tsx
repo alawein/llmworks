@@ -1,10 +1,18 @@
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Progress,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@alawein/ui';
 import { memo, useState, useRef, useEffect } from 'react';
-
-
-
-
-
 
 import {
   Terminal,
@@ -78,7 +86,7 @@ const StrategicCommandPanelComponent = () => {
   const commandModules: CommandModule[] = [
     {
       id: 'eval-engine',
-      name: 'Evaluation Engine',
+      name: 'Planned Evaluation Engine',
       status: 'online',
       cpu: 67,
       memory: 45,
@@ -198,7 +206,7 @@ const StrategicCommandPanelComponent = () => {
     // Mock responses
     const mockResponses = {
       status:
-        'System Status: All modules operational ✓\nEvaluation Engine: Online (67% CPU)\nModel Registry: Online (23% CPU)\nSecurity Monitor: Online (12% CPU)',
+        'Sample Status: demo modules visible ✓\nPlanned Evaluation Engine: preview only\nModel Registry: sample data\nSecurity Monitor: sample data',
       help: 'Available commands:\n  status - Show system status\n  restart <module> - Restart a module\n  logs <level> - Show filtered logs\n  sessions - List active sessions\n  metrics - Display performance metrics',
       'logs error':
         'Error logs from last hour:\n[14:20:09] ANALYZER: Memory threshold exceeded\n[13:45:23] NETWORK: Connection timeout to node-3',

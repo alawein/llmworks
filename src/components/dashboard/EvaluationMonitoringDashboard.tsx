@@ -1,11 +1,32 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, EmptyState, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Badge,
+  Button,
+  Card,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  EmptyState,
+  Progress,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@alawein/ui';
 import React, { useState, useEffect } from 'react';
-
-
-
-
-
-
 
 import {
   Play,
@@ -191,9 +212,9 @@ const mockRealTimeMetrics = [
 ];
 
 const chartConfig = {
-  activeEvaluations: { label: 'Active', color: 'hsl(var(--primary))' },
-  queuedEvaluations: { label: 'Queued', color: 'hsl(var(--accent))' },
-  throughput: { label: 'Throughput', color: 'hsl(var(--secondary))' },
+  activeEvaluations: { label: 'Sample active', color: 'hsl(var(--primary))' },
+  queuedEvaluations: { label: 'Sample queued', color: 'hsl(var(--accent))' },
+  throughput: { label: 'Sample throughput', color: 'hsl(var(--secondary))' },
 };
 
 export const EvaluationMonitoringDashboard = () => {
@@ -203,7 +224,7 @@ export const EvaluationMonitoringDashboard = () => {
   const [realTimeData, setRealTimeData] = useState(mockRealTimeMetrics);
   const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  // Simulate real-time updates
+  // Simulate sample timed updates for the dashboard preview.
   useEffect(() => {
     const interval = setInterval(() => {
       setEvaluations((prev) =>
@@ -226,7 +247,7 @@ export const EvaluationMonitoringDashboard = () => {
         })
       );
 
-      // Update real-time metrics
+      // Update sample metrics
       const newTime = new Date();
       const timeString = newTime.toLocaleTimeString('en-US', {
         hour12: false,
@@ -329,16 +350,16 @@ export const EvaluationMonitoringDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Real-time Overview */}
+      {/* Sample overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Running</p>
+              <p className="text-sm text-muted-foreground">Sample running</p>
               <p className="text-2xl font-bold text-blue-600">{runningEvaluations}</p>
               <div className="flex items-center gap-1 mt-1">
                 <Activity className="h-3 w-3 text-blue-500" />
-                <span className="text-xs text-muted-foreground">Active now</span>
+                <span className="text-xs text-muted-foreground">Demo state</span>
               </div>
             </div>
             <Play className="h-8 w-8 text-blue-500" />
@@ -348,7 +369,7 @@ export const EvaluationMonitoringDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Queued</p>
+              <p className="text-sm text-muted-foreground">Sample queued</p>
               <p className="text-2xl font-bold text-warning">{queuedEvaluations}</p>
               <div className="flex items-center gap-1 mt-1">
                 <Timer className="h-3 w-3 text-warning" />
@@ -362,11 +383,11 @@ export const EvaluationMonitoringDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Completed Today</p>
+              <p className="text-sm text-muted-foreground">Sample completed</p>
               <p className="text-2xl font-bold text-success">{completedToday}</p>
               <div className="flex items-center gap-1 mt-1">
                 <TrendingUp className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">+3 vs yesterday</span>
+                <span className="text-xs text-success">demo comparison</span>
               </div>
             </div>
             <CheckCircle className="h-8 w-8 text-success" />
@@ -376,11 +397,11 @@ export const EvaluationMonitoringDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total Cost</p>
+              <p className="text-sm text-muted-foreground">Sample cost</p>
               <p className="text-2xl font-bold text-foreground">${totalCost.toFixed(2)}</p>
               <div className="flex items-center gap-1 mt-1">
                 <Target className="h-3 w-3 text-primary" />
-                <span className="text-xs text-muted-foreground">This session</span>
+                <span className="text-xs text-muted-foreground">Demo session</span>
               </div>
             </div>
             <Zap className="h-8 w-8 text-primary" />
@@ -388,10 +409,10 @@ export const EvaluationMonitoringDashboard = () => {
         </Card>
       </div>
 
-      {/* Real-time Chart */}
+      {/* Sample activity chart */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-foreground">Real-time Activity</h3>
+          <h3 className="text-lg font-bold text-foreground">Sample Activity</h3>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <RefreshCw className="h-4 w-4" />
             Last updated: {lastUpdated.toLocaleTimeString()}
@@ -455,7 +476,7 @@ export const EvaluationMonitoringDashboard = () => {
           </div>
 
           <div className="ml-auto text-sm text-muted-foreground">
-            Showing {filteredEvaluations.length} of {evaluations.length} evaluations
+            Showing {filteredEvaluations.length} of {evaluations.length} sample evaluations
           </div>
         </div>
       </Card>
@@ -504,19 +525,19 @@ export const EvaluationMonitoringDashboard = () => {
               {/* Metrics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="text-muted-foreground">Success Rate</p>
+                  <p className="text-muted-foreground">Sample success rate</p>
                   <p className="font-medium">{evaluation.metrics.successRate.toFixed(1)}%</p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Avg Response</p>
+                  <p className="text-muted-foreground">Sample response</p>
                   <p className="font-medium">{evaluation.metrics.avgResponseTime.toFixed(1)}s</p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Cost</p>
+                  <p className="text-muted-foreground">Sample cost</p>
                   <p className="font-medium">${evaluation.metrics.cost.toFixed(2)}</p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Duration</p>
+                  <p className="text-muted-foreground">Sample duration</p>
                   <p className="font-medium">
                     {evaluation.duration ||
                       `${Math.floor((Date.now() - new Date(evaluation.startTime).getTime()) / 60000)}m`}
@@ -529,16 +550,16 @@ export const EvaluationMonitoringDashboard = () => {
                 <div className="bg-muted/20 rounded-lg p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">Results</p>
+                      <p className="text-sm text-muted-foreground">Sample results</p>
                       {evaluation.results.winner && (
-                        <p className="font-medium">Winner: {evaluation.results.winner}</p>
+                        <p className="font-medium">Sample winner: {evaluation.results.winner}</p>
                       )}
                       {evaluation.results.accuracy && (
-                        <p className="text-sm">Accuracy: {evaluation.results.accuracy}%</p>
+                        <p className="text-sm">Sample accuracy: {evaluation.results.accuracy}%</p>
                       )}
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Scores</p>
+                      <p className="text-sm text-muted-foreground">Sample scores</p>
                       {Object.entries(evaluation.results.scores).map(([model, score]) => (
                         <p key={model} className="text-sm font-medium">
                           {model}: {score}%

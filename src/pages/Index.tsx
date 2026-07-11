@@ -1,4 +1,4 @@
-import { Button } from "@alawein/ui";
+import { Button } from '@alawein/ui';
 import { memo, useEffect, useState } from 'react';
 import { HeroSection } from '@/components/HeroSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
@@ -28,7 +28,7 @@ const IndexPage = () => {
     setSEO({
       title: 'LLM Works — Open‑Source Model Evaluation Platform',
       description:
-        'Evaluate LLM reliability through interactive testing and rigorous benchmarking. Open-source evaluation platform with auditable results.',
+        'Explore scripted LLM evaluation demos, sample metrics, and benchmark run tracking. Provider-backed benchmark scoring is not yet implemented.',
       path: '/',
     });
     injectJsonLd(
@@ -38,7 +38,7 @@ const IndexPage = () => {
         name: 'LLM Works',
         url: window.location.origin,
         description:
-          'Open‑source LLM evaluation platform: Arena (interactive testing) and Bench (rigorous benchmarking) with auditable results.',
+          'Open‑source LLM evaluation interface: Arena demos, illustrative comparison views, and benchmark run tracking while scoring is still in progress.',
       },
       'ld-home'
     );
@@ -105,8 +105,8 @@ const IndexPage = () => {
               <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
                 <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
                   Experience all Strategic Command Center features in an automated demonstration.
-                  Perfect for showcasing the platform's capabilities, gaming elements, and
-                  enterprise-grade interfaces.
+                  Perfect for reviewing demo capabilities, gaming elements, and polished interface
+                  patterns.
                 </p>
               </div>
             </header>
@@ -141,8 +141,8 @@ const IndexPage = () => {
                   </span>
                 </h3>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Experience tactical AI evaluations in our pixel-art battle arena with real-time
-                  energy visualization
+                  Experience a scripted tactical evaluation layout in our pixel-art battle arena
+                  with sample energy visualization
                 </p>
               </div>
               <PixelBattleScene
@@ -170,7 +170,7 @@ const IndexPage = () => {
           </div>
         </section>
 
-        {/* Live Intelligence Dashboard Showcase */}
+        {/* Sample Intelligence Dashboard Showcase */}
         <section
           className="relative py-32 overflow-hidden"
           aria-labelledby="dashboard-section"
@@ -208,7 +208,7 @@ const IndexPage = () => {
                   id="dashboard-section"
                   className="heading-display text-5xl md:text-6xl mb-8 max-w-4xl mx-auto"
                 >
-                  <span className="block">Real-Time Command</span>
+                  <span className="block">Sample Command</span>
                   <span className="block">
                     <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                       Intelligence Center
@@ -219,8 +219,8 @@ const IndexPage = () => {
 
               <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
                 <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
-                  Monitor live strategic evaluations, track system performance, and analyze threat
-                  intelligence in real-time through our sophisticated command dashboard.
+                  Review sample strategic evaluation states, system-performance cards, and dashboard
+                  layouts without presenting demo data as measured operations.
                 </p>
               </div>
             </header>
@@ -282,8 +282,7 @@ const IndexPage = () => {
               <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
                 <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
                   Advanced system control with module management, session monitoring, and terminal
-                  access. Enterprise-grade operational control for serious AI evaluation
-                  deployments.
+                  access. Demo operational control for reviewing planned AI evaluation workflows.
                 </p>
               </div>
             </header>
@@ -344,8 +343,8 @@ const IndexPage = () => {
 
               <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
                 <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
-                  Advance through commander ranks, unlock achievements, and earn XP through
-                  strategic evaluations. Build your reputation as an elite AI tactical analyst.
+                  Advance through commander ranks, unlock achievements, and earn demo XP through
+                  scripted evaluation activities.
                 </p>
               </div>
             </header>
@@ -458,7 +457,7 @@ const IndexPage = () => {
                   id="specs-section"
                   className="heading-display text-5xl md:text-6xl mb-8 max-w-4xl mx-auto"
                 >
-                  <span className="block">Enterprise-Grade</span>
+                  <span className="block">Current-State</span>
                   <span className="block">
                     <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
                       Technical Specifications
@@ -470,8 +469,8 @@ const IndexPage = () => {
               <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
                 <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
                   Comprehensive technical documentation including system architecture, API
-                  specifications, security framework, and performance metrics. Built for enterprise
-                  deployment and scale.
+                  specifications, security notes, and sample performance metrics. Built to make
+                  current capabilities and planned work visible.
                 </p>
               </div>
             </header>
@@ -538,8 +537,9 @@ const IndexPage = () => {
                 </h2>
 
                 <p className="body-elegant text-xl md:text-2xl max-w-3xl mx-auto opacity-80 leading-relaxed">
-                  Step into the arena where artificial minds engage in strategic evaluations.
-                  Witness intellect, creativity, and tactical analysis compete for superiority.
+                  Step into the arena where scripted demos show planned evaluation interactions.
+                  Review debate, creativity, and tactical-analysis UI without treating it as model
+                  output.
                 </p>
               </div>
 
@@ -613,8 +613,8 @@ const IndexPage = () => {
                 <div className="card-sophisticated group text-center">
                   <div className="glass-subtle p-1 rounded-xl mb-4 mx-auto w-fit group-hover:shadow-lg transition-all">
                     <div className="glass-minimal p-4 rounded-lg">
-                      <div className="heading-display text-3xl text-primary mb-2">12K+</div>
-                      <div className="body-elegant text-sm opacity-70">Strategic Evaluations</div>
+                      <div className="heading-display text-3xl text-primary mb-2">Demo</div>
+                      <div className="body-elegant text-sm opacity-70">Sample Interactions</div>
                     </div>
                   </div>
                 </div>

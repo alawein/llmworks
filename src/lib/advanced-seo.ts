@@ -118,7 +118,7 @@ export const generateOrganizationSchema = () => {
     '@type': 'Organization',
     name: 'LLM Works',
     description:
-      'Open-source platform for evaluating Large Language Models through interactive testing and rigorous benchmarking',
+      'Open-source interface for scripted LLM evaluation demos, sample metrics, and benchmark run tracking while provider-backed scoring is still in progress',
     url: 'https://llmworks.dev',
     logo: 'https://llmworks.dev/logo.png',
     foundingDate: '2024',
@@ -149,7 +149,7 @@ export const generateSoftwareApplicationSchema = () => {
     '@type': 'SoftwareApplication',
     name: 'LLM Works',
     description:
-      'Comprehensive platform for LLM evaluation with interactive Arena testing and standardized benchmarks',
+      'LLM evaluation interface with scripted Arena demos, illustrative comparison views, and benchmark run tracking',
     url: 'https://llmworks.dev',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web Browser',
@@ -174,11 +174,11 @@ export const generateSoftwareApplicationSchema = () => {
     downloadUrl: 'https://llmworks.dev',
     screenshot: 'https://llmworks.dev/screenshots/dashboard.png',
     featureList: [
-      'Interactive Arena testing between AI models',
-      'Standardized benchmark evaluation (MMLU, TruthfulQA, GSM8K)',
-      'Real-time performance monitoring',
-      'Comprehensive analytics dashboard',
-      'Cost tracking and optimization',
+      'Scripted Arena demo flows',
+      'Benchmark run tracking for selected tasks',
+      'Illustrative comparison dashboards',
+      'Sample analytics dashboard',
+      'Provider configuration UI',
       'Accessibility-first design',
     ],
   };

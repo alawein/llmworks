@@ -1,7 +1,5 @@
-import { Badge, Card, CardContent, CardHeader, CardTitle, Progress } from "@alawein/ui";
+import { Badge, Card, CardContent, CardHeader, CardTitle, Progress } from '@alawein/ui';
 import { memo, useState, useEffect } from 'react';
-
-
 
 import {
   Trophy,
@@ -71,7 +69,7 @@ const XPProgressionSystemComponent = () => {
     {
       id: 'strategic-mastermind',
       name: 'Strategic Mastermind',
-      description: 'Complete 100 strategic evaluations',
+      description: 'Complete 100 scripted evaluation activities',
       icon: Crown,
       unlocked: false,
       rarity: 'epic',
