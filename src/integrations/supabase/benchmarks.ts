@@ -1,4 +1,4 @@
-import { supabase } from './client';
+import { assertSupabaseConfigured, supabase } from './client';
 
 export interface BenchmarkDefinition {
   id: string;
@@ -40,6 +40,8 @@ const raiseIfFunctionError = (error: unknown) => {
 };
 
 export const listBenchmarks = async () => {
+  assertSupabaseConfigured();
+
   const { data, error } = await supabase.functions.invoke<BenchmarkDefinition[]>('benchmarks', {
     method: 'GET',
   });
@@ -49,6 +51,8 @@ export const listBenchmarks = async () => {
 };
 
 export const getBenchmarkResults = async (benchmarkId: string) => {
+  assertSupabaseConfigured();
+
   const { data, error } = await supabase.functions.invoke<BenchmarkResult[]>(
     `benchmarks/${encodeURIComponent(benchmarkId)}/results`,
     { method: 'GET' }
@@ -59,6 +63,8 @@ export const getBenchmarkResults = async (benchmarkId: string) => {
 };
 
 export const queueBenchmarkRun = async (benchmarkId: string, request: BenchmarkRunRequest) => {
+  assertSupabaseConfigured();
+
   const { data, error } = await supabase.functions.invoke<BenchmarkRunResponse>(
     `benchmarks/${encodeURIComponent(benchmarkId)}/run`,
     {

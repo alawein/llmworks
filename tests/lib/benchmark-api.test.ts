@@ -4,11 +4,13 @@ import { fileURLToPath } from 'node:url';
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-const { invokeMock } = vi.hoisted(() => ({
+const { invokeMock, assertSupabaseConfiguredMock } = vi.hoisted(() => ({
   invokeMock: vi.fn(),
+  assertSupabaseConfiguredMock: vi.fn(),
 }));
 
 vi.mock('@/integrations/supabase/client', () => ({
+  assertSupabaseConfigured: assertSupabaseConfiguredMock,
   supabase: {
     functions: {
       invoke: invokeMock,
@@ -19,6 +21,7 @@ vi.mock('@/integrations/supabase/client', () => ({
 describe('benchmark edge-function client', () => {
   beforeEach(() => {
     invokeMock.mockReset();
+    assertSupabaseConfiguredMock.mockReset();
   });
 
   it('lists benchmarks through the Supabase edge function', async () => {
@@ -67,6 +70,24 @@ describe('benchmark edge-function client', () => {
     invokeMock.mockResolvedValue({ data: null, error: new Error('Unauthorized') });
 
     await expect(queueBenchmarkRun('mmlu', { models: ['gpt-4o'] })).rejects.toThrow('Unauthorized');
+  });
+
+  it('does not invoke benchmark functions when Supabase configuration is missing', async () => {
+    const { queueBenchmarkRun } = await import('@/integrations/supabase/benchmarks');
+    assertSupabaseConfiguredMock.mockImplementation(() => {
+      throw new Error(
+        'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY.'
+      );
+    });
+    invokeMock.mockResolvedValue({
+      data: { runId: 'run-1', status: 'pending', message: 'queued' },
+      error: null,
+    });
+
+    await expect(queueBenchmarkRun('mmlu', { models: ['gpt-4o'] })).rejects.toThrow(
+      /Supabase is not configured/
+    );
+    expect(invokeMock).not.toHaveBeenCalled();
   });
 });
 
