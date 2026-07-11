@@ -13,8 +13,8 @@ import {
   Star,
 } from 'lucide-react';
 
-import { useNotifications } from '@/components/FloatingNotifications';
-import { useKeyboard } from '@/components/KeyboardShortcuts';
+import { useNotifications } from '@/components/notification-context';
+import { useKeyboard } from '@/components/keyboard-context';
 
 interface ShowcaseStep {
   id: string;

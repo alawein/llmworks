@@ -1,30 +1,7 @@
-import { memo, useEffect, useState, createContext, useContext, ReactNode } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Keyboard, Command, ArrowRight, CornerDownLeft, X } from 'lucide-react';
-
-interface Shortcut {
-  key: string;
-  description: string;
-  action: () => void;
-  category: 'navigation' | 'ui' | 'actions' | 'dev';
-  modifiers?: ('ctrl' | 'alt' | 'shift' | 'meta')[];
-}
-
-interface KeyboardContextType {
-  addShortcut: (shortcut: Shortcut) => void;
-  removeShortcut: (key: string) => void;
-  toggleHelp: () => void;
-}
-
-const KeyboardContext = createContext<KeyboardContextType | null>(null);
-
-export const useKeyboard = () => {
-  const context = useContext(KeyboardContext);
-  if (!context) {
-    return { addShortcut: () => {}, removeShortcut: () => {}, toggleHelp: () => {} };
-  }
-  return context;
-};
+import { KeyboardContext, type Shortcut } from './keyboard-context';
 
 interface KeyboardProviderProps {
   children: ReactNode;
@@ -33,7 +10,6 @@ interface KeyboardProviderProps {
 export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
   const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
   const [showHelp, setShowHelp] = useState(false);
-  const [lastPressed, setLastPressed] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const addShortcut = (shortcut: Shortcut) => {
@@ -106,8 +82,6 @@ export const KeyboardProvider = ({ children }: KeyboardProviderProps) => {
         e.metaKey && 'meta',
         e.key.toLowerCase(),
       ].filter(Boolean) as string[];
-
-      setLastPressed(pressedKeys);
 
       // Find matching shortcut
       const matchingShortcut = shortcuts.find((shortcut) => {
