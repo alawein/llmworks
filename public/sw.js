@@ -2,7 +2,6 @@
 // Provides caching and offline functionality for the evaluation platform
 
 const CACHE_NAME = 'llm-works-v1';
-const CACHE_VERSION = '1.0.0';
 
 // Static assets to cache immediately
 const STATIC_CACHE = [
@@ -22,13 +21,10 @@ const ASSET_CACHE_PATTERNS = [/\.(?:js|css|png|jpg|jpeg|svg|gif|webp|woff|woff2|
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log(`[SW] Installing service worker ${CACHE_VERSION}`);
-
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Caching static assets');
         return cache.addAll(STATIC_CACHE);
       })
       .then(() => {
@@ -40,8 +36,6 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log(`[SW] Activating service worker ${CACHE_VERSION}`);
-
   event.waitUntil(
     caches
       .keys()
@@ -49,7 +43,6 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
-              console.log(`[SW] Deleting old cache: ${cacheName}`);
               return caches.delete(cacheName);
             }
           })
@@ -112,8 +105,6 @@ async function networkFirstStrategy(request) {
 
     return networkResponse;
   } catch (error) {
-    console.log(`[SW] Network failed for ${request.url}, trying cache`);
-
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
@@ -153,19 +144,14 @@ async function cacheFirstStrategy(request) {
     return cachedResponse;
   }
 
-  try {
-    const networkResponse = await fetch(request);
+  const networkResponse = await fetch(request);
 
-    if (networkResponse.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
-    }
-
-    return networkResponse;
-  } catch (error) {
-    console.log(`[SW] Failed to fetch ${request.url}`);
-    throw error;
+  if (networkResponse.ok) {
+    const cache = await caches.open(CACHE_NAME);
+    cache.put(request, networkResponse.clone());
   }
+
+  return networkResponse;
 }
 
 // Navigation strategy (for page requests)
@@ -179,9 +165,7 @@ async function navigationStrategy(request) {
     }
 
     return networkResponse;
-  } catch (error) {
-    console.log(`[SW] Navigation failed for ${request.url}, trying cache`);
-
+  } catch {
     // Try to serve cached version
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {

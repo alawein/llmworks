@@ -32,17 +32,13 @@ const CACHE_STRATEGIES = {
 
 // Install event - cache static resources
 self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Install');
-
   event.waitUntil(
     caches
       .open(STATIC_CACHE_NAME)
       .then((cache) => {
-        console.log('[ServiceWorker] Caching static resources');
         return cache.addAll(STATIC_RESOURCES);
       })
       .then(() => {
-        console.log('[ServiceWorker] Skip waiting');
         return self.skipWaiting();
       })
   );
@@ -50,8 +46,6 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[ServiceWorker] Activate');
-
   event.waitUntil(
     caches
       .keys()
@@ -68,13 +62,11 @@ self.addEventListener('activate', (event) => {
               );
             })
             .map((cacheName) => {
-              console.log('[ServiceWorker] Removing old cache:', cacheName);
               return caches.delete(cacheName);
             })
         );
       })
       .then(() => {
-        console.log('[ServiceWorker] Claiming clients');
         return self.clients.claim();
       })
   );
@@ -171,7 +163,7 @@ async function networkFirst(request) {
     }
 
     return networkResponse;
-  } catch (error) {
+  } catch {
     const cachedResponse = await caches.match(request);
 
     if (cachedResponse) {
@@ -228,8 +220,6 @@ function isApiRequest(url) {
 
 // Background sync for offline actions
 self.addEventListener('sync', (event) => {
-  console.log('[ServiceWorker] Background sync:', event.tag);
-
   if (event.tag === 'sync-evaluations') {
     event.waitUntil(syncEvaluations());
   }
@@ -274,7 +264,7 @@ async function getPendingEvaluations() {
   return [];
 }
 
-async function removePendingEvaluation(id) {
+async function removePendingEvaluation(_id) {
   // Implementation would interact with IndexedDB
   return true;
 }
@@ -318,8 +308,6 @@ self.addEventListener('notificationclick', (event) => {
 
 // Message handler for client communication
 self.addEventListener('message', (event) => {
-  console.log('[ServiceWorker] Message received:', event.data);
-
   if (event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
