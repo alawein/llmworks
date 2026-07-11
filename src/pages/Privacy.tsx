@@ -11,15 +11,15 @@ const PrivacyPage = () => {
       <main id="main" className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-foreground mb-6">Privacy Policy</h1>
-          <p className="text-muted-foreground mb-8">Last updated: January 12, 2025</p>
+          <p className="text-muted-foreground mb-8">Last updated: July 11, 2026</p>
 
           <Card className="p-8 space-y-6">
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-4">Local Processing</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Current Processing Model</h2>
               <p className="text-muted-foreground">
-                LLM Works is designed with privacy-first principles. All model evaluations run
-                locally in your browser. We do not send your prompts, model outputs, or evaluation
-                data to our servers.
+                LLMWorks currently provides a browser UI for scripted demos, sample dashboards,
+                and benchmark run tracking. It does not currently run provider-backed evaluations,
+                call model-provider APIs, or calculate benchmark scores.
               </p>
             </section>
 
@@ -29,26 +29,28 @@ const PrivacyPage = () => {
                 We collect minimal data to improve the platform:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                <li>Anonymous usage analytics (page views, feature usage)</li>
-                <li>Error reports (when enabled in settings)</li>
-                <li>Performance metrics to optimize the platform</li>
+                <li>Supabase authentication data when you sign in</li>
+                <li>Benchmark run records created through the benchmark queue UI</li>
+                <li>Optional diagnostics such as error and performance signals when enabled</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-4">Your Model Data</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Provider Keys and Model Data</h2>
               <p className="text-muted-foreground">
-                Your model configurations, API keys, evaluation results, and all sensitive data
-                remain on your device. We never have access to your model inputs, outputs, or
-                evaluation data.
+                Do not enter provider API keys, private prompts, or sensitive model outputs into
+                the current demo surfaces. This release has no provider-key encryption path and no
+                provider-backed scoring flow. Future provider integrations must document and test
+                their storage, encryption, and data-retention behavior before launch.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-4">Third-Party Services</h2>
               <p className="text-muted-foreground">
-                When you configure model providers (OpenAI, Anthropic, etc.), you connect directly
-                to their APIs. We do not intercept or store these communications.
+                The app uses Supabase for authentication and persistence and Vercel for hosting.
+                Current arena, comparison, and dashboard surfaces are scripted or illustrative
+                unless a screen explicitly labels data as measured provider output.
               </p>
             </section>
 
@@ -57,7 +59,7 @@ const PrivacyPage = () => {
               <p className="text-muted-foreground">
                 Questions about this privacy policy? Open an issue on our{' '}
                 <a
-                  href="https://github.com/alawein/aegis-ai-evaluator"
+                  href="https://github.com/alawein/llmworks"
                   className="text-primary hover:underline"
                   target="_blank"
                   rel="noopener noreferrer"

@@ -9,6 +9,7 @@ import { CostTrackingDashboard } from '@/components/dashboard/CostTrackingDashbo
 import Arena from '@/pages/Arena';
 import Bench from '@/pages/Bench';
 import Index from '@/pages/Index';
+import PrivacyPage from '@/pages/Privacy';
 
 vi.mock('@/components/comparison/RadarComparisonChart', () => ({
   RadarComparisonChart: () => <div data-testid="radar-chart" />,
@@ -72,6 +73,22 @@ describe('truthful demo surfaces', () => {
     expect(screen.getByText(/provider-backed scoring is not yet implemented/i)).toBeInTheDocument();
     expect(document.body).not.toHaveTextContent(
       /automated scoring|auditable reports|performance analysis and audit trails/i
+    );
+  });
+
+  it('keeps the privacy page honest about missing provider execution and key handling', () => {
+    render(
+      <MemoryRouter>
+        <PrivacyPage />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText(/does not currently run provider-backed evaluations/i)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/do not enter provider API keys/i)).toBeInTheDocument();
+    expect(document.body).not.toHaveTextContent(
+      /all model evaluations run locally|connect directly to their APIs|model configurations, API keys, evaluation results, and all sensitive data remain on your device/i
     );
   });
 
