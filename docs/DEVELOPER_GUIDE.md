@@ -89,7 +89,7 @@ VITE_ANTHROPIC_API_KEY=sk-ant-test-key
 - **Frontend**: React 18 with TypeScript
 - **Build Tool**: Vite 5 with SWC
 - **UI Framework**: shadcn/ui (Radix UI + Tailwind CSS)
-- **State Management**: TanStack Query + React Context
+- **State Management**: React state + React Context
 - **Routing**: React Router v6
 - **Backend**: Supabase (auth, database, real-time)
 - **Deployment**: Vercel/Netlify with GitHub Actions
@@ -108,7 +108,7 @@ VITE_ANTHROPIC_API_KEY=sk-ant-test-key
 ```mermaid
 graph TD
     A[User Interface] --> B[React Components]
-    B --> C[TanStack Query]
+    B --> C[React State and Context]
     C --> D[API Layer]
     D --> E[Supabase Backend]
     E --> F[External APIs]
@@ -301,42 +301,11 @@ describe('Component', () => {
 
 ## State Management
 
-### TanStack Query for Server State
+### Server State
 
-```typescript
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
-// Query hook
-export const useEvaluations = () => {
-  return useQuery({
-    queryKey: ['evaluations'],
-    queryFn: async () => {
-      const response = await fetch('/api/evaluations');
-      return response.json();
-    },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
-  });
-};
-
-// Mutation hook
-export const useCreateEvaluation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (data: EvaluationRequest) => {
-      const response = await fetch('/api/evaluations', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(['evaluations']);
-    },
-  });
-};
-```
+The current UI does not use a client-side server-state library. Keep data
+fetching explicit in the module that owns the route or feature, then add a
+dedicated cache/provider only when a real Supabase or API integration needs it.
 
 ### React Context for UI State
 
@@ -627,22 +596,10 @@ beforeAll(() => {
 ```typescript
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EvaluationForm } from './EvaluationForm';
 
 const renderWithProviders = (ui: React.ReactElement) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false },
-      mutations: { retry: false },
-    },
-  });
-
-  return render(
-    <QueryClientProvider client={queryClient}>
-      {ui}
-    </QueryClientProvider>
-  );
+  return render(ui);
 };
 
 describe('EvaluationForm', () => {

@@ -45,8 +45,8 @@ Shared voice and workspace prompt:
 
 1. Keep evaluation behavior inspectable. Do not bury core benchmark logic in
    opaque wrappers or side effects.
-2. Treat `VITE_API_KEY_ENCRYPTION_SALT` as a deployment secret, not as a
-   checked-in convenience default.
+2. Do not reintroduce `VITE_API_KEY_ENCRYPTION_SALT` or client-side provider-key
+   encryption claims unless code consumes that secret.
 3. Provider keys and Supabase credentials stay out of version control.
 4. Route surfaces belong in `src/pages/`.
 5. Security-testing flows are first-class product paths. Preserve them when
