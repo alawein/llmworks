@@ -3,7 +3,6 @@ import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AnalyticsListener from '@/components/AnalyticsListener';
 import { SkipLink } from '@/components/SkipLink';
@@ -37,28 +36,6 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const DashboardPage = lazy(() => import('./pages/Dashboard'));
-
-// Optimized QueryClient configuration for better performance
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // Cache queries for 5 minutes by default
-      staleTime: 5 * 60 * 1000,
-      // Keep unused data in cache for 10 minutes
-      gcTime: 10 * 60 * 1000,
-      // Retry failed requests 2 times
-      retry: 2,
-      // Don't refetch on window focus in production
-      refetchOnWindowFocus: import.meta.env.DEV,
-      // Don't refetch on reconnect unless in dev
-      refetchOnReconnect: import.meta.env.DEV,
-    },
-    mutations: {
-      // Retry failed mutations once
-      retry: 1,
-    },
-  },
-});
 
 // Router wrapper component to provide context for hooks
 const AppRoutes = () => {
@@ -134,19 +111,17 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <NotificationProvider>
-            <KeyboardProvider>
-              <AppRoutes />
-            </KeyboardProvider>
-          </NotificationProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <NotificationProvider>
+          <KeyboardProvider>
+            <AppRoutes />
+          </KeyboardProvider>
+        </NotificationProvider>
+      </BrowserRouter>
+    </TooltipProvider>
   );
 };
 

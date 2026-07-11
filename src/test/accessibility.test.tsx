@@ -1,8 +1,7 @@
 import { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 import Index from '@/pages/Index';
 import Arena from '@/pages/Arena';
@@ -18,34 +17,14 @@ import { NotificationProvider } from '@/components/FloatingNotifications';
 
 // Test wrapper component with all required providers
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false },
-      mutations: { retry: false },
-    },
-  });
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <NotificationProvider>{children}</NotificationProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <NotificationProvider>{children}</NotificationProvider>
+    </BrowserRouter>
   );
 };
 
 describe('Accessibility Tests', () => {
-  let queryClient: QueryClient;
-
-  beforeEach(() => {
-    queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-        mutations: { retry: false },
-      },
-    });
-  });
-
   describe('Page Accessibility', () => {
     it('Index page should be accessible', async () => {
       const { container } = render(

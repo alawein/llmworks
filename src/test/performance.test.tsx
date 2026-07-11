@@ -1,5 +1,4 @@
 import { render, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
@@ -19,19 +18,10 @@ const PERFORMANCE_THRESHOLDS = {
 
 // Test wrapper component with all required providers
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false },
-      mutations: { retry: false },
-    },
-  });
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <NotificationProvider>{children}</NotificationProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <NotificationProvider>{children}</NotificationProvider>
+    </BrowserRouter>
   );
 };
 
@@ -256,36 +246,6 @@ describe('Performance Tests', () => {
         // Should have alt text for accessibility
         expect(img).toHaveAttribute('alt');
       });
-    });
-  });
-
-  describe('Query Performance', () => {
-    it('should handle React Query efficiently', async () => {
-      const queryClient = new QueryClient({
-        defaultOptions: {
-          queries: { retry: false },
-          mutations: { retry: false },
-        },
-      });
-
-      const startTime = performance.now();
-
-      render(
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <NotificationProvider>
-              <Dashboard />
-            </NotificationProvider>
-          </BrowserRouter>
-        </QueryClientProvider>
-      );
-
-      await waitFor(() => {
-        expect(document.body.firstChild).toBeInTheDocument();
-      });
-
-      const renderTime = performance.now() - startTime;
-      expect(renderTime).toBeLessThan(PERFORMANCE_THRESHOLDS.RENDER_TIME * 2); // Allow more time for complex dashboard
     });
   });
 

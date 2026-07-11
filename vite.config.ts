@@ -44,8 +44,6 @@ export default defineConfig({
           ],
           // Chart and visualization libraries
           'vendor-charts': ['recharts', 'lucide-react'],
-          // TanStack libraries
-          'vendor-query': ['@tanstack/react-query'],
           // Supabase client
           'vendor-supabase': ['@supabase/supabase-js'],
         },
@@ -89,7 +87,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
+    include: ['react', 'react-dom', 'react-router-dom'],
     exclude: ['@supabase/supabase-js'],
   },
 });

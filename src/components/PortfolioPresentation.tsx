@@ -50,7 +50,7 @@ const PortfolioPresentationComponent = ({
       { name: 'Tailwind CSS', category: 'Styling', icon: '🎨' },
       { name: 'shadcn/ui', category: 'Components', icon: '🧩' },
       { name: 'Supabase', category: 'Backend', icon: '🚀' },
-      { name: 'React Query', category: 'State', icon: '🔄' },
+      { name: 'React Context', category: 'State', icon: '🔄' },
       { name: 'Lucide Icons', category: 'Icons', icon: '🎯' },
     ],
     features: [

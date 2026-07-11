@@ -1,6 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 
@@ -71,19 +70,10 @@ vi.mock('@/components/KeyboardShortcuts', () => ({
 
 // Test wrapper component for individual components (not full App)
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: { retry: false },
-      mutations: { retry: false },
-    },
-  });
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <NotificationProvider>{children}</NotificationProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <NotificationProvider>{children}</NotificationProvider>
+    </BrowserRouter>
   );
 };
 
