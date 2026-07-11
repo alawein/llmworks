@@ -5,124 +5,129 @@ sync: none
 sla: none
 ---
 
-# Aegis AI: Brand Charter
+# LLM Works Brand Charter
 
-Last updated: 2026-05-30
+Last updated: 2026-07-11
 
-1. Mission Enable safer, more reliable AI by making model evaluation
-   transparent, rigorous, and accessible.
+## 1. Mission
 
-2. Vision A global standard for evaluating AI systems where qualitative insight
-   and quantitative rigor converge, guiding responsible deployment across
-   research and industry.
+Help teams explore LLM evaluation workflows with clear, honest interfaces that
+separate working product behavior from demos, samples, and planned scoring.
 
-3. Core Principles
+## 2. Vision
 
-- Safety First: Every decision optimizes for downstream safety and risk
-  reduction.
-- Transparency & Auditability: All evaluations create traceable, explainable
-  artifacts.
-- Reproducibility & Rigor: Methods are documented, repeatable, and peer-review
-  friendly.
-- Human‑Centered: Tools support practitioners and respect user context and
-  intent.
-- Responsible Innovation: Advance capabilities without compromising ethics or
-  compliance.
-- Privacy & Security by Design: Protect data, credentials, and model IP at every
-  step.
-- Accessibility & Inclusion: WCAG‑aligned experiences and inclusive language by
-  default.
+LLM Works should become a trustworthy open-source evaluation workbench where
+qualitative experiments, benchmark run tracking, and provider-backed scoring can
+share one legible product surface.
 
-4. Positioning For AI researchers, ML engineers, and product teams who need to
-   trust model behavior, Aegis AI is the evaluation platform that unifies
-   interactive testing (The Arena) with rigorous benchmarking (The Bench).
-   Unlike general-purpose sandboxes or static leaderboards, Aegis provides
-   end‑to‑end auditable workflows, bias mitigation, and longitudinal performance
-   tracking.
+## 3. Core principles
 
-5. Key Differentiators
+- Truthful by default: never present scripted demos, sample metrics, or planned
+  scoring as measured model output.
+- Evidence-first: show sources, methods, and implementation state plainly.
+- Human-centered: keep flows understandable for researchers, engineers, and
+  product teams.
+- Security-aware: treat provider keys and deployment secrets as sensitive
+  operator data.
+- Accessible: keep product and docs language clear, inclusive, and testable.
 
-- Dual‑workspace model: The Arena (qualitative) + The Bench (quantitative)
-- Arbiter + Verifier Framework: Bias mitigation and factual/math/code
-  verification
-- Dynamic Elo + Standard Benchmarks: Relative and absolute performance in one
-  place
-- Structured Audit Trails: Judge rationales, citations, parameters, and outcomes
-- Design System Excellence: HSL tokens, light/dark themes, a11y‑first components
-- Open Integrations: Pluggable models, datasets, and storage; Supabase
-  foundation
+## 4. Current positioning
 
-6. Messaging Pillars (with proof points)
+For AI researchers, ML engineers, and product teams exploring LLM evaluation
+workflows, LLM Works provides a React/Supabase interface for scripted Arena
+demos, benchmark run tracking, provider configuration UI, and sample analytics.
+Provider-backed model calls, benchmark scoring, and measured comparison reports
+are not yet implemented.
 
-- Trust & Safety: Bias controls, transparent judging, verifiable outputs
-- Rigor & Reproducibility: Benchmarks, datasets, seeded runs, report exports
-- Insight & Velocity: Multi‑agent experiments reveal failure modes faster
-- Control & Compliance: Role‑based access patterns, audit logs, exportable
-  evidence
+## 5. Current differentiators
 
-7. Narrative & Boilerplate Aegis AI is the shield for responsible AI, combining
-   interactive exploration with standardized evaluation to illuminate how models
-   think and how they perform.
+- Arena demos: scripted debate, creative, and explanation flows that show the
+  intended interaction model without claiming live model output.
+- Bench tracking: benchmark run records can be queued and tracked while scoring
+  integration is still pending.
+- Honest comparison UI: model comparison dashboards use illustrative sample data
+  and disclose that status before export.
+- Local-first product posture: provider credentials are operator secrets and must
+  not be described as server-encrypted until code backs that claim.
+- Shared design system: Radix/Tailwind surfaces with explicit demo labels,
+  accessible navigation, and consistent status copy.
 
-8. Tagline Options
+## 6. Messaging pillars
 
-- The shield of AI evaluation
-- Evaluate with confidence
-- Where AI performance meets accountability
+- Transparency: users can tell what is live, what is sample, and what is planned.
+- Evaluation workflow clarity: Arena, Bench, comparison, and dashboard routes map
+  to distinct product jobs.
+- Implementation honesty: docs and UI should match the current codebase.
+- Responsible progress: planned evaluation features are described as roadmap work,
+  not existing guarantees.
 
-9. Voice & Tone (summary)
+## 7. Narrative and boilerplate
 
-- Voice: Clear, credible, and human. Avoid hype; favor evidence.
-- Tone: Adjust by context: product UI (concise/neutral), docs (helpful/precise),
-  marketing (confident/inspiring), errors (empathetic/solution‑oriented).
+LLM Works is an open-source LLM evaluation interface for exploring Arena demos,
+queueing benchmark run records, configuring providers, and reviewing sample
+comparison dashboards. Benchmark scoring and provider-backed measured results are
+still in progress.
 
-10. Copy Patterns (examples)
+## 8. Tagline options
 
-- Home H1: Evaluate AI models with confidence Subhead: Unite interactive testing
-  and rigorous benchmarking to understand, compare, and trust model behavior.
-  Primary CTA: Open Dashboard
-- Arena H1: The Arena - interactive evaluation Subhead: Debate, create, and
-  explain to reveal how models reason.
-- Bench H1: The Bench - rigorous benchmarking Subhead: Standardized tests,
-  auditable reports, longitudinal tracking.
-- Settings H1: Settings Subhead: Configure models and monitor system
-  performance.
-- 404: Not found. Let’s get you back on track
+- Evaluate LLM workflows with confidence
+- Clear demos today, measured scoring next
+- LLM evaluation surfaces without hidden claims
 
-11. SEO Title/Description Templates
+## 9. Voice and tone
 
-- Home: Aegis AI - Model Evaluation Platform | Arena & Bench Desc: Evaluate AI
-  models with interactive testing and rigorous benchmarking.
-- Arena: The Arena | Aegis AI - Interactive AI Evaluation Desc: Debates,
-  creative tasks, and explanation challenges to reveal model behavior.
-- Bench: The Bench | Aegis AI - AI Benchmarks & Reports Desc: MMLU, TruthfulQA,
-  GSM8K, and custom tests with auditable reports.
-- Settings: Settings | Aegis AI Desc: Configure models and monitor performance.
-- Dashboard: Dashboard | Aegis AI Desc: Track evaluations, activity, and
-  insights.
+- Product UI: concise, neutral, and explicit about demo/sample states.
+- Documentation: practical, precise, and grounded in the current repository.
+- Marketing: confident only where the product behavior is implemented.
+- Errors and empty states: direct, actionable, and free of invented progress.
 
-12. Accessibility & Motion
+## 10. Copy patterns
 
-- Respect prefers‑reduced‑motion; provide focus states and sufficient contrast
-- Use semantic HTML landmarks and a single H1 per page
+- Home H1: Evaluate LLM workflows with confidence
+- Home subhead: Explore scripted demos, sample metrics, and benchmark run
+  tracking while provider-backed scoring is in progress.
+- Arena H1: The Arena - scripted evaluation demos
+- Arena subhead: Debate, create, and explain with demo content that is clearly
+  labeled as non-provider output.
+- Bench H1: The Bench - benchmark run tracking
+- Bench subhead: Queue benchmark run records and preview planned presets; scoring
+  is not yet implemented.
+- Settings H1: Settings
+- Settings subhead: Configure provider and application preferences.
+- 404: Not found. Let's get you back on track.
 
-13. Competitive Context (snapshot)
+## 11. SEO title/description templates
 
-- Leaderboards: static snapshots vs. Aegis longitudinal + interactive
-- Prompt sandboxes: single‑agent demos vs. Aegis multi‑agent orchestration
-- Enterprise eval tools: closed black boxes vs. Aegis auditable and integrable
+- Home: LLM Works - LLM Evaluation Workflow Interface
+  - Description: Explore scripted Arena demos, sample metrics, and benchmark run
+    tracking while provider-backed scoring is in progress.
+- Arena: The Arena | LLM Works
+  - Description: Scripted debate, creative, and explanation demos for exploring
+    LLM evaluation workflows.
+- Bench: The Bench | LLM Works
+  - Description: Queue benchmark run records and preview planned benchmark
+    presets. Scoring is not yet implemented.
+- Settings: Settings | LLM Works
+  - Description: Configure provider and application preferences.
+- Dashboard: Dashboard | LLM Works
+  - Description: Review sample analytics and current application status.
 
-14. Compliance & Ethics (starter)
+## 12. Accessibility and motion
 
-- Document evaluation data sources and licensing
-- Provide clear disclaimers for synthetic judgments
-- Offer data deletion and export flows
+- Respect `prefers-reduced-motion`.
+- Provide visible focus states and sufficient color contrast.
+- Use semantic landmarks and one H1 per page.
 
-15. Success Metrics
+## 13. Compliance and ethics starter
 
-- Time‑to‑insight (create → run → interpret)
-- Evaluation repeatability rate
-- Benchmark report exports and shares
-- Model comparison engagement
+- Disclose synthetic or scripted judgments before showing them.
+- Document evaluation data sources and licensing before enabling real scoring.
+- Provide clear export labels for sample data versus measured data.
+
+## 14. Success metrics
+
+- Users can identify demo/sample/planned states without reading source code.
+- Benchmark run records queue reliably.
+- Provider-backed scoring ships with tests, schema alignment, and documentation.
 
 End of Brand Charter

@@ -5,7 +5,7 @@ sync: none
 sla: none
 ---
 
-# Aegis AI :  Voice & Tone Guide
+# LLM Works Voice & Tone Guide
 
 1. Voice Principles
 
@@ -16,14 +16,14 @@ sla: none
 
 2. Tone by Context
 
-- Product UI: concise, neutral, action‑oriented (e.g., “Run Benchmark”).
+- Product UI: concise, neutral, action‑oriented (e.g., “Queue Benchmark Run”).
 - Documentation: helpful, precise, example‑rich.
 - Marketing: confident, inspiring, but grounded in proof.
 - Errors/Empty States: empathetic, instructive, with next steps.
 
 3. Language Do/Don’t
 
-- Do: “View auditable report,” “Compare models,” “Verify outputs.”
+- Do: “View sample report,” “Compare sample metrics,” “Queue benchmark run.”
 - Don’t: “Magical,” “Perfect accuracy,” or superlative claims without evidence.
 
 4. Structural Patterns
@@ -35,20 +35,19 @@ sla: none
 
 5. Microcopy Examples
 
-- Empty state (Bench): “No results yet , run your first benchmark to generate a
-  report.”
-- Error (Arena): “Run failed due to rate limit. Try again or adjust model
-  settings.”
-- Success: “Report generated , download or share the link.”
+- Empty state (Bench): “No queued runs yet; queue a benchmark run to track setup
+  status.”
+- Error (Arena): “This demo is unavailable. Try again or choose another mode.”
+- Success: “Run queued; scoring will appear after provider integration ships.”
 - Tooltips: short utility, <8 words.
 
 6. Terminology Glossary (starter)
 
-- The Arena: interactive, multi‑agent evaluation workspace.
-- The Bench: standardized benchmarking workspace.
-- Arbiter: bias mitigation and judging layer.
-- Verifier: factual/math/code verification layer.
-- Elo: dynamic relative performance rating.
+- The Arena: scripted evaluation demo workspace.
+- The Bench: benchmark run tracking workspace.
+- Arbiter: planned review framework; do not describe as live judging.
+- Verifier: planned evidence system; do not describe as implemented proofs.
+- Elo: planned relative performance rating; do not describe as live ranking.
 
 7. Style & Grammar
 
@@ -69,4 +68,4 @@ sla: none
 - Review new pages against this guide.
 - Update quarterly based on user feedback.
 
-, End of Voice & Tone Guide ,
+End of Voice & Tone Guide

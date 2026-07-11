@@ -6,6 +6,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { DebateMode } from '@/components/arena/DebateMode';
 import { ModelComparisonDashboard } from '@/components/comparison/ModelComparisonDashboard';
 import Arena from '@/pages/Arena';
+import Bench from '@/pages/Bench';
+import Index from '@/pages/Index';
 
 vi.mock('@/components/comparison/RadarComparisonChart', () => ({
   RadarComparisonChart: () => <div data-testid="radar-chart" />,
@@ -15,7 +17,37 @@ vi.mock('@/components/comparison/BarComparisonChart', () => ({
   BarComparisonChart: () => <div data-testid="bar-chart" />,
 }));
 
+vi.mock('@/components/ShowcaseDemo', () => ({
+  ShowcaseDemo: () => <div data-testid="showcase-demo" />,
+}));
+
+vi.mock('@/components/bench/BenchmarkRunner', () => ({
+  BenchmarkRunner: () => null,
+}));
+
+vi.mock('@/components/bench/CustomTestBuilder', () => ({
+  CustomTestBuilder: () => null,
+}));
+
+vi.mock('@/components/bench/ResultsViewer', () => ({
+  ResultsViewer: () => null,
+}));
+
 describe('truthful demo surfaces', () => {
+  it('keeps the landing page honest about scripted demos and unfinished scoring', () => {
+    render(
+      <MemoryRouter>
+        <Index />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/scripted demos and sample metrics/i)).toBeInTheDocument();
+    expect(screen.getByText(/benchmark scoring is not yet implemented/i)).toBeInTheDocument();
+    expect(document.body).not.toHaveTextContent(
+      /auditable results|real-time evaluations|cryptographic verification|rigorous benchmarking/i
+    );
+  });
+
   it('keeps the scripted-demo disclosure visible for every arena mode', () => {
     render(
       <MemoryRouter>
@@ -26,6 +58,20 @@ describe('truthful demo surfaces', () => {
     expect(
       screen.getByText(/all arena modes are scripted demos.*no provider calls/i)
     ).toBeInTheDocument();
+  });
+
+  it('keeps the bench page honest about queued runs and unfinished scoring', () => {
+    render(
+      <MemoryRouter>
+        <Bench />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/queue benchmark run records/i)).toBeInTheDocument();
+    expect(screen.getByText(/provider-backed scoring is not yet implemented/i)).toBeInTheDocument();
+    expect(document.body).not.toHaveTextContent(
+      /automated scoring|auditable reports|performance analysis and audit trails/i
+    );
   });
 
   it('labels the scripted debate as a demo before a user starts it', () => {

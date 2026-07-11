@@ -135,9 +135,7 @@ export const BenchmarkRunner = () => {
       config: benchmarkRunnerConfig,
     }));
     const queuedRunKeys = new Set(queuedRuns.map((run) => run.queueKey));
-    const requestsToQueue = queueRequests.filter(
-      (request) => !queuedRunKeys.has(request.queueKey)
-    );
+    const requestsToQueue = queueRequests.filter((request) => !queuedRunKeys.has(request.queueKey));
 
     if (requestsToQueue.length === 0) {
       setIsRunning(false);
@@ -287,9 +285,10 @@ export const BenchmarkRunner = () => {
       <Card className="p-6 gradient-surface">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-bold text-foreground mb-2">Benchmark Execution</h3>
+            <h3 className="text-lg font-bold text-foreground mb-2">Benchmark Queue</h3>
             <p className="text-sm text-muted-foreground">
-              {selectedModels.length} model(s) × {selectedBenchmarks.length} benchmark(s) selected
+              {selectedModels.length} model(s) × {selectedBenchmarks.length} planned benchmark(s)
+              selected. Scoring is pending provider inference integration.
             </p>
           </div>
           <div className="flex gap-2">
@@ -299,7 +298,7 @@ export const BenchmarkRunner = () => {
               variant="hero"
             >
               <Play className="h-4 w-4" />
-              {isRunning ? 'Running...' : 'Start Benchmark'}
+              {isRunning ? 'Queueing...' : 'Queue Benchmark Run'}
             </Button>
             {showResults && (
               <Button onClick={exportResults} variant="outline">
@@ -354,9 +353,7 @@ export const BenchmarkRunner = () => {
         <Card className="p-6">
           <div className="text-center py-8 text-muted-foreground">
             <AlertTriangle className="h-8 w-8 mx-auto mb-3 text-destructive opacity-70" />
-            <p className="font-medium text-foreground">
-              Some benchmark runs could not be queued.
-            </p>
+            <p className="font-medium text-foreground">Some benchmark runs could not be queued.</p>
             <ul className="mt-4 space-y-2 text-sm">
               {queueFailures.map((failure) => (
                 <li key={failure.queueKey}>

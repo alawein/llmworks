@@ -1,6 +1,5 @@
-import { Badge, Button, Skeleton } from "@alawein/ui";
+import { Badge, Button, Skeleton } from '@alawein/ui';
 import { memo, Suspense, lazy, useEffect, useRef } from 'react';
-
 
 import { Swords, Zap, BarChart3, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -89,9 +88,9 @@ const HeroSectionComponent = () => {
               </h1>
 
               <p className="body-elegant fluid-body max-w-lg">
-                Deploy models in strategic engagements. Through tactical evaluations, intelligence
-                challenges, and rigorous analysis, discover which AI commands the field of
-                artificial intelligence.
+                Explore scripted demos and sample metrics for LLM evaluation workflows. Benchmark
+                scoring is not yet implemented; the current app shows UI flows, auth, and benchmark
+                run tracking.
               </p>
             </div>
 
@@ -113,7 +112,7 @@ const HeroSectionComponent = () => {
                     <Zap className="h-5 w-5 mr-3 transition-transform group-hover:scale-110" />
                     <div className="flex flex-col items-start">
                       <span className="font-semibold">Enter Arena</span>
-                      <span className="text-xs opacity-90 font-normal">Start strategic tests</span>
+                      <span className="text-xs opacity-90 font-normal">Open scripted demo</span>
                     </div>
                     <ArrowUpRight className="h-4 w-4 ml-2 opacity-70 transition-all group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
@@ -128,7 +127,7 @@ const HeroSectionComponent = () => {
               >
                 <Link to="/bench" onClick={() => handleCTAClick('bench')}>
                   <BarChart3 className="h-5 w-5 mr-3 transition-transform group-hover:scale-110" />
-                  <span className="font-semibold">View Leaderboard</span>
+                  <span className="font-semibold">View Bench Demo</span>
                 </Link>
               </Button>
             </div>
@@ -144,11 +143,11 @@ const HeroSectionComponent = () => {
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                <span>Transparent Results</span>
+                <span>Sample Metrics</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                <span>Real-time Evaluations</span>
+                <span>Scoring Pending</span>
               </div>
             </div>
           </div>

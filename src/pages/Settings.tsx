@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@alawein/ui';
 import { useEffect, useState } from 'react';
 
 import { Navigation } from '@/components/Navigation';
@@ -50,7 +50,7 @@ export default function Settings() {
               <div>
                 <h2 className="text-3xl font-bold text-foreground">System Monitor</h2>
                 <p className="text-muted-foreground">
-                  Real-time system status and performance metrics
+                  Sample system status and performance metrics
                 </p>
               </div>
               <SystemMonitor />

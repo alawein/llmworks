@@ -1,4 +1,4 @@
-import { Button } from "@alawein/ui";
+import { Button } from '@alawein/ui';
 import { memo, useState, useEffect, useRef } from 'react';
 import {
   Play,
@@ -127,8 +127,8 @@ const ShowcaseDemoComponent = ({ className = '' }: ShowcaseDemoProps) => {
     },
     {
       id: 'live-dashboard',
-      title: 'Live Intelligence Dashboard',
-      description: 'Real-time monitoring with tactical intelligence feeds',
+      title: 'Sample Intelligence Dashboard',
+      description: 'Sample monitoring with tactical intelligence cards',
       component: 'LiveIntelligenceDashboard',
       duration: 3500,
       category: 'technical',

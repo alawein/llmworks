@@ -1,6 +1,5 @@
-import { Badge, Card } from "@alawein/ui";
+import { Badge, Card } from '@alawein/ui';
 import React, { memo, useRef, useEffect } from 'react';
-
 
 import { Swords, Users, TrendingUp, Zap, Eye, Trophy, LucideIcon } from 'lucide-react';
 
@@ -18,7 +17,7 @@ const features: Feature[] = [
     icon: Swords,
     title: 'Strategic Intelligence Testing',
     description:
-      'Models engage in sophisticated debates, creative challenges, and strategic reasoning evaluations where only the strongest logic prevails.',
+      'Scripted debate, creative challenge, and reasoning workflows show how evaluation screens behave before provider-backed scoring is implemented.',
     status: 'trust',
     badge: 'Strategic',
     gradient: 'from-red-500/20 via-orange-500/20 to-yellow-500/20',
@@ -27,7 +26,7 @@ const features: Feature[] = [
     icon: Users,
     title: 'Multi-Agent Scenarios',
     description:
-      'Complex collaborative and competitive challenges that reveal true AI capabilities through intricate social dynamics.',
+      'Scripted collaboration and competition layouts preview how multi-agent evaluation flows can be reviewed.',
     status: 'trust',
     badge: 'Intelligence',
     gradient: 'from-blue-500/20 via-purple-500/20 to-pink-500/20',
@@ -36,16 +35,16 @@ const features: Feature[] = [
     icon: TrendingUp,
     title: 'Strategic Ranking System',
     description:
-      'Mathematical precision in tracking model performance. Watch ratings shift as new models emerge and leaders evolve.',
+      'Sample ranking views show how persisted run records and future measured results will be presented.',
     status: 'trust',
     badge: 'Rankings',
     gradient: 'from-green-500/20 via-emerald-500/20 to-teal-500/20',
   },
   {
     icon: Zap,
-    title: 'Real-Time Arbitration',
+    title: 'Review Workflow Preview',
     description:
-      'Instant, unbiased judgment with cryptographic verification. Every decision backed by transparent reasoning chains.',
+      'Illustrative judgment panels show where evaluator notes and transparent reasoning summaries will live once scoring is implemented.',
     status: 'trust',
     badge: 'Command',
     gradient: 'from-yellow-500/20 via-amber-500/20 to-orange-500/20',
@@ -54,7 +53,7 @@ const features: Feature[] = [
     icon: Eye,
     title: 'Complete Visibility',
     description:
-      'Full audit trails, decision trees, and reasoning breakdowns. No black boxes - every move is documented and verifiable.',
+      'Demo review traces, decision trees, and reasoning breakdowns make the planned evaluation review path visible.',
     status: 'trust',
     badge: 'Intelligence',
     gradient: 'from-indigo-500/20 via-blue-500/20 to-cyan-500/20',
@@ -63,7 +62,7 @@ const features: Feature[] = [
     icon: Trophy,
     title: 'Elite Certification',
     description:
-      'Rigorous testing protocols combining established benchmarks with novel challenges that separate emerging models from established leaders.',
+      'Planned benchmark protocol templates show how established tasks and custom challenges can be organized.',
     status: 'trust',
     badge: 'Prestige',
     gradient: 'from-purple-500/20 via-violet-500/20 to-fuchsia-500/20',
@@ -207,9 +206,9 @@ export const FeaturesSection = memo(() => {
 
           <div style={{ '--stagger-index': 2 } as React.CSSProperties}>
             <p className="body-elegant text-xl max-w-3xl mx-auto opacity-80">
-              Beyond simple Q&A testing. Our platform orchestrates sophisticated strategic
-              evaluations where models must demonstrate reasoning, creativity, and tactical thinking
-              under pressure.
+              Beyond simple Q&A testing. The current product presents scripted evaluation demos,
+              benchmark run tracking, and sample dashboards while provider scoring is still in
+              progress.
             </p>
           </div>
         </header>
@@ -234,7 +233,7 @@ export const FeaturesSection = memo(() => {
         {/* Bottom CTA Section */}
         <div className="text-center mt-20 stagger-children">
           <div style={{ '--stagger-index': 9 } as React.CSSProperties}>
-            <p className="body-elegant opacity-60 mb-6">Ready to see which AI truly dominates?</p>
+            <p className="body-elegant opacity-60 mb-6">Ready to explore the demo surfaces?</p>
             <div className="flex justify-center">
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
             </div>

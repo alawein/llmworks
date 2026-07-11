@@ -16,11 +16,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Changed
+
+- Labeled scripted demos, sample metrics, benchmark queueing, and current-state
+  docs so mock surfaces no longer read as measured provider output.
+
 ---
 
 ## [1.1.0] — 2026-03-06
 
 ### Added
+
 - Migrated to `@alawein/ui` shared component library (#1)
 - Visual regression CI workflow with Playwright baselines
 - Lib module tests for analytics, rate-limiter, security, and utils
@@ -28,10 +34,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Workspace standardization (P10, P19)
 
 ### Changed
+
 - Upgraded Vite 5 → 7 and plugin-react to 5.1.4
 - Centralized browser API mocks and suppressed act() warnings
 
 ### Fixed
+
 - Resolved security vulnerabilities via dependency upgrades
 - Fixed animation stability for visual test baselines
 - Fixed vitest process hang with pool forks config
@@ -42,6 +50,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [1.0.0] — 2026-02-01
 
 ### Added
+
 - Initial LLMWorks platform
 - React + Vite + TypeScript stack
 - Supabase integration

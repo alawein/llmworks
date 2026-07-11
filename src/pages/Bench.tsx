@@ -1,8 +1,5 @@
-import { Badge, Button, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import { Badge, Button, Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@alawein/ui';
 import { useEffect, useState, Suspense, lazy, memo } from 'react';
-
-
-
 
 import { Navigation } from '@/components/Navigation';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
@@ -37,16 +34,17 @@ const Bench = memo(() => {
     setSEO({
       title: 'The Bench | LLM Works',
       description:
-        'Open‑source benchmarking that runs in your browser. MMLU, TruthfulQA, GSM8K, custom tests.',
+        'Queue benchmark run records in your browser. Provider-backed scoring is not yet implemented.',
       path: '/bench',
     });
     injectJsonLd(
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        name: 'The Bench — AI Benchmarking Suite',
+        name: 'The Bench — Benchmark Run Tracking',
         url: `${window.location.origin}/bench`,
-        description: 'Standardized benchmarks and custom tests with auditable reports.',
+        description:
+          'Benchmark run tracking with planned presets. Provider-backed scoring is not yet implemented.',
         isPartOf: {
           '@type': 'SoftwareApplication',
           name: 'LLM Works',
@@ -62,7 +60,7 @@ const Bench = memo(() => {
       description: 'Massive Multitask Language Understanding - 57 academic subjects',
       tasks: 15459,
       avgTime: '~45 min',
-      status: 'Ready',
+      status: 'Queue only',
       difficulty: 'Advanced',
       color: 'bg-accent/10 text-accent',
     },
@@ -72,7 +70,7 @@ const Bench = memo(() => {
       description: 'Tests resistance to generating false information and misconceptions',
       tasks: 817,
       avgTime: '~20 min',
-      status: 'Ready',
+      status: 'Queue only',
       difficulty: 'Expert',
       color: 'bg-primary/10 text-primary',
     },
@@ -82,7 +80,7 @@ const Bench = memo(() => {
       description: 'Grade School Math problems requiring multi-step reasoning',
       tasks: 1319,
       avgTime: '~30 min',
-      status: 'Ready',
+      status: 'Queue only',
       difficulty: 'Intermediate',
       color: 'bg-accent/10 text-accent',
     },
@@ -92,17 +90,17 @@ const Bench = memo(() => {
       description: 'Upload your own evaluation datasets and criteria',
       tasks: 'Variable',
       avgTime: 'Variable',
-      status: 'Available',
+      status: 'Builder only',
       difficulty: 'Custom',
       color: 'bg-muted text-muted-foreground',
     },
   ];
 
   const metrics = [
-    { label: 'Accuracy', description: 'Percentage of correct answers', icon: Target },
-    { label: 'Brier Score', description: 'Calibration of confidence scores', icon: TrendingUp },
-    { label: 'Citation Quality', description: 'Validity of provided sources', icon: CheckCircle },
-    { label: 'Elo Rating', description: 'Dynamic competitive ranking', icon: BarChart3 },
+    { label: 'Accuracy', description: 'Planned metric once scoring is wired', icon: Target },
+    { label: 'Brier Score', description: 'Planned calibration metric', icon: TrendingUp },
+    { label: 'Citation Quality', description: 'Planned source-validity metric', icon: CheckCircle },
+    { label: 'Elo Rating', description: 'Planned competitive ranking metric', icon: BarChart3 },
   ];
 
   return (
@@ -115,16 +113,16 @@ const Bench = memo(() => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <BarChart3 className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-primary neural-text">
-              STANDARDIZED BENCHMARKING
+              BENCHMARK RUN TRACKING
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            THE BENCH — BENCHMARK EVALUATION
+            THE BENCH — RUN TRACKING
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Run standardized benchmarks. Generate detailed reports with performance analysis and
-            audit trails.
+            Queue benchmark run records and preview planned benchmark presets. Provider-backed
+            scoring is not yet implemented.
           </p>
         </div>
 
@@ -157,7 +155,9 @@ const Bench = memo(() => {
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h3 className="text-xl font-bold text-foreground mb-2">{benchmark.name}</h3>
-                        <Badge variant={benchmark.status === 'Ready' ? 'default' : 'secondary'}>
+                        <Badge
+                          variant={benchmark.status === 'Queue only' ? 'default' : 'secondary'}
+                        >
                           {benchmark.status}
                         </Badge>
                       </div>
@@ -193,7 +193,7 @@ const Bench = memo(() => {
                       onClick={() => setActiveTab('runner')}
                     >
                       <Play className="h-4 w-4" />
-                      Run Benchmark
+                      Queue Run
                     </Button>
                   </Card>
                 ))}
@@ -241,23 +241,23 @@ const Bench = memo(() => {
         <Card className="p-8 gradient-surface shadow-medium">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-foreground mb-4">Start Benchmarking</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-4">Queue benchmark runs</h3>
               <p className="text-muted-foreground mb-4">
-                Select your models, choose your benchmarks, and generate detailed evaluation reports
-                with performance analytics and detailed reporting.
+                Select models and planned benchmark presets to queue run records. Real scoring,
+                provider inference, and measured reports are still pending.
               </p>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="h-4 w-4 text-primary" />
-                  <span className="text-sm text-muted-foreground">Automated scoring</span>
+                  <span className="text-sm text-muted-foreground">Run tracking</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-primary" />
-                  <span className="text-sm text-muted-foreground">Performance tracking</span>
+                  <span className="text-sm text-muted-foreground">Scoring pending</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Download className="h-4 w-4 text-primary" />
-                  <span className="text-sm text-muted-foreground">Exportable reports</span>
+                  <span className="text-sm text-muted-foreground">Sample reports</span>
                 </div>
               </div>
             </div>

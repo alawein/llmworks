@@ -29,7 +29,7 @@ describe('BenchmarkRunner', () => {
 
     await user.click(screen.getByRole('button', { name: /gpt-4o/i }));
     await user.click(screen.getByRole('button', { name: /mmlu/i }));
-    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+    await user.click(screen.getByRole('button', { name: /queue benchmark run/i }));
 
     await waitFor(() => {
       expect(queueBenchmarkRun).toHaveBeenCalledWith('mmlu', {
@@ -61,7 +61,7 @@ describe('BenchmarkRunner', () => {
     await user.click(screen.getByRole('button', { name: /gpt-4o/i }));
     await user.click(screen.getByRole('button', { name: /mmlu/i }));
     await user.click(screen.getByRole('button', { name: /truthfulqa/i }));
-    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+    await user.click(screen.getByRole('button', { name: /queue benchmark run/i }));
 
     await waitFor(() => {
       expect(queueBenchmarkRun).toHaveBeenCalledTimes(2);
@@ -77,7 +77,7 @@ describe('BenchmarkRunner', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/truthfulqa: unauthorized for gpt-4o/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+    await user.click(screen.getByRole('button', { name: /queue benchmark run/i }));
 
     await waitFor(() => {
       expect(queueBenchmarkRun).toHaveBeenCalledTimes(3);
@@ -107,7 +107,7 @@ describe('BenchmarkRunner', () => {
 
     await user.click(screen.getByRole('button', { name: /gpt-4o/i }));
     await user.click(screen.getByRole('button', { name: /mmlu/i }));
-    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+    await user.click(screen.getByRole('button', { name: /queue benchmark run/i }));
 
     await waitFor(() => {
       expect(queueBenchmarkRun).toHaveBeenCalledTimes(1);
@@ -123,7 +123,7 @@ describe('BenchmarkRunner', () => {
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /claude 3\.5 sonnet/i }));
-    await user.click(screen.getByRole('button', { name: /start benchmark/i }));
+    await user.click(screen.getByRole('button', { name: /queue benchmark run/i }));
 
     await waitFor(() => {
       expect(queueBenchmarkRun).toHaveBeenCalledTimes(2);

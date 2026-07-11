@@ -1,10 +1,15 @@
-
-
-
-
-
-
-import { Badge, Button, Card, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@alawein/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  Input,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@alawein/ui';
 import {
   Search,
   Filter,
@@ -111,6 +116,7 @@ export const ResultsViewer = () => {
       models: result.models,
       timestamp: result.timestamp,
       status: result.status,
+      sampleData: true,
       exportedAt: new Date().toISOString(),
     };
 
@@ -124,6 +130,16 @@ export const ResultsViewer = () => {
 
   return (
     <div className="space-y-6">
+      <Card className="p-4 border-accent/20 bg-accent/5">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <BarChart3 className="h-4 w-4 text-accent" />
+          <span>
+            Sample result records only. These percentages and winners are illustrative placeholders,
+            not measured provider output.
+          </span>
+        </div>
+      </Card>
+
       {/* Filters & Search */}
       <Card className="p-4">
         <div className="flex flex-col md:flex-row gap-4 items-center">
@@ -202,7 +218,7 @@ export const ResultsViewer = () => {
                         <div className="flex items-center gap-1 text-sm">
                           <TrendingUp className="h-4 w-4 text-accent" />
                           <span className="text-foreground font-medium">
-                            {result.accuracy}% accuracy
+                            {result.accuracy}% sample accuracy
                           </span>
                         </div>
                       )}
@@ -210,7 +226,7 @@ export const ResultsViewer = () => {
                         <div className="flex items-center gap-1 text-sm">
                           <CheckCircle className="h-4 w-4 text-accent" />
                           <span className="text-foreground font-medium">
-                            Winner: {result.winner}
+                            Sample winner: {result.winner}
                           </span>
                         </div>
                       )}
@@ -240,7 +256,7 @@ export const ResultsViewer = () => {
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">Showing 5 of 47 results</div>
+        <div className="text-sm text-muted-foreground">Showing 5 sample records</div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" disabled>
             Previous

@@ -1,12 +1,18 @@
-import { Badge, Button, Card, Input, Label, Progress, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from "@alawein/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  Input,
+  Label,
+  Progress,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
+} from '@alawein/ui';
 import { useState } from 'react';
-
-
-
-
-
-
-
 
 import {
   Upload,
@@ -109,10 +115,9 @@ export const CustomTestBuilder = () => {
 
     setIsRunning(true);
 
-    // Mock test execution
+    // Preview-only placeholder until provider inference and scoring are implemented.
     setTimeout(() => {
       setIsRunning(false);
-      // In a real implementation, this would show results
     }, 3000);
   };
 
@@ -292,7 +297,12 @@ export const CustomTestBuilder = () => {
         <Card className="p-6">
           <div className="flex items-center gap-2 mb-4">
             <Play className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-bold text-foreground">Run Custom Test</h3>
+            <h3 className="text-lg font-bold text-foreground">Preview Custom Test</h3>
+          </div>
+
+          <div className="mb-4 rounded-lg border border-accent/20 bg-accent/5 p-3 text-sm text-muted-foreground">
+            Custom test execution is a setup preview. Provider calls and scoring are not yet
+            implemented.
           </div>
 
           <div className="space-y-4">
@@ -344,7 +354,7 @@ export const CustomTestBuilder = () => {
             {isRunning && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-foreground">Running custom test...</span>
+                  <span className="text-foreground">Previewing custom test setup...</span>
                   <span className="text-muted-foreground">Progress</span>
                 </div>
                 <Progress value={65} className="h-2" />
@@ -360,12 +370,12 @@ export const CustomTestBuilder = () => {
               {isRunning ? (
                 <>
                   <Settings className="h-4 w-4 mr-2 animate-spin" />
-                  Evaluating Performance...
+                  Previewing Setup...
                 </>
               ) : (
                 <>
                   <Play className="h-4 w-4 mr-2" />
-                  Execute Evaluation
+                  Preview Evaluation Setup
                 </>
               )}
             </Button>

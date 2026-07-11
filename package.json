@@ -2,7 +2,7 @@
   "name": "llmworks-app",
   "version": "1.0.0",
   "private": true,
-  "description": "Open-source LLM evaluation platform with interactive testing and rigorous benchmarking",
+  "description": "Open-source LLM evaluation interface with scripted demos and benchmark run tracking",
   "keywords": [
     "llm",
     "evaluation",

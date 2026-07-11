@@ -1,9 +1,17 @@
-import { Badge, Button, Card, ChartContainer, ChartTooltip, ChartTooltipContent, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from "@alawein/ui";
+import {
+  Badge,
+  Button,
+  Card,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  Progress,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@alawein/ui';
 import React, { useState, useEffect } from 'react';
-
-
-
-
 
 import {
   AlertTriangle,
@@ -138,7 +146,7 @@ const mockSystemMetrics: SystemMetric[] = [
 const mockServices: ServiceStatus[] = [
   {
     id: 'api-gateway',
-    name: 'API Gateway',
+    name: 'Sample API Gateway',
     status: 'healthy',
     uptime: 99.9,
     lastChecked: '1 min ago',
@@ -149,7 +157,7 @@ const mockServices: ServiceStatus[] = [
   },
   {
     id: 'evaluation-engine',
-    name: 'Evaluation Engine',
+    name: 'Planned Evaluation Engine',
     status: 'healthy',
     uptime: 99.7,
     lastChecked: '2 min ago',
@@ -171,7 +179,7 @@ const mockServices: ServiceStatus[] = [
   },
   {
     id: 'model-apis',
-    name: 'Model API Aggregator',
+    name: 'Planned Model API Aggregator',
     status: 'degraded',
     uptime: 98.2,
     lastChecked: '3 min ago',
@@ -209,7 +217,7 @@ const mockAlerts: Alert[] = [
     id: 'alert-001',
     type: 'warning',
     title: 'High Response Time',
-    message: 'Model API Aggregator response time exceeded threshold (>1000ms)',
+    message: 'Sample model API aggregator response time exceeded threshold (>1000ms)',
     service: 'model-apis',
     timestamp: '2 min ago',
     acknowledged: false,
@@ -262,7 +270,7 @@ export const SystemHealthDashboard = () => {
   const [alerts, setAlerts] = useState<Alert[]>(mockAlerts);
   const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  // Simulate real-time updates
+  // Simulate sample timed updates for the dashboard preview.
   useEffect(() => {
     const interval = setInterval(() => {
       // Update system metrics
@@ -395,7 +403,7 @@ export const SystemHealthDashboard = () => {
               <p className="text-2xl font-bold text-success">Operational</p>
               <div className="flex items-center gap-1 mt-1">
                 <CheckCircle className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">{avgUptime.toFixed(1)}% uptime</span>
+                <span className="text-xs text-success">{avgUptime.toFixed(1)}% sample uptime</span>
               </div>
             </div>
             <Server className="h-8 w-8 text-success" />
@@ -432,7 +440,7 @@ export const SystemHealthDashboard = () => {
               <p className="text-2xl font-bold text-foreground">{avgResponseTime.toFixed(0)}ms</p>
               <div className="flex items-center gap-1 mt-1">
                 <Timer className="h-3 w-3 text-primary" />
-                <span className="text-xs text-muted-foreground">Last 5 minutes</span>
+                <span className="text-xs text-muted-foreground">Sample window</span>
               </div>
             </div>
             <Zap className="h-8 w-8 text-primary" />
@@ -448,7 +456,7 @@ export const SystemHealthDashboard = () => {
               </p>
               <div className="flex items-center gap-1 mt-1">
                 <Activity className="h-3 w-3 text-primary" />
-                <span className="text-xs text-muted-foreground">Real-time</span>
+                <span className="text-xs text-muted-foreground">Sample</span>
               </div>
             </div>
             <Users className="h-8 w-8 text-primary" />
@@ -499,7 +507,7 @@ export const SystemHealthDashboard = () => {
         </Card>
       </div>
 
-      {/* Real-time Monitoring */}
+      {/* Sample monitoring */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
@@ -566,7 +574,7 @@ export const SystemHealthDashboard = () => {
       {/* Service Status */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-foreground">Service Status</h3>
+          <h3 className="text-lg font-bold text-foreground">Sample Service Status</h3>
           <Button variant="outline" size="sm" onClick={handleRefresh}>
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
@@ -586,7 +594,7 @@ export const SystemHealthDashboard = () => {
 
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Uptime</span>
+                  <span className="text-muted-foreground">Sample uptime</span>
                   <span className="font-medium">{service.uptime}%</span>
                 </div>
                 <div className="flex justify-between">

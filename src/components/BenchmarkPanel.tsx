@@ -1,7 +1,13 @@
-import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Progress } from "@alawein/ui";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Progress,
+} from '@alawein/ui';
 import { memo, useMemo, useState, useRef, useEffect } from 'react';
-
-
 
 import {
   TrendingUp,
@@ -219,7 +225,7 @@ export const BenchmarkPanel = memo(() => {
               </Badge>
             </div>
             <CardDescription className="body-elegant">
-              Real-time strategic intelligence and model performance tracking
+              Sample strategic intelligence and model performance tracking
             </CardDescription>
           </CardHeader>
 

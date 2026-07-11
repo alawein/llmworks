@@ -12,9 +12,9 @@ sla: none
 ### Name & Tagline
 
 - **Primary Name**: LLM Works
-- **Tagline**: "Evaluate LLMs with confidence"
-- **Full Description**: Open-source LLM evaluation platform with interactive
-  testing and rigorous benchmarking
+- **Tagline**: "Evaluate LLM workflows with confidence"
+- **Full Description**: Open-source LLM evaluation interface with scripted demos,
+  benchmark run tracking, and provider-backed scoring still in progress
 
 ### Logo Specifications
 
@@ -60,7 +60,7 @@ sla: none
 
 ### Brand Personality
 
-- **Evidence-first**: Data-driven, transparent, verifiable
+- **Evidence-first**: Current-state, transparent, verifiable
 - **Human-centered**: Accessible, clear, enabling
 - **Professional**: Credible, trustworthy, systematic
 - **Open**: Collaborative, transparent, community-driven
@@ -69,7 +69,9 @@ sla: none
 
 - Use active voice and clear, direct language
 - Focus on benefits and outcomes, not just features
-- Emphasize transparency, auditability, and trust
+- Emphasize transparency, implementation state, and trust
+- Label scripted demos, sample metrics, and planned scoring before users act on
+  them
 - Avoid overly technical jargon in user-facing content
 
 ## Product Naming
@@ -77,31 +79,31 @@ sla: none
 ### Core Platform
 
 - **LLM Works** - Main platform name
-- **The Arena** - Interactive testing environment
-- **The Bench** - Benchmarking suite
+- **The Arena** - Scripted evaluation demo environment
+- **The Bench** - Benchmark run tracking surface
 
 ### Framework Components
 
-- **Arbiter** - Evaluation protocol framework
-- **Verifier** - Audit trail and proof system
-- **Dynamic Elo** - Performance ranking system
+- **Arbiter** - Planned evaluation review framework
+- **Verifier** - Planned evidence and review system
+- **Dynamic Elo** - Planned performance ranking concept
 
 ## Usage Examples
 
 ### Headlines
 
-✅ "Evaluate LLMs with confidence" ✅ "Auditable AI evaluation made simple" ✅
-"Trust through transparent testing"
+✅ "Evaluate LLM workflows with confidence" ✅ "Scripted demos, labeled clearly"
+✅ "Trust through transparent implementation state"
 
 ### Descriptions
 
-✅ "Open-source LLM evaluation platform with auditable results" ✅ "Unite
-interactive testing and rigorous benchmarking" ✅ "Verifiable evaluation
-protocols for professional teams"
+✅ "Open-source LLM evaluation interface with scripted demos and benchmark run
+tracking" ✅ "Explore Arena demos while provider scoring is in progress" ✅
+"Sample metrics are labeled before export"
 
 ### Call-to-Actions
 
-✅ "Try in Browser" ✅ "View Benchmarks" ✅ "Browse Examples"
+✅ "Try in Browser" ✅ "View Bench Demo" ✅ "Browse Examples"
 
 ## Implementation Notes
 
@@ -125,4 +127,4 @@ protocols for professional teams"
 
 ---
 
-_Last Updated: January 2025_ _Version: 1.0_
+_Last Updated: July 2026_ _Version: 1.1_

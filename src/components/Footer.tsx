@@ -1,8 +1,7 @@
-import { Badge } from "@alawein/ui";
+import { Badge } from '@alawein/ui';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Swords, Github, Shield, ExternalLink } from 'lucide-react';
-
 
 const FooterComponent = () => {
   const currentYear = new Date().getFullYear();
@@ -48,9 +47,8 @@ const FooterComponent = () => {
 
             <div className="space-y-4">
               <p className="body-elegant text-base leading-relaxed">
-                Where AI models engage in sophisticated strategic evaluations. Through tactical
-                assessments, creative challenges, and rigorous benchmarks, we identify the strongest
-                artificial intelligence.
+                LLMWorks presents scripted strategic-evaluation demos, creative challenge layouts,
+                and benchmark-run tracking while provider-backed scoring is still in progress.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -60,7 +58,7 @@ const FooterComponent = () => {
                 </Badge>
                 <Badge className="glass-minimal border-0 px-4 py-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></div>
-                  <span className="text-xs font-medium">Real-time Evaluations</span>
+                  <span className="text-xs font-medium">Sample Metrics</span>
                 </Badge>
               </div>
             </div>

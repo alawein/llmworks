@@ -139,7 +139,7 @@ All environment variables are **optional** with sensible defaults:
 # API Configuration
 VITE_API_URL=               # Defaults to environment-specific URLs
 VITE_CDN_URL=               # Optional CDN for assets
-VITE_WS_URL=                # WebSocket URL for real-time features
+VITE_WS_URL=                # Reserved for planned streaming features
 
 # Provider integrations
 # The current client does not consume provider keys or an encryption salt.
