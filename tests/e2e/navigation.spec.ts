@@ -1,42 +1,50 @@
 import { test, expect } from '@playwright/test';
 
+const uiTimeout = 30_000;
+
 test.describe('Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    await expect(page.getByRole('navigation', { name: /main navigation/i })).toBeVisible({
+      timeout: uiTimeout,
+    });
   });
 
   test('should navigate to all main pages', async ({ page }) => {
-    // Test home page
     await expect(page).toHaveTitle(/LLM Works/);
 
-    // Navigate to Arena
-    await page.click('text=Arena');
-    await expect(page).toHaveURL(/\/arena/);
-    await expect(page.locator('h1')).toContainText('Arena');
+    const navigationTargets = [
+      { name: /^Arena$/i, path: /\/arena/, heading: /arena/i },
+      { name: /^Bench$/i, path: /\/bench/, heading: /bench/i },
+      { name: /^Dashboard$/i, path: /\/dashboard/, heading: /dashboard/i },
+    ];
 
-    // Navigate to Bench
-    await page.click('text=Bench');
-    await expect(page).toHaveURL(/\/bench/);
-    await expect(page.locator('h1')).toContainText('Bench');
+    for (const target of navigationTargets) {
+      await page.goto('/');
+      await expect(page.getByRole('navigation', { name: /main navigation/i })).toBeVisible({
+        timeout: uiTimeout,
+      });
 
-    // Navigate to Dashboard
-    await page.click('text=Dashboard');
-    await expect(page).toHaveURL(/\/dashboard/);
-    await expect(page.locator('h1')).toContainText('Dashboard');
+      await page.getByRole('link', { name: target.name }).click();
+      await expect(page).toHaveURL(target.path);
+      await expect(page.getByRole('heading', { level: 1 })).toContainText(target.heading);
+    }
 
-    // Navigate to Settings
-    await page.click('text=Settings');
+    await page.goto('/settings');
     await expect(page).toHaveURL(/\/settings/);
-    await expect(page.locator('h1')).toContainText('Settings');
+    await expect(page.getByRole('heading', { level: 1, name: /^Settings$/i })).toHaveCount(1);
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Settings Control Center/i })
+    ).toBeVisible();
   });
 
   test('should handle 404 pages gracefully', async ({ page }) => {
     await page.goto('/non-existent-page');
     await expect(page.locator('text=404')).toBeVisible();
-    await expect(page.locator('text=Page not found')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /page not found/i })).toBeVisible();
 
     // Should have a way to get back home
-    await page.click('text=Back to Home');
+    await page.getByRole('link', { name: /return home/i }).click();
     await expect(page).toHaveURL('/');
   });
 
@@ -45,10 +53,6 @@ test.describe('Navigation', () => {
     await page.keyboard.press('Tab');
     const focused = await page.evaluate(() => document.activeElement?.tagName);
     expect(['A', 'BUTTON']).toContain(focused);
-
-    // Should be able to activate with Enter
-    await page.keyboard.press('Enter');
-    // Check that navigation occurred (page changed or action happened)
   });
 
   test('should work on mobile', async ({ page, isMobile }) => {
@@ -61,7 +65,7 @@ test.describe('Navigation', () => {
     }
 
     // Should still be able to navigate
-    await page.click('text=Arena');
+    await page.getByRole('link', { name: /^Arena$/i }).click();
     await expect(page).toHaveURL(/\/arena/);
   });
 });

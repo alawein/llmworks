@@ -1,6 +1,9 @@
 import { chromium, FullConfig } from '@playwright/test';
 
-async function globalSetup(_config: FullConfig) {
+async function globalSetup(config: FullConfig) {
+  const baseURL =
+    config.projects[0]?.use.baseURL ?? process.env.PLAYWRIGHT_TEST_BASE_URL ?? 'http://127.0.0.1:4174';
+
   // Launch browser for setup tasks
   const browser = await chromium.launch();
   const context = await browser.newContext();
@@ -8,18 +11,10 @@ async function globalSetup(_config: FullConfig) {
 
   try {
     // Warm up the application
-    await page.goto(process.env.BASE_URL || 'http://localhost:4173');
+    await page.goto(baseURL);
 
-    // Wait for the app to be ready
-    await page.waitForLoadState('networkidle');
-
-    // Pre-cache critical resources if needed
-    await page.evaluate(() => {
-      // Trigger any critical resource loading
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js');
-      }
-    });
+    // Wait for the app shell; ongoing background work can keep `networkidle` open.
+    await page.getByRole('heading', { level: 1, name: /Architect Superior/i }).waitFor();
   } catch (error) {
     console.error('❌ Global setup failed:', error);
     throw error;
