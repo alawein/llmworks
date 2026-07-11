@@ -42,7 +42,6 @@ import {
   Pie,
   Cell,
 } from 'recharts';
-import { trackEvent } from '@/lib/analytics';
 import { format } from 'date-fns';
 
 interface CostData {
@@ -218,7 +217,7 @@ const mockModelUsage: ModelUsage[] = [
 const mockBudgets: Budget[] = [
   {
     id: 'monthly-main',
-    name: 'Monthly Evaluation Budget',
+    name: 'Sample Monthly Evaluation Budget',
     limit: 1000,
     spent: 678.45,
     period: 'monthly',
@@ -230,7 +229,7 @@ const mockBudgets: Budget[] = [
   },
   {
     id: 'weekly-testing',
-    name: 'Weekly Testing Budget',
+    name: 'Sample Weekly Testing Budget',
     limit: 250,
     spent: 189.23,
     period: 'weekly',
@@ -287,11 +286,6 @@ export const CostTrackingDashboard = () => {
     },
   ];
 
-  const handleExportData = () => {
-    trackEvent('cost_data_export', { period: selectedPeriod });
-    // Export logic would go here
-  };
-
   const getBudgetStatus = (budget: Budget) => {
     const percentage = (budget.spent / budget.limit) * 100;
     if (percentage >= 90) return { color: 'red', status: 'danger' };
@@ -323,16 +317,29 @@ export const CostTrackingDashboard = () => {
 
   return (
     <div className="space-y-6">
+      <Card className="p-4 border-primary/20 bg-primary/5">
+        <div className="flex items-start gap-3">
+          <DollarSign className="h-5 w-5 text-primary mt-0.5" />
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Sample Cost Dashboard</h2>
+            <p className="text-sm text-muted-foreground">
+              Illustrative sample spend, token, provider, budget, and recommendation data — not
+              measured billing data from provider APIs.
+            </p>
+          </div>
+        </div>
+      </Card>
+
       {/* Overview Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total Spent</p>
+              <p className="text-sm text-muted-foreground">Sample Total Spent</p>
               <p className="text-2xl font-bold text-foreground">${totalSpent.toFixed(2)}</p>
               <div className="flex items-center gap-1 mt-1">
                 <TrendingUp className="h-3 w-3 text-destructive" />
-                <span className="text-xs text-destructive">+15.2% this period</span>
+                <span className="text-xs text-destructive">Sample +15.2% this period</span>
               </div>
             </div>
             <DollarSign className="h-8 w-8 text-primary" />
@@ -342,11 +349,11 @@ export const CostTrackingDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Daily Average</p>
+              <p className="text-sm text-muted-foreground">Sample Daily Average</p>
               <p className="text-2xl font-bold text-foreground">${avgDailySpend.toFixed(2)}</p>
               <div className="flex items-center gap-1 mt-1">
                 <TrendingDown className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">-3.8% vs last period</span>
+                <span className="text-xs text-success">Sample -3.8% vs last period</span>
               </div>
             </div>
             <BarChart3 className="h-8 w-8 text-primary" />
@@ -356,14 +363,14 @@ export const CostTrackingDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total Tokens</p>
+              <p className="text-sm text-muted-foreground">Sample Total Tokens</p>
               <p className="text-2xl font-bold text-foreground">
                 {(totalTokens / 1000).toFixed(0)}K
               </p>
               <div className="flex items-center gap-1 mt-1">
                 <Zap className="h-3 w-3 text-primary" />
                 <span className="text-xs text-muted-foreground">
-                  {totalEvaluations} evaluations
+                  {totalEvaluations} sample evaluations
                 </span>
               </div>
             </div>
@@ -374,13 +381,13 @@ export const CostTrackingDashboard = () => {
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Cost per Evaluation</p>
+              <p className="text-sm text-muted-foreground">Sample Cost per Evaluation</p>
               <p className="text-2xl font-bold text-foreground">
                 ${(totalSpent / totalEvaluations).toFixed(2)}
               </p>
               <div className="flex items-center gap-1 mt-1">
                 <Target className="h-3 w-3 text-success" />
-                <span className="text-xs text-success">-8.1% efficiency gain</span>
+                <span className="text-xs text-success">Sample -8.1% efficiency gain</span>
               </div>
             </div>
             <CreditCard className="h-8 w-8 text-primary" />
@@ -456,19 +463,40 @@ export const CostTrackingDashboard = () => {
             </Popover>
           </div>
 
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleExportData}>
-              <Download className="h-4 w-4 mr-2" />
-              Export
-            </Button>
-            <Button variant="outline" size="sm">
-              <Settings className="h-4 w-4 mr-2" />
-              Budget Settings
-            </Button>
-            <Button variant="outline" size="sm">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
-            </Button>
+          <div className="flex flex-col items-start sm:items-end gap-2">
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; export is not wired to provider billing data."
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export Sample
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; budget settings are not wired."
+              >
+                <Settings className="h-4 w-4 mr-2" />
+                Sample Budget Settings
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled
+                title="Sample data only; refresh is not wired to live provider data."
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh Sample
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground sm:text-right">
+              Sample-only controls are disabled until live provider billing and export wiring is
+              available.
+            </p>
           </div>
         </div>
       </Card>
@@ -477,7 +505,7 @@ export const CostTrackingDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cost Trend */}
         <Card className="p-6">
-          <h3 className="text-lg font-bold text-foreground mb-4">Cost Trend</h3>
+          <h3 className="text-lg font-bold text-foreground mb-4">Sample Cost Trend</h3>
           <ChartContainer config={chartConfig} className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={costData}>
@@ -504,7 +532,7 @@ export const CostTrackingDashboard = () => {
 
         {/* Provider Breakdown */}
         <Card className="p-6">
-          <h3 className="text-lg font-bold text-foreground mb-4">Cost by Provider</h3>
+          <h3 className="text-lg font-bold text-foreground mb-4">Sample Cost by Provider</h3>
           <div className="flex items-center justify-center">
             <ChartContainer config={chartConfig} className="h-[300px] w-[300px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -535,10 +563,15 @@ export const CostTrackingDashboard = () => {
       {/* Model Usage Table */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-foreground">Model Usage & Costs</h3>
-          <Button variant="outline" size="sm">
+          <h3 className="text-lg font-bold text-foreground">Sample Model Usage & Costs</h3>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled
+            title="Sample data only; detail export is not wired."
+          >
             <Download className="h-4 w-4 mr-2" />
-            Export Details
+            Export Sample Details
           </Button>
         </div>
 
@@ -605,16 +638,16 @@ export const CostTrackingDashboard = () => {
       {/* Cost Optimization Recommendations */}
       <Card className="p-6">
         <h3 className="text-lg font-bold text-foreground mb-4">
-          Cost Optimization Recommendations
+          Sample Cost Optimization Recommendations
         </h3>
         <div className="space-y-4">
           <div className="flex items-start gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
             <AlertTriangle className="h-5 w-5 text-warning mt-0.5" />
             <div>
-              <h4 className="font-medium text-foreground">High OpenAI Usage</h4>
+              <h4 className="font-medium text-foreground">Sample High OpenAI Usage</h4>
               <p className="text-sm text-muted-foreground mt-1">
-                OpenAI accounts for 65% of your costs. Consider using Claude 3.5 Sonnet for similar
-                performance at lower cost.
+                In this sample dataset, OpenAI accounts for 65% of displayed costs. Treat this as an
+                illustrative optimization prompt, not measured provider billing advice.
               </p>
             </div>
           </div>
@@ -622,10 +655,10 @@ export const CostTrackingDashboard = () => {
           <div className="flex items-start gap-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
             <Target className="h-5 w-5 text-success mt-0.5" />
             <div>
-              <h4 className="font-medium text-foreground">Optimization Opportunity</h4>
+              <h4 className="font-medium text-foreground">Sample Optimization Opportunity</h4>
               <p className="text-sm text-muted-foreground mt-1">
-                Your cost per evaluation decreased 8.1% this period. Consider batching similar
-                evaluations to maintain this efficiency.
+                The sample cost per evaluation decreases 8.1% in this mock period. Real optimization
+                guidance requires measured provider usage data.
               </p>
             </div>
           </div>
@@ -633,10 +666,10 @@ export const CostTrackingDashboard = () => {
           <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
             <Zap className="h-5 w-5 text-blue-600 mt-0.5" />
             <div>
-              <h4 className="font-medium text-foreground">Token Optimization</h4>
+              <h4 className="font-medium text-foreground">Sample Token Optimization</h4>
               <p className="text-sm text-muted-foreground mt-1">
-                Reduce prompt length by 15-20% to save on input token costs without affecting
-                evaluation quality.
+                Sample token-saving suggestions are placeholders until provider usage and evaluation
+                quality data are wired.
               </p>
             </div>
           </div>
